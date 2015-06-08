@@ -1,0 +1,11 @@
+[user]
+	name = Jakob Odersky
+	email = jodersky@gmail.com
+[color]
+	ui = auto
+[alias]
+	s = status
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
+	lg = log --oneline --decorate --all --graph
+[push]
+	default = simple

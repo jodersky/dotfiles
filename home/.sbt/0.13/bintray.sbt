@@ -1,0 +1,1 @@
+bintray.BintrayKeys.bintrayReleaseOnPublish := false

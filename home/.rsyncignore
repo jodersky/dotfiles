@@ -1,0 +1,23 @@
+# keep these hidden files and directories
++ /.rsyncignore
++ /.ssh
++ /.gnupg
++ /.password-store
++ /.sbt
++ /.mutt
++ /.emacs.d
++ /.dotfiles
++ .gitignore
+
+# ignore other hidden files
+- /.*
+
+# ignore temporary files
+- **~
+
+# ignore files in any .gitignore files
+- : .gitignore
+
+# ignore following directories
+- /Downloads
+- /opt

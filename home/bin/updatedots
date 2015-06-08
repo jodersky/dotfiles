@@ -1,0 +1,63 @@
+#!/bin/bash
+
+# Root directory of dotfiles project
+BASEDIR=$(dirname "$(readlink -f "$0")")/../..
+
+# Directory containing all dotfiles that will be linked to $HOMEDIR
+DOTDIR=${BASEDIR}/home
+
+# Directory into which files will be linked
+HOMEDIR=${HOME}
+
+# Directory into which any pre-existing dotfiles will be copied
+BACKUPDIR=${HOMEDIR}/.updatedots-backup
+
+# Dotfiles relative to $DOTDIR
+RDOTFILES=$(find ${DOTDIR} -type f -print | sed "s|^${DOTDIR}/||g")
+
+# Command used to create symbolic links
+LINK="ln --symbolic --relative"
+
+# Publish dotfiles to home directory, backing up any collisions
+create_links() {
+    if [ ! -e "$BACKUPDIR" ]; then
+	mkdir "$BACKUPDIR"
+    fi
+    if [ -n "$(ls -A $BACKUPDIR)" ]; then
+	echo "Backup directory $BACKUPDIR is not empty. Local files could be lost. Aborting." >&2
+	exit 1
+    fi
+    
+    local moved=0
+    
+    echo "*** Linking dotfiles from $(realpath $DOTDIR) to $HOMEDIR ***"
+    for relative in $RDOTFILES; do
+	local src=$DOTDIR/$relative
+	local dest=$HOMEDIR/$relative
+
+	echo -n "$dest: "
+	
+	mkdir -p $(dirname "$dest")
+
+	if [ -e "$dest" ] && [ $(readlink -f "$dest") = $(readlink -f "$src") ]; then
+	    echo "nothing to be done"
+	else
+	    if [ -e "$dest" ]; then
+		mv "$dest" "$BACKUPDIR/$file"
+		moved=1
+		echo -n "saved original, "
+	    fi 
+
+	    $LINK "$src" "$dest"
+	    echo "linked"
+	fi
+    done
+
+    echo "*** Finished linking dotfiles ***"
+    echo
+    if [ "$moved" -gt 0 ]; then
+	echo "WARNING: some local files were moved to $BACKUPDIR" >&2
+    fi
+}
+
+create_links
