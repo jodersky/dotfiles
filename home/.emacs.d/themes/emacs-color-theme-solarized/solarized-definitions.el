@@ -302,7 +302,10 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
                          (diff-changed (,@fg-yellow ,@bg-base02))
                          (diff-removed (,@fg-red ,@bg-base02))
                          (diff-refine-change (,@fg-blue ,@bg-base02))))))
-                (diff-file-header (,@bg-back))
+                (diff-refine-added (:inherit diff-added ,@fmt-revr))
+                (diff-refine-removed (:inherit diff-removed ,@fmt-revr))
+                (diff-file-header (:inherit default ,@fg-blue))
+                (diff-hunk-header (:inherit default))
                 (diff-header (,@fg-base1 ,@bg-back))
                 ;; IDO
                 (ido-only-match (,@fg-green))
@@ -729,10 +732,10 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
                 (term-color-white (,@fg-base00))
                 ;; company
                 (company-tooltip (,@fg-base00 ,@bg-base02))
-                (company-tooltip-selection (,@fg-base1 ,@bg-base02))
+                (company-tooltip-selection (,@fg-green ,@bg-base02))
                 (company-tooltip-mouse (,@fg-base1 ,@bg-base02))
-                (company-tooltip-common (,@fg-blue ,@bg-base02))
-                (company-tooltip-common-selection (,@fg-blue ,@bg-base01))
+                (company-tooltip-common (,@fg-blue ,@bg-base02 ,@fmt-undr))
+                (company-tooltip-common-selection (,@fg-green ,@bg-base02 ,@fmt-undr))
                 (company-tooltip-annotation (,@fg-yellow ,@bg-base02))
                 (company-scrollbar-fg (,@bg-base0))
                 (company-scrollbar-bg (,@bg-base02))
@@ -748,7 +751,24 @@ the \"Gen RGB\" column in solarized-definitions.el to improve them further."
                 ;; guide-key
                 (guide-key/prefix-command-face (,@fg-blue))
                 (guide-key/highlight-command-face (,@fg-orange))
-                (guide-key/key-face (,@fg-green)))))))
+                (guide-key/key-face (,@fg-green))
+                ;; magit
+                (magit-log-sha1 (,@fg-red))
+                (magit-branch (,@fg-yellow))
+                (magit-tag (,@fg-green))
+                (magit-log-author (,@fg-cyan))
+                (magit-log-head-label-remote (,@fg-green))
+                (magit-log-head-label-tags (,@fg-orange))
+                (magit-log-head-label-local (,@fg-yellow))
+                (magit-log-head-label-head (,@fg-violet))
+                (magit-process-ok (,@fg-green :inherit magit-section-title))
+                (magit-process-ng (,@fg-red :inherit magit-section-title))
+                ;; undo-tree
+                (undo-tree-visualizer-current-face (,@fg-orange))
+                (undo-tree-visualizer-default-face (:inherit shadow))
+                (undo-tree-visualizer-active-branch-face (:inherit default))
+                (undo-tree-visualizer-unmodified-face (,@fg-cyan))
+                (undo-tree-visualizer-register-face (,@fg-yellow)))))))
 
 ;;;###autoload
 (when (boundp 'custom-theme-load-path)
