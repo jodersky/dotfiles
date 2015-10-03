@@ -7,6 +7,7 @@
 (global-linum-mode t)
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
+(setq initial-scratch-message "")
 (setq ring-bell-function 'ignore)
 
 ;; disable backups, autosave and lockfiles (use scm instead)
