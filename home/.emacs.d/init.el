@@ -22,5 +22,8 @@
 ;; uniform questions
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; default window size
+(when window-system (set-frame-size (selected-frame) 160 60))
+
 ;;; Other configuration
 (mapc 'load (file-expand-wildcards "~/.emacs.d/config/*.el"))
