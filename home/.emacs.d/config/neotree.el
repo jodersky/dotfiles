@@ -14,3 +14,5 @@
  '(neo-root-dir-face ((t :inherit link-visited :underline nil)) t))
 
 (setq neo-theme 'ascii)
+
+(neotree)
