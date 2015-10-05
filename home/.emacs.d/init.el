@@ -12,6 +12,7 @@
 
 ;; disable backups, autosave and lockfiles (use scm instead)
 (setq make-backup-files nil)
+(setq backup-inhibited t)
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 (global-auto-revert-mode t)
@@ -24,6 +25,15 @@
 
 ;; default window size
 (when window-system (set-frame-size (selected-frame) 160 60))
+
+;; Highlight corresponding parentheses when cursor is on one
+(show-paren-mode t)
+
+;; Highlight tabulations
+(setq-default highlight-tabs t)
+
+;; Show trailing white spaces
+(setq-default show-trailing-whitespace t)
 
 ;;; Other configuration
 (mapc 'load (file-expand-wildcards "~/.emacs.d/config/*.el"))
