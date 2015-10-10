@@ -30,10 +30,10 @@
 (show-paren-mode t)
 
 ;; Highlight tabulations
-(setq-default highlight-tabs t)
+;(setq-default highlight-tabs t)
 
 ;; Show trailing white spaces
-(setq-default show-trailing-whitespace t)
+;(setq-default show-trailing-whitespace t)
 
 ;;; Other configuration
 (mapc 'load (file-expand-wildcards "~/.emacs.d/config/*.el"))
