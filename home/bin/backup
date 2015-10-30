@@ -1,58 +1,25 @@
 #!/bin/bash
 set -e
 
-# source folder to back up, don't forget to add trailing slash
-: ${BACKUPSOURCE:="/home/jodersky/"}
+DEVICE=/dev/sdb
+MAPPED=backup
 
-# backup root folder, i.e. the one that will contain all backups in separate sub-folders
-: ${BACKUPCAPSULE:="/media/jodersky/backup/backup/jakob/"}
-
-
-#destination folder to back up to
-destination="$BACKUPCAPSULE"/$(date +%Y-%m-%d_%H-%M-%S)
-
-#symbolic link to latest backup (if any)
-latest="$BACKUPCAPSULE/latest"
-
-# rsync options
-roptions=(
-    -a
-    -P
-    --copy-unsafe-links
-    --delete
-    --delete-excluded
-    --filter=": .rsyncignore"
-)
-
-# settings that are passed through arguments
-init=0; # initialise new backup
-dryrun=0; # perform a simulated run, don't backup any files
-
-# process arguments
-while [ $# -gt 0 ]
-do
-    if [ "$1" = "--init" ]; then
-    	init=1
-    elif [ "$1" = "-n" ]; then
-    	dryrun=1
-    else
-    	echo "invalid argument: $1"
-		exit 1
-	fi
-    shift
-done
-
-if [ $init -eq 0 ]; then
-	roptions+=(--link-dest="$latest")
-fi
-if [ $dryrun -eq 1 ]; then
-	roptions+=(-n)
-	roptions+=(-vv)
+if [ "$EUID" -ne 0 ]; then
+    echo "Need to be root" >&2
+    exit 1
 fi
 
-rsync "${roptions[@]}" "$BACKUPSOURCE" "$destination"
-
-if [ $dryrun -eq 0 ]; then
-	rm -f $latest
-	ln -s "$destination" "$latest"
-fi
+case "$1" in
+    mount)
+	cryptsetup open "$DEVICE" "$MAPPED"
+	mount /dev/mapper/"$MAPPED" /mnt
+	;;
+    umount)
+       	umount /mnt
+	cryptsetup close "$MAPPED"
+	;;
+    *)
+	echo "Unknown argument $1"
+	exit 1
+	;;
+esac
