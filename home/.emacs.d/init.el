@@ -24,7 +24,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; default window size
-(when window-system (set-frame-size (selected-frame) 160 60))
+;y(when window-system (set-frame-size (selected-frame) 160 60))
 
 ;; Highlight corresponding parentheses when cursor is on one
 (show-paren-mode t)
