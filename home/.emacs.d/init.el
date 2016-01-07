@@ -24,7 +24,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 ;; default window size
-;y(when window-system (set-frame-size (selected-frame) 160 60))
+(when window-system (set-frame-size (selected-frame) 160 60))
 
 ;; Highlight corresponding parentheses when cursor is on one
 (show-paren-mode t)
@@ -33,7 +33,7 @@
 ;(setq-default highlight-tabs t)
 
 ;; Show trailing white spaces
-;(setq-default show-trailing-whitespace t)
+(setq-default show-trailing-whitespace t)
 
 ;;; Other configuration
 (mapc 'load (file-expand-wildcards "~/.emacs.d/config/*.el"))
