@@ -2,16 +2,22 @@
 (load-theme 'solarized t)
 
 (add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (let ((mode (if (display-graphic-p frame) 'light 'dark)))
-              (set-frame-parameter frame 'background-mode mode)
-              (set-terminal-parameter frame 'background-mode mode))
-            (enable-theme 'solarized)))
+	  (lambda (frame)
+	    (let ((mode (if (display-graphic-p frame) 'light 'dark)))
+	      (set-frame-parameter frame 'background-mode mode)
+	      (set-terminal-parameter frame 'background-mode mode))
+	    (enable-theme 'solarized)))
 
 
-(defun solarized-toggle ()
+(defun set-solarized-light ()
   (interactive)
-  (invert-face 'default)
-  (enable-theme 'solarized))
+  (customize-set-variable 'frame-background-mode 'light)
+  (load-theme 'solarized t))
 
-(global-set-key [f9] 'solarized-toggle)
+(defun set-solarized-dark ()
+  (interactive)
+  (customize-set-variable 'frame-background-mode 'dark)
+  (load-theme 'solarized t))
+
+(global-set-key [f9] 'set-solarized-light)
+(global-set-key [f10] 'set-solarized-dark)
