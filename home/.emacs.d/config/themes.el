@@ -1,5 +1,5 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/emacs-color-theme-solarized")
-(load-theme 'solarized t)
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/monokai-emacs")
 
 (add-hook 'after-make-frame-functions
 	  (lambda (frame)
@@ -7,7 +7,6 @@
 	      (set-frame-parameter frame 'background-mode mode)
 	      (set-terminal-parameter frame 'background-mode mode))
 	    (enable-theme 'solarized)))
-
 
 (defun set-solarized-light ()
   (interactive)
@@ -21,3 +20,6 @@
 
 (global-set-key [f9] 'set-solarized-light)
 (global-set-key [f10] 'set-solarized-dark)
+
+
+(load-theme 'monokai t)
