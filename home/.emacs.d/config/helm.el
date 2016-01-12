@@ -18,6 +18,8 @@
 (setq helm-buffers-fuzzy-matching t
       helm-recentf-fuzzy-match    t)
 
+(global-set-key (kbd "C-x C-f") 'helm-find-files)
+
 (when (executable-find "curl")
   (setq helm-google-suggest-use-curl-p t))
 
