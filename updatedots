@@ -31,39 +31,42 @@ create_links() {
 	mkdir "$BACKUPDIR"
     fi
     if [ -n "$(ls -A $BACKUPDIR)" ]; then
-	echo "Backup directory $BACKUPDIR is not empty. Local files could be lost. Aborting." >&2
+	echo "Backup directory $BACKUPDIR is not empty, local files could be lost." >&2
+	echo "Aborting." >&2
 	exit 1
     fi
-    
+
     local moved=0
-    
+
     echo "*** Linking dotfiles from $(realpath $DOTDIR) to $HOMEDIR ***"
     for relative in $RDOTFILES; do
 	local src=$DOTDIR/$relative
 	local dest=$HOMEDIR/$relative
 
-	echo -n "$dest: "
-	
+	# backup destination (if the file already exists and is backed up)
+	local bdest=$BACKUPDIR/$relative
+
 	mkdir -p $(dirname "$dest")
 
 	if [ -e "$dest" ] && [ $(readlink -f "$dest") = $(readlink -f "$src") ]; then
-	    echo "nothing to be done"
+	    echo "Nothing to be done for $relative"
 	else
 	    if [ -e "$dest" ]; then
-		mv "$dest" "$BACKUPDIR/$file"
+		mkdir -p $(dirname "$bdest")
+		mv "$dest" "$bdest"
 		moved=1
-		echo -n "saved original, "
-	    fi 
+		echo "Backed up original $relative to $bdest"
+	    fi
 
 	    $LINK "$src" "$dest"
-	    echo "linked"
+	    echo "Linked $relative"
 	fi
     done
 
     echo "*** Finished linking dotfiles ***"
     echo
     if [ "$moved" -gt 0 ]; then
-	echo "WARNING: some local files were moved to $BACKUPDIR" >&2
+	echo "WARNING: some files were moved to $BACKUPDIR" >&2
     fi
 }
 
