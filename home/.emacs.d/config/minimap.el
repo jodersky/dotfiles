@@ -4,5 +4,5 @@
 (customize-set-variable 'minimap-window-location (quote right))
 (set-face-attribute 'minimap-active-region-background nil :background "dim gray")
 
-(minimap-mode 1)
+;(minimap-mode 1)
 
