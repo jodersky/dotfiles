@@ -26,6 +26,9 @@
 ;; default window size
 (when window-system (set-frame-size (selected-frame) 160 60))
 
+;; set title of frame to current buffer
+(setq frame-title-format "%b")
+
 ;; Highlight corresponding parentheses when cursor is on one
 (show-paren-mode t)
 
