@@ -4,9 +4,9 @@
 xbacklight -set 10
 
 # Central Europe
-redshift -l 46.52:6.62 -t 5700:3600 -g 0.8 -m vidmode
+#redshift -l 46.52:6.62 -t 5700:3600 -g 0.8 -m vidmode
 
 # North-West America
-#redshift -l 37.7:122.4 -t 5700:3600 -g 0.8 -m randr
+redshift -l 37.7:122.4 -t 5700:3600 -g 0.8 -m randr
 
 xbacklight -set 60
