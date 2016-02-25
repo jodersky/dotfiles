@@ -1,6 +1,7 @@
 [user]
 	name = Jakob Odersky
 	email = jakob@odersky.com
+	signingkey = 0x4601878662E33372
 [color]
 	ui = auto
 [alias]
@@ -10,3 +11,5 @@
 	pr = "!f() { git fetch ${2:-upstream} pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
 [push]
 	default = simple
+[core]
+	editor = emacs -nw
