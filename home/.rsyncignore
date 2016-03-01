@@ -8,7 +8,7 @@
 + /.emacs.d
 + /.dotfiles
 + /.gitconfig
-+ .gitignore
++ /.gitignore
 
 # ignore other hidden files
 - /.*
