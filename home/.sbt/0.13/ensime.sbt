@@ -1,1 +1,0 @@
-transitiveClassifiers in Global := List("")
