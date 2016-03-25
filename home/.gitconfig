@@ -8,7 +8,7 @@
 	s = status
 	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
 	lg = log --oneline --decorate --all --graph
-	pr = "!f() { git fetch ${2:-upstream} pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+	pr = "!f() { git fetch ${2:-upstream} pull/$1/head:pr/$1; }; f"
 [push]
 	default = simple
 [core]
