@@ -1,4 +1,3 @@
-(require 'spotify)
-
-(global-set-key (kbd "M-s p") 'spotify-playpause)
-(global-set-key (kbd "M-s n") 'spotify-next)
+(use-package spotify
+  :bind (("M-s p" . spotify-playpause)
+	 ("M-s n" . spotify-next)))
