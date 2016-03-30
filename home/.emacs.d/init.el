@@ -47,8 +47,10 @@
 
 (when (not package-archive-contents)
   (package-refresh-contents))
+
 ;; c style
 (setq c-default-style "linux")
+
 (use-package helm
   :init (progn
 	  (require 'helm-config)
@@ -75,16 +77,16 @@
 
   :config (setq helm-candidate-number-limit 100
 		helm-idle-delay 0.0 ; update fast sources immediately (doesn't).
- 		helm-input-idle-delay 0.01  ; this actually updates things reeeelatively quickly.
- 		helm-yas-display-key-on-candidate t
- 		helm-quick-update t
- 		helm-M-x-requires-pattern nil
- 		helm-ff-skip-boring-files t
- 	        helm-split-window-in-side-p t ; open helm buffer inside current window
- 		helm-M-x-fuzzy-match t
- 		helm-buffers-fuzzy-matching t
- 		helm-recentf-fuzzy-match t
- 		helm-ff-file-name-history-use-recentf t)
+		helm-input-idle-delay 0.01  ; this actually updates things reeeelatively quickly.
+		helm-yas-display-key-on-candidate t
+		helm-quick-update t
+		helm-M-x-requires-pattern nil
+		helm-ff-skip-boring-files t
+		helm-split-window-in-side-p t ; open helm buffer inside current window
+		helm-M-x-fuzzy-match t
+		helm-buffers-fuzzy-matching t
+		helm-recentf-fuzzy-match t
+		helm-ff-file-name-history-use-recentf t)
 
   :bind (("C-c h" . helm-mini)
 	 ("C-h a" . helm-apropos)
@@ -92,17 +94,22 @@
 	 ("C-x C-f" . helm-find-files)
 	 ("M-y" . helm-show-kill-ring)
 	 ("M-x" . helm-M-x)
-	 ("<tab>" . helm-execute-persistent-action)
-	 ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
 	 ("C-x c o" . helm-occur)
 	 ("C-x c y" . helm-yas-complete)
 	 ("C-x c Y" . helm-yas-create-snippet-on-region)
-	 ("C-x c SPC" . helm-all-mark-rings))
+	 ("C-x c SPC" . helm-all-mark-rings)
+	 :map helm-map
+	 ("<tab>" . helm-execute-persistent-action)
+	 ("C-i" . helm-execute-persistent-action) ; make TAB works in terminal
+	 ("C-z" . helm-select-action))
 
   :diminish helm-mode)
+
+
 (use-package markdown-mode
   :mode ("\\.markdown\\'" "\\.md\\'")
   :config (setq markdown-command "/usr/bin/pandoc"))
+
 (use-package minimap
   :config (progn
 	    (setq minimap-width-fraction 0.1
@@ -120,6 +127,7 @@
 	     '(neo-root-dir-face ((t :inherit link-visited :underline nil)) t))
 	    (setq neo-theme 'ascii))
   :bind (("<f8>" . neotree-toggle)))
+
 (use-package projectile
   :diminish projectile-mode
   :config (progn
@@ -132,6 +140,7 @@
 	    (helm-projectile-on)))
 
 (use-package helm-projectile)
+
 (use-package scala-mode2
   :interpreter
   ("scala" . scala-mode)
