@@ -8,8 +8,7 @@
 	  helm-M-x-fuzzy-match t
 	  helm-buffers-fuzzy-matching t
 	  helm-recentf-fuzzy-match t
-	  helm-ff-file-name-history-use-recentf t)
-    (message "Helm started"))
+	  helm-ff-file-name-history-use-recentf t))
 
   :bind (("C-h a" . helm-apropos)
 	 ("C-x b" . helm-buffers-list)
