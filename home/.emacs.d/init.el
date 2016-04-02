@@ -10,7 +10,7 @@
 (setq initial-scratch-message "")
 (setq ring-bell-function 'ignore)
 
-;; disable backups, autosave and lockfiles (use scm instead)
+;; disable backups, autosave and lockfiles
 (setq make-backup-files nil)
 (setq backup-inhibited t)
 (setq auto-save-default nil)
@@ -27,7 +27,8 @@
 (when window-system (set-frame-size (selected-frame) 160 60))
 
 ;; set title of frame to current buffer
-(setq frame-title-format "%b")
+;;(setq frame-title-format "%b")
+(setq frame-title-format '(buffer-file-name "%f" "%b"))
 
 ;; Highlight corresponding parentheses when cursor is on one
 (show-paren-mode t)
