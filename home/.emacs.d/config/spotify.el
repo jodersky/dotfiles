@@ -1,4 +1,5 @@
 (use-package spotify
   :bind
-  (("M-s p" . spotify-playpause)
+  (("M-s SPC" . spotify-playpause)
+   ("M-s p" . spotify-previous)
    ("M-s n" . spotify-next)))
