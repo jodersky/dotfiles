@@ -34,7 +34,7 @@
   :bind ("C-x p" . helm-projectile))
 
 (use-package projectile
-  :defer t ; loading is ensured by helm-projectile
+  :defer projectile-mode ; loading is ensured by helm-projectile
   :config
   (projectile-global-mode)
   :diminish projectile-mode)

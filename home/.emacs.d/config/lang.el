@@ -1,3 +1,30 @@
+;;;; Settings for editing various text files and programing languages
+
+;;; General text-editing
+
+;; Markdown
+(use-package markdown-mode
+  :mode
+  ("\\.markdown\\'" "\\.md\\'")
+  :config
+  (setq markdown-command "/usr/bin/pandoc"))
+
+;; YML
+(use-package yaml-mode
+  :mode ("\\.yml\\'" "\\.yaml\\'"))
+
+;; Completion
+(use-package company
+  :diminish company-mode)
+
+;; Snippets
+(use-package yasnippet
+  :diminish yas-minor-mode)
+
+;;; C
+(setq c-default-style "linux")
+
+;;; Scala
 (use-package scala-mode2
   :interpreter
   ("scala" . scala-mode)
@@ -22,3 +49,13 @@
   :init
   (setq
    ensime-default-buffer-prefix "ENSIME-"))
+
+;;; Web development
+;; Different modes in html files
+(use-package web-mode
+  :mode "\\.html?\\'")
+
+;; Javascript
+(use-package js3-mode
+  :mode "\\.js\\'")
+
