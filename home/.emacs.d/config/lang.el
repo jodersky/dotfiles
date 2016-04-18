@@ -39,16 +39,18 @@
 	      (ensime-mode)))
   :bind (:map scala-mode-map
 	      ("C-<tab>" . dabbrev-expand)
-	      ("<backtab>" . scala-indent:indent-with-reluctant-strategy))
-
-  )
+	      ("<backtab>" . scala-indent:indent-with-reluctant-strategy)))
 
 ;; ENhanced Scala Interaction Mode for text Editors
 (use-package ensime
   :commands ensime ensime-mode
   :init
-  (setq
-   ensime-default-buffer-prefix "ENSIME-"))
+  (setq ensime-default-buffer-prefix "ENSIME-"))
+
+
+;;; Java
+(add-hook 'java-mode-hook (lambda ()
+			    (setq c-basic-offset 4)))
 
 ;;; Web development
 ;; Different modes in html files

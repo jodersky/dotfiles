@@ -1,6 +1,6 @@
 (use-package helm
   :config
-  (progn
+  (progn ; progn since order is important here
     (setq helm-split-window-in-side-p t ; open helm buffer inside current windowA
 	  helm-candidate-number-limit 100
 	  helm-quick-update t
