@@ -1,0 +1,5 @@
+#!/bin/sh
+
+SBT=/usr/bin/sbt
+
+$SBT -Dsbt.global.base="$HOME/.sbt-clean" $@
