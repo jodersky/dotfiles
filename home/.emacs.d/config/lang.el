@@ -45,8 +45,10 @@
 (use-package ensime
   :commands ensime ensime-mode
   :init
-  (setq ensime-default-buffer-prefix "ENSIME-"))
-
+  (setq ensime-default-buffer-prefix "ENSIME-")
+  :config
+  (set-face-attribute 'ensime-implicit-highlight nil
+		      :underline nil))
 
 ;;; Java
 (add-hook 'java-mode-hook (lambda ()
