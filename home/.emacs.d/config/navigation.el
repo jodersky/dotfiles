@@ -31,10 +31,13 @@
 (use-package helm-projectile
   :config
   (helm-projectile-on)
-  :bind ("C-x p" . helm-projectile))
+  :bind (("C-x p" . helm-projectile)
+	 ("C-x P" . helm-projectile-grep)))
 
 (use-package projectile
   :defer projectile-mode ; loading is ensured by helm-projectile
+  :init
+  (setq projectile-use-git-grep t)
   :config
-  (projectile-global-mode)
+  (projectile-global-mode t)
   :diminish projectile-mode)

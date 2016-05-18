@@ -25,7 +25,7 @@
 (setq c-default-style "linux")
 
 ;;; Scala
-(use-package scala-mode2
+(use-package scala-mode
   :interpreter
   ("scala" . scala-mode)
   :config
