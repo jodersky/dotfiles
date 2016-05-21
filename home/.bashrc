@@ -111,3 +111,6 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+# Spark: don't run scalastyle on every compile
+export NOLINT_ON_COMPILE=true
