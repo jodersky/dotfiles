@@ -9,6 +9,7 @@
 + /.dotfiles
 + /.gitconfig
 + /.gitignore
++ /.drone
 
 # ignore other hidden files
 - /.*
