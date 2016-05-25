@@ -1,11 +1,11 @@
 /* Shrink title bars */
 
-.header-bar.default-decoration {
-    padding-top: 0px;
-    padding-bottom: 0px;
+.default-decoration {
+    min-height: 0px;
+    padding: 2px;
 }
 
-.header-bar.default-decoration .button.titlebutton {
-    padding-top: 0px;
-    padding-bottom: 0px;
+.default-decoration .titlebutton {
+    min-height: 0px;
+    padding: 0px;
 }
