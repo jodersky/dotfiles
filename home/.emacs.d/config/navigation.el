@@ -43,4 +43,4 @@
   :diminish projectile-mode)
 
 (use-package magit
-  :defer t)
+  :bind ("C-c C-g" . magit-status))
