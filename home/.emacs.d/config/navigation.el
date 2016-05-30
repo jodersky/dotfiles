@@ -43,4 +43,4 @@
   :diminish projectile-mode)
 
 (use-package magit
-  :bind ("C-c C-g" . magit-status))
+  :bind ("C-x g" . magit-status))
