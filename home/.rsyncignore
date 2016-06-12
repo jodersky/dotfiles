@@ -1,15 +1,14 @@
 # keep these hidden files and directories
++ /.dotfiles/
++ /.drone/
++ /.emacs.d/
++ /.gitconfig/
++ /.gnupg/
++ /.mutt/
++ /.password-store/
++ /.sbt/
++ /.ssh/
 + /.rsyncignore
-+ /.ssh
-+ /.gnupg
-+ /.password-store
-+ /.sbt
-+ /.mutt
-+ /.emacs.d
-+ /.dotfiles
-+ /.gitconfig
-+ /.gitignore
-+ /.drone
 
 # ignore other hidden files
 - /.*
@@ -18,7 +17,7 @@
 - **~
 
 # ignore files in any .gitignore files
-- : .gitignore
+dir-merge,- .gitignore
 
 # ignore following directories
 - /Downloads
