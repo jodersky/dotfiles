@@ -112,5 +112,8 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Spark: don't run scalastyle on every compile
-export NOLINT_ON_COMPILE=true
+if [ -d "$HOME/.bashrc.d" ]; then
+    for script in "$HOME/.bashrc.d/"*; do
+	. "$script"
+    done
+fi
