@@ -9,8 +9,8 @@ object EnsimeProjectSettings extends AutoPlugin {
   override def trigger = allRequirements
 
   override def projectSettings = Seq(
-    EnsimeKeys.configTransformer := {(cfg: EnsimeConfig) => {
-      val config = EnsimeKeys.configTransformer.value(cfg)
+    EnsimeKeys.ensimeConfigTransformer := {(cfg: EnsimeConfig) => {
+      val config = EnsimeKeys.ensimeConfigTransformer.value(cfg)
       val cleanedModules = config.modules.map{ case (name, module) =>
         def badJar(name: String) = (
           name.startsWith("stax-api") ||
