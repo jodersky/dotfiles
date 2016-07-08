@@ -47,6 +47,7 @@
   :init
   (setq ensime-default-buffer-prefix "ENSIME-")
   :config
+  (setq ensime-startup-snapshot-notification nil)
   (set-face-attribute 'ensime-implicit-highlight nil
 		      :underline nil))
 
