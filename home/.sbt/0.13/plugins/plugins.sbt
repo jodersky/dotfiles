@@ -1,4 +1,8 @@
-addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-M12-1")
+
+sys.props.get("coursier") match {
+  case Some("false") => Seq()
+  case _ => addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-M12-1")
+}
 
 //addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0")
 
