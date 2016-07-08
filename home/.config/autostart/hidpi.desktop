@@ -1,0 +1,8 @@
+
+
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Name=hidpi
+Exec=/usr/bin/xrandr --output eDP1 --scale 1.2x1.2 --panning 3456x2160
+Terminal=false
+Type=Application
