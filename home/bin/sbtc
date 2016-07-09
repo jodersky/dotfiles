@@ -1,5 +1,5 @@
 #!/bin/sh
 
-SBT=/usr/bin/sbt
+# Start sbt in a clean environment
 
-$SBT -Dsbt.global.base="$HOME/.sbt-clean" $@
+/usr/bin/sbt  -Dsbt.global.base="$HOME/.sbt-clean" $@
