@@ -1,25 +1,21 @@
 #!/bin/bash
 set -e
 
-DEVICE=/dev/sdb
-MAPPED=backup
-
-if [ "$EUID" -ne 0 ]; then
-    echo "Need to be root" >&2
-    exit 1
-fi
+device=/dev/sdb
+mapped=backup
 
 case "$1" in
     mount)
-	cryptsetup open "$DEVICE" "$MAPPED"
-	mount /dev/mapper/"$MAPPED" /mnt
+	echo $(pass other/backup) | sudo cryptsetup open --type luks "$device" "$mapped"
+	sudo mount /dev/mapper/"$mapped" /mnt
 	;;
     umount)
-       	umount /mnt
-	cryptsetup close "$MAPPED"
+	sudo umount /mnt
+	sudo cryptsetup close "$mapped"
 	;;
     *)
 	echo "Unknown argument $1"
+	echo "Usage: $0 [mount | umount]"
 	exit 1
 	;;
 esac
