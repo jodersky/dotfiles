@@ -16,7 +16,6 @@
   [[default]]
     background_darkness = 0.9
     background_image = None
-    background_type = transparent
     scroll_on_output = False
     scrollback_infinite = True
     scrollbar_position = hidden
