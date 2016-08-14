@@ -45,9 +45,9 @@
 (use-package ensime
   :commands ensime ensime-mode
   :init
-  (setq ensime-default-buffer-prefix "ENSIME-")
   :config
   (setq ensime-startup-snapshot-notification nil)
+  ;; don't put squiggly line under implicit conversions
   (set-face-attribute 'ensime-implicit-highlight nil
 		      :underline nil))
 
@@ -64,3 +64,7 @@
 (use-package js3-mode
   :mode "\\.js\\'")
 
+
+;; Docker
+(use-package dockerfile-mode
+  :mode "\\Dockerfile\\'")
