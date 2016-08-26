@@ -1,7 +1,7 @@
 
 sys.props.get("coursier") match {
   case Some("false") => Seq()
-  case _ => addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-M12-1")
+  case _ => addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-M13")
 }
 
 //addSbtPlugin("me.lessis" % "bintray-sbt" % "0.3.0")
@@ -16,4 +16,4 @@ addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.10")
 
-addSbtPlugin("com.geirsson" %% "sbt-scalafmt" % "0.2.5")
+//addSbtPlugin("com.geirsson" %% "sbt-scalafmt" % "0.2.5")
