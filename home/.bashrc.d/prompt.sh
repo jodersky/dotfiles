@@ -11,7 +11,7 @@ function __prompt_command() {
     local light_blue='\[\033[01;34m\]'
     local reset='\[\033[0m\]'
 
-    PS1+="╭ "
+    PS1+="╭"
 
     if [ $EXIT = 0 ]; then
 	PS1+="${green}(✔)${reset} "
@@ -43,5 +43,5 @@ function __prompt_command() {
 	fi
     fi
 
-    PS1+="\n╰\$ ${RCol}"
+    PS1+="\n╰\$ ${reset}"
 }
