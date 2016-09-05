@@ -23,6 +23,9 @@
 ;; uniform questions
 (defalias 'yes-or-no-p 'y-or-n-p)
 
+;; kill the current buffer immediately (only ask if buffer modified)
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
+
 ;; default window size
 (when window-system (set-frame-size (selected-frame) 160 60))
 
@@ -36,7 +39,7 @@
 ;(setq-default highlight-tabs t)
 
 ;; Show trailing white spaces
-(setq-default show-trailing-whitespace t)
+;(setq-default show-trailing-whitespace t)
 
 ;;; Other configuration
 (mapc 'load (file-expand-wildcards "~/.emacs.d/config/*.el"))
