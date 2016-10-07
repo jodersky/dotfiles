@@ -10,7 +10,7 @@
 + /.ssh/
 + /.rsyncignore
 
-# ignore other hidden files
+# ignore other hidden files in this directory
 - /.*
 
 # ignore temporary files
@@ -20,5 +20,8 @@
 dir-merge,- .gitignore
 
 # ignore following directories
-- /Downloads
+- /downloads
+- /images
 - /opt
+- /tmp
+- /vm
