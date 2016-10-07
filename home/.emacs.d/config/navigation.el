@@ -1,3 +1,6 @@
+(global-set-key (kbd "<mouse-8>") 'previous-buffer)
+(global-set-key (kbd "<mouse-9>") 'next-buffer)
+
 (use-package helm
   :config
   (progn ; progn since order is important here
@@ -26,6 +29,8 @@
   :bind ("C-h b" . helm-descbinds))
 
 (use-package helm-swoop
+  :config (setq helm-swoop-pre-input-function
+		(lambda () ""))
   :bind ("C-s" . helm-swoop))
 
 (use-package helm-projectile
@@ -44,3 +49,8 @@
 
 (use-package magit
   :bind ("C-x g" . magit-status))
+
+(use-package zoom-frm
+  :bind (("C-=" . zoom-frm-in)
+	 ("C--" . zoom-frm-out)
+	 ("C-0" . zoom-frm-unzoom)))

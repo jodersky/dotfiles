@@ -18,7 +18,7 @@
 (global-auto-revert-mode t)
 
 ;; font
-(set-face-attribute 'default nil :height 110); value is in 1/10pt, so 100 will give you 10pt, etc.
+(set-face-attribute 'default nil :height 120); value is in 1/10pt, so 100 will give you 10pt, etc.
 
 ;; uniform questions
 (defalias 'yes-or-no-p 'y-or-n-p)
