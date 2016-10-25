@@ -1,6 +1,6 @@
 import sbt._
 
-import org.ensime.Imports.EnsimeKeys
+import org.ensime.EnsimeKeys
 import org.ensime.{ EnsimeConfig, EnsimeModule }
 
 object EnsimeProjectSettings extends AutoPlugin {

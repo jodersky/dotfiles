@@ -8,10 +8,14 @@ sys.props.get("coursier") match {
 
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.8.2")
 
-addSbtPlugin("org.ensime" % "sbt-ensime" % "1.9.1")
+addSbtPlugin("org.ensime" % "sbt-ensime" % "1.10.0")
 
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.0.0")
 
 addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.10")
 
 //addSbtPlugin("com.geirsson" %% "sbt-scalafmt" % "0.3.1")
+
+resolvers += Resolver.sonatypeRepo("snapshots")
+
+addSbtPlugin("org.scala-native" % "sbtplugin"  % "0.1-SNAPSHOT")
