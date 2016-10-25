@@ -46,10 +46,7 @@
   :commands ensime ensime-mode
   :init
   :config
-  (setq ensime-startup-snapshot-notification nil)
-  ;; don't put squiggly line under implicit conversions
-  (set-face-attribute 'ensime-implicit-highlight nil
-		      :underline nil))
+  (setq ensime-startup-snapshot-notification nil))
 
 ;;; Java
 (add-hook 'java-mode-hook (lambda ()
