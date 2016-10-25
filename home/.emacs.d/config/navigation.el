@@ -51,6 +51,6 @@
   :bind ("C-x g" . magit-status))
 
 (use-package zoom-frm
-  :bind (("C-=" . zoom-frm-in)
+  :bind (("C-+" . zoom-frm-in)
 	 ("C--" . zoom-frm-out)
 	 ("C-0" . zoom-frm-unzoom)))
