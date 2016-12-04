@@ -43,6 +43,7 @@
 
 ;; ENhanced Scala Interaction Mode for text Editors
 (use-package ensime
+  :pin melpa
   :commands ensime ensime-mode
   :init
   :config
@@ -61,7 +62,9 @@
 (use-package js3-mode
   :mode "\\.js\\'")
 
+;;; Haskell
+(use-package haskell-mode)
 
-;; Docker
+;;; Docker
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")

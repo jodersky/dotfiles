@@ -12,7 +12,6 @@
 	  helm-buffers-fuzzy-matching t
 	  helm-recentf-fuzzy-match t
 	  helm-ff-file-name-history-use-recentf t))
-
   :bind (("C-h a" . helm-apropos)
 	 ("C-x b" . helm-buffers-list)
 	 ("C-x C-f" . helm-find-files)
@@ -38,6 +37,10 @@
   (helm-projectile-on)
   :bind (("C-x p" . helm-projectile)
 	 ("C-x P" . helm-projectile-grep)))
+
+(use-package popup-imenu
+  :commands popup-imenu
+  :bind ("M-i" . popup-imenu))
 
 (use-package projectile
   :defer t ; loading is ensured by helm-projectile
