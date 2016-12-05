@@ -4,20 +4,22 @@
 + /.emacs.d/
 + /.gitconfig/
 + /.gnupg/
-+ /.mutt/
 + /.password-store/
 + /.sbt/
 + /.ssh/
++ /.offlineimaprc
++ /.offlineimaprc.py
 + /.rsyncignore
 
-# ignore other hidden files in this directory
-- /.*
+# ignore files in any .gitignore files
+dir-merge,- /.gitignore_global
+dir-merge,- .gitignore
 
 # ignore temporary files
 - **~
 
-# ignore files in any .gitignore files
-dir-merge,- .gitignore
+# ignore other hidden files in this directory
+- /.*
 
 # ignore following directories
 - /downloads
