@@ -13,7 +13,7 @@ function __prompt_command() {
 
     PS1+="╭"
 
-    if [ $EXIT = 0 ]; then
+    if [ "$EXIT" -eq 0 ]; then
 	PS1+="${green}(✔)${reset} "
     else
 	PS1+="${red}(✗)${reset} "
@@ -41,6 +41,10 @@ function __prompt_command() {
 	    local git_branch="$(echo ${git_status} | tr ':' '\n' | grep "^##" | cut -c4-)"
 	    PS1+=" ${git_color}[${git_branch}]${reset}"
 	fi
+    fi
+
+    if [ "$EXIT" -ne 0 ]; then
+	PS1+=" ${red}(exit $EXIT)${reset}"
     fi
 
     PS1+="\n╰\$ ${reset}"
