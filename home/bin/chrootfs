@@ -1,0 +1,41 @@
+#!/bin/bash
+# Utility script to chroot into a root filesystem of a foreign
+# architecture
+set -e
+
+fail() {
+    echo "$1" >&2
+    exit 1
+}
+
+rootfs="$1"
+
+[ -n "$rootfs" ] || fail "Usage: $(basename $0) <directory>"
+[ -e "$rootfs" ] || fail "$rootfs does not exist"
+[ "$EUID" -eq 0 ] || fail "$(basename $0) must be run as root"
+
+# Unmount and remove any temporary files
+#
+cleanup() {
+    set +e
+    fuser --kill -SIGTERM "$rootfs"
+    sleep 2
+    fuser --kill -SIGKILL --verbose "$rootfs"
+    umount -l "$rootfs/proc" 2> /dev/null
+    umount -l "$rootfs/sys" 2> /dev/null
+    umount -l "$rootfs/dev/pts" 2> /dev/null
+    umount -l "$rootfs/dev" 2> /dev/null
+    trap - 0 1 2 3 6
+}
+trap cleanup 0 1 2 3 6
+
+mount -t proc chproc "$rootfs/proc"
+mount -t sysfs chsys "$rootfs/sys"
+mount -t devtmpfs chdev "$rootfs/dev"
+mount -t devpts chpts "$rootfs/dev/pts"
+
+echo "chrootfs: chrooting into $rootfs" 1>&2
+LANG=C LC_ALL=C chroot "$rootfs"
+echo "chrootfs: cleaning up" 1>&2
+cleanup
+echo "chrootfs: done" 1>&2
