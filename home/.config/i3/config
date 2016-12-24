@@ -39,6 +39,7 @@ bindsym $mod+Shift+q kill
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+x exec --no-startup-id i3-dmenu-desktop
 
 # change focus
 bindsym $mod+j focus left
@@ -91,7 +92,7 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 set $workspace1 "1: Org"
-set $workspace2 "2: Browser"
+set $workspace2 "2: Org"
 set $workspace3 "3: Spark"
 set $workspace4 "4"
 set $workspace5 "5"
@@ -158,7 +159,7 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-set $bg-color 	         #2f343f
+set $bg-color            #464f63
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676e7d
@@ -178,29 +179,35 @@ bar {
         #status_command i3status
 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	colors {
-	       	background $bg-color
+	       	background $inactive-bg-color
 	    	separator #757575
 		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+                focused_workspace  $bg-color          $bg-color          $text-color
+                inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+                urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
         }
 }
 
+new_window pixel 2
+
 # media keys
 # https://feeding.cloud.geek.nz/posts/creating-a-modern-tiling-desktop-environment-using-i3/
-bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ '-5%'
-bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ '+5%'
-bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%'
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '+5%'
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
-bindsym XF86AudioPlay exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
 
-bindsym XF86AudioNext exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+bindsym XF86AudioNext exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
 
-bindsym XF86AudioPrev exec dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
 
-bindsym XF86MonBrightnessDown exec xbacklight -steps 1 -time 0 -dec 5
-bindsym XF86MonBrightnessUp exec xbacklight -steps 1 -time 0 -inc 5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -steps 1 -time 0 -dec 5
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -steps 1 -time 0 -inc 5
+
+bindsym $mod+Shift+t exec i3-sensible-terminal
+bindsym $mod+Shift+v exec emacs
+bindsym $mod+Shift+f exec firefox
 
 # screenlock
 bindsym $mod+Control+l exec i3lock -c 000000
@@ -217,7 +224,8 @@ exec --no-startup-id nm-applet
 exec --no-startup-id redshift
 
 for_window [class="Spotify"] move to workspace $workspace10
-exec spotify
+exec --no-startup-id spotify
 
-for_window [class="Firefox"] border pixel 2
-exec_always --no-statup-id i3-msg 'workspace 2: Browser ; exec firefox'
+#for_window [class="Firefox"] border pixel 2
+#exec --no-startup-id i3-msg 'workspace $workspace1; exec firefox --new-window https://mail.google.com
+#exec --no-startup-id i3-msg 'workspace $workspace1; exec firefox --new-window https://calendar.google.com
