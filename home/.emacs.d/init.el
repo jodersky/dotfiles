@@ -7,7 +7,7 @@
 (global-linum-mode t)
 (setq column-number-mode t)
 (setq inhibit-splash-screen t)
-(setq initial-scratch-message "")
+(setq initial-scratch-message nil)
 (setq ring-bell-function 'ignore)
 
 ;; disable backups, autosave and lockfiles
@@ -16,6 +16,9 @@
 (setq auto-save-default nil)
 (setq create-lockfiles nil)
 (global-auto-revert-mode t)
+
+;; save customizations to separate file
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 ;; font
 (set-face-attribute 'default nil :height 120); value is in 1/10pt, so 100 will give you 10pt, etc.

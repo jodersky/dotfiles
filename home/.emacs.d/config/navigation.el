@@ -4,8 +4,7 @@
 (use-package helm
   :config
   (progn ; progn since order is important here
-    (setq helm-split-window-in-side-p t ; open helm buffer inside current windowA
-	  helm-candidate-number-limit 100
+    (setq helm-candidate-number-limit 100
 	  helm-quick-update t
 	  helm-M-x-requires-pattern nil
 	  helm-M-x-fuzzy-match t
@@ -38,6 +37,11 @@
   :bind (("C-x p" . helm-projectile)
 	 ("C-x P" . helm-projectile-grep)))
 
+(use-package goto-chg
+  :commands goto-last-change
+  :bind (("C-." . goto-last-change)
+         ("C-," . goto-last-change-reverse)))
+
 (use-package popup-imenu
   :commands popup-imenu
   :bind ("M-i" . popup-imenu))
@@ -54,6 +58,21 @@
   :bind ("C-x g" . magit-status))
 
 (use-package zoom-frm
-  :bind (("C-+" . zoom-frm-in)
-	 ("C--" . zoom-frm-out)
+  :bind (("C-+" . zoom-all-frames-in)
+	 ("C--" . zoom-all-frames-out)
 	 ("C-0" . zoom-frm-unzoom)))
+
+(defun unfill-paragraph (&optional region)
+  ;; http://www.emacswiki.org/emacs/UnfillParagraph
+  "Transforms a paragraph in REGION into a single line of text."
+  (interactive)
+  (let ((fill-column (point-max)))
+    (fill-paragraph nil region)))
+(define-key global-map "\M-Q" 'unfill-paragraph)
+
+(defun revert-buffer-no-confirm ()
+  ;; http://www.emacswiki.org/emacs-en/download/misc-cmds.el
+  "Revert buffer without confirmation."
+  (interactive)
+  (revert-buffer t t))
+(global-set-key [f5] 'revert-buffer-no-confirm)
