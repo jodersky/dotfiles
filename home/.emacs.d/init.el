@@ -23,8 +23,9 @@
 ;; font
 (set-face-attribute 'default nil :height 100); value is in 1/10pt, so 100 will give you 10pt, etc.
 
-;; uniform questions
+;; simplify questions
 (defalias 'yes-or-no-p 'y-or-n-p)
+(setq vc-follow-symlinks t)
 
 ;; kill the current buffer immediately (only ask if buffer modified)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
