@@ -21,7 +21,7 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
 ;; font
-(set-face-attribute 'default nil :height 120); value is in 1/10pt, so 100 will give you 10pt, etc.
+(set-face-attribute 'default nil :height 100); value is in 1/10pt, so 100 will give you 10pt, etc.
 
 ;; uniform questions
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -37,6 +37,8 @@
 
 ;; Highlight corresponding parentheses when cursor is on one
 (show-paren-mode t)
+
+(setq dired-listing-switches "-alh  --group-directories-first")
 
 ;; Highlight tabulations
 ;(setq-default highlight-tabs t)

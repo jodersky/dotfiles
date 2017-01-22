@@ -47,7 +47,8 @@
   :commands ensime ensime-mode
   :init
   :config
-  (setq ensime-startup-snapshot-notification nil))
+  (setq ensime-startup-notification nil
+	ensime-startup-snapshot-notification nil))
 
 ;;; Java
 (add-hook 'java-mode-hook (lambda ()
