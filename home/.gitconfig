@@ -12,5 +12,5 @@
 [push]
 	default = simple
 [core]
-	editor = emacs -nw
+	editor = emacsclient --alternate-editor='' --tty
 	excludesfile = ~/.gitignore_global
