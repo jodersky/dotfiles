@@ -19,6 +19,7 @@
 
 ;; save customizations to separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(load custom-file 'noerror)
 
 ;; font
 (set-face-attribute 'default nil :height 100); value is in 1/10pt, so 100 will give you 10pt, etc.
@@ -189,6 +190,11 @@
 ;; Java
 (add-hook 'java-mode-hook (lambda ()
 			    (setq c-basic-offset 4)))
+;; Rust
+(use-package rust-mode
+  :mode "\\.rs\\'")
+(use-package toml-mode
+  :mode "\\.toml\\'")
 
 ;; Web development
 ;; Different modes in html files
