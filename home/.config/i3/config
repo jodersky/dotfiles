@@ -13,7 +13,7 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Ubuntu 18
+font pango:Ubuntu 11
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -39,7 +39,7 @@ bindsym $mod+Shift+q kill
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+x exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+x exec --no-startup-id dmenu_run
 
 # change focus
 bindsym $mod+j focus left
@@ -91,15 +91,15 @@ bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 
-set $workspace1 "1: Org"
-set $workspace2 "2: Org"
-set $workspace3 "3: Spark"
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
 set $workspace4 "4"
 set $workspace5 "5"
 set $workspace6 "6"
 set $workspace7 "7"
-set $workspace8 "8"
-set $workspace9 "9"
+set $workspace8 "8: Org"
+set $workspace9 "9: Org IBM"
 set $workspace10 "10: Music"
 
 # switch to workspace
@@ -141,16 +141,16 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym j resize shrink width 5 px or 5 ppt
+        bindsym k resize grow height 5 px or 5 ppt
+        bindsym l resize shrink height 5 px or 5 ppt
+        bindsym semicolon resize grow width 5 px or 5 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Left resize shrink width 5 px or 5 ppt
+        bindsym Down resize grow height 5 px or 5 ppt
+        bindsym Up resize shrink height 5 px or 5 ppt
+        bindsym Right resize grow width 5 px or 5 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -175,12 +175,12 @@ client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color     
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-    	position top
+	position top
         #status_command i3status
 	status_command i3blocks -c ~/.config/i3/i3blocks.conf
 	colors {
-	       	background $inactive-bg-color
-	    	separator #757575
+		background $inactive-bg-color
+		separator #757575
 		#                  border             background         text
                 focused_workspace  $bg-color          $bg-color          $text-color
                 inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
@@ -206,14 +206,21 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -steps 1 -time 0 -
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -steps 1 -time 0 -inc 5
 
 bindsym $mod+Shift+t exec i3-sensible-terminal
-bindsym $mod+Shift+v exec emacs
+bindsym $mod+Shift+v exec emacsclient --alternate-editor='' --create-frame --no-wait --eval '(switch-to-buffer nil)'
 bindsym $mod+Shift+f exec firefox
+bindsym $mod+Shift+p exec open-project
+bindsym $mod+Shift+y exec passmenu
+
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
 
 # screenlock
-bindsym $mod+Control+l exec i3lock -c 000000
+exec --no-startup-id xss-lock -- i3lock -n -i ~/.background.png -t -e
+#bindsym $mod+Control+l exec loginctl lock-session $XDG_SESSION_ID
+bindsym $mod+Control+l exec --no-startup-id systemctl suspend
 
 # desktop background
-exec_always feh --bg-scale ~/.background.jpg
+exec_always feh --bg-scale ~/.background.png
 
 # GNOME desktop settings such as font sizes and touchpad settings
 exec --no-startup-id gnome-shell
