@@ -1,19 +1,20 @@
 export PROMPT_COMMAND=__prompt_command
 
 function __prompt_command() {
-    local EXIT="$?"
+    local exit="$?"
     PS1=""
+    # set title for terminal emulators
     PS1+="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]"
 
-    local red='\[\033[0;31m\]'
-    local green='\[\033[0;32m\]'
-    local light_green='\[\033[01;32m\]'
-    local light_blue='\[\033[01;34m\]'
-    local reset='\[\033[0m\]'
+    local red='\[\e[31m\]'
+    local green='\[\e[32m\]'
+    local light_green='\[\e[92m\]'
+    local light_blue='\[\e[94m\]'
+    local reset='\[\e[0m\]'
 
     PS1+="╭"
 
-    if [ "$EXIT" -eq 0 ]; then
+    if [ "$exit" -eq 0 ]; then
 	PS1+="${green}(✔)${reset} "
     else
 	PS1+="${red}(✗)${reset} "
@@ -43,8 +44,8 @@ function __prompt_command() {
 	fi
     fi
 
-    if [ "$EXIT" -ne 0 ]; then
-	PS1+=" ${red}(exit $EXIT)${reset}"
+    if [ "$exit" -ne 0 ]; then
+	PS1+=" ${red}(exit $exit)${reset}"
     fi
 
     PS1+="\n╰\$ ${reset}"
