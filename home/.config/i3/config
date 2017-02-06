@@ -11,30 +11,16 @@
 
 set $mod Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below.
-font pango:Ubuntu, FontAwesome 11
-
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
-
-# start a terminal
-bindsym $mod+Return exec i3-sensible-terminal
-
-# kill focused window
-bindsym $mod+Shift+q kill
-
-# There also is the (new) i3-dmenu-desktop which only displays applications
-# shipping a .desktop file. It is a wrapper around dmenu, so you need that
-# installed.
-bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
-bindsym $mod+x exec --no-startup-id dmenu_run
 
 # change focus
 bindsym $mod+j focus left
 bindsym $mod+k focus down
 bindsym $mod+l focus up
 bindsym $mod+semicolon focus right
+bindsym $mod+a focus parent
+bindsym $mod+z focus child
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -53,6 +39,10 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# move workspaces between monitors
+bindsym $mod+Shift+greater move workspace to output right
+bindsym $mod+Shift+less move workspace to output left
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -74,12 +64,7 @@ bindsym $mod+Shift+space floating toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
-bindsym $mod+a focus parent
-
-# focus the child container
-bindsym $mod+z focus child
-
+# workspace names
 set $workspace1 "1: "
 set $workspace2 "2: "
 set $workspace3 "3: "
@@ -115,22 +100,11 @@ bindsym $mod+Shift+8 move container to workspace $workspace8
 bindsym $mod+Shift+9 move container to workspace $workspace9
 bindsym $mod+Shift+0 move container to workspace $workspace10
 
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 5 px or 5 ppt
+	bindsym j resize shrink width 5 px or 5 ppt
         bindsym k resize grow height 5 px or 5 ppt
         bindsym l resize shrink height 5 px or 5 ppt
         bindsym semicolon resize grow width 5 px or 5 ppt
@@ -145,8 +119,63 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
 bindsym $mod+r mode "resize"
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# launchers
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop # desktop applications
+bindsym $mod+x exec --no-startup-id dmenu_run # all executables
+mode "common applications" {
+	bindsym t exec i3-sensible-terminal, mode "default"
+	bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait --eval '(switch-to-buffer nil)', mode "default"
+	bindsym f exec firefox, mode "default"
+	bindsym p exec open-project, mode "default"
+	bindsym y exec passmenu, mode "default"
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+q mode "common applications"
+
+# media keys
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%'
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '+5%'
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
+bindsym XF86AudioNext exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
+bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+
+# lighting
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -steps 1 -time 0 -dec 2
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -steps 1 -time 0 -inc 2
+
+# GNOME desktop settings such as font sizes and touchpad settings
+exec --no-startup-id gnome-shell
+exec --no-startup-id gnome-settings-daemon
+
+# screenlock
+exec --no-startup-id xss-lock -- i3lock -n -i ~/.background.png -t -e
+bindsym $mod+Control+l exec --no-startup-id systemctl suspend
+
+# utility applications
+exec --no-startup-id nm-applet
+exec --no-startup-id redshift
+
+# layout preferences
+for_window [class="Spotify"] move to workspace $workspace10
+exec --no-startup-id spotify
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+font pango:Ubuntu, FontAwesome 11
 
 set $bg-color            #464f63
 set $inactive-bg-color   #2f343f
@@ -175,51 +204,7 @@ bar {
                 urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
         }
 }
-
 new_window pixel 2
-
-# media keys
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%'
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '+5%'
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
-
-bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
-
-bindsym XF86AudioNext exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
-
-bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
-
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -steps 1 -time 0 -dec 2
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -steps 1 -time 0 -inc 2
-
-bindsym $mod+Shift+t exec i3-sensible-terminal
-bindsym $mod+Shift+v exec emacsclient --alternate-editor='' --create-frame --no-wait --eval '(switch-to-buffer nil)'
-bindsym $mod+Shift+f exec firefox
-bindsym $mod+Shift+p exec open-project
-bindsym $mod+Shift+y exec passmenu
-
-bindsym $mod+Shift+greater move workspace to output right
-bindsym $mod+Shift+less move workspace to output left
-
-# screenlock
-exec --no-startup-id xss-lock -- i3lock -n -i ~/.background.png -t -e
-#bindsym $mod+Control+l exec loginctl lock-session $XDG_SESSION_ID
-bindsym $mod+Control+l exec --no-startup-id systemctl suspend
 
 # desktop background
 exec_always feh --bg-scale ~/.background.png
-
-# GNOME desktop settings such as font sizes and touchpad settings
-exec --no-startup-id gnome-shell
-exec --no-startup-id gnome-settings-daemon
-
-# utility applications
-exec --no-startup-id nm-applet
-exec --no-startup-id redshift
-
-for_window [class="Spotify"] move to workspace $workspace10
-exec --no-startup-id spotify
-
-#for_window [class="Firefox"] border pixel 2
-#exec --no-startup-id i3-msg 'workspace $workspace1; exec firefox --new-window https://mail.google.com
-#exec --no-startup-id i3-msg 'workspace $workspace1; exec firefox --new-window https://calendar.google.com
