@@ -134,7 +134,8 @@ bindsym $mod+Shift+q kill
 # launchers
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop # desktop applications
 bindsym $mod+x exec --no-startup-id dmenu_run # all executables
-mode "common applications" {
+
+mode "common" {
 	bindsym t exec i3-sensible-terminal, mode "default"
 	bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait --eval '(switch-to-buffer nil)', mode "default"
 	bindsym f exec firefox, mode "default"
@@ -143,7 +144,7 @@ mode "common applications" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
-bindsym $mod+q mode "common applications"
+bindsym $mod+q mode "common"
 
 # media keys
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%'
@@ -178,17 +179,17 @@ exec --no-startup-id spotify
 font pango:Ubuntu, FontAwesome 11
 
 set $bg-color            #464f63
-set $inactive-bg-color   #2f343f
+set $inactive-bg-color   #020202
 set $text-color          #f3f4f5
 set $inactive-text-color #676e7d
-set $urgent-bg-color     #e53935
+set $urgent-bg-color     #e59900
 
 # window colors
-#                       border              background         text                 indicator
-client.focused          $bg-color           $bg-color           $text-color          #00ff00
-client.unfocused        $inactive-bg-color  $inactive-bg-color  $inactive-text-color #00ff00
-client.focused_inactive $inactive-bg-color  $inactive-bg-color  $inactive-text-color #00ff00
-client.urgent           $urgent-bg-color    $urgent-bg-color    $text-color          #00ff00
+#                       border             background         text                 indicator
+client.focused          $bg-color          $bg-color          $text-color          $bg-color
+client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
+client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
+client.urgent           $urgent-bg-color   $urgent-bg-color   $text-color          $urgent-bg-color
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -204,7 +205,7 @@ bar {
                 urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
         }
 }
-new_window pixel 2
+new_window pixel 1
 
 # desktop background
 exec_always feh --bg-scale ~/.background.png
