@@ -72,7 +72,7 @@ set $workspace4 "4: "
 set $workspace5 "5: "
 set $workspace6 "6: "
 set $workspace7 "7: "
-set $workspace8 "8: "
+set $workspace8 "8: "
 set $workspace9 "9: "
 set $workspace10 "10: "
 
@@ -145,6 +145,15 @@ mode "common" {
 	bindsym Escape mode "default"
 }
 bindsym $mod+q mode "common"
+
+mode "setup" {
+     bindsym 0 exec --no-startup-id setup mirror
+     bindsym 1 exec --no-startup-id setup single
+     bindsym 2 exec --no-startup-id setup double
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+}
+bindsym XF86LaunchA mode setup
 
 # media keys
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%'
