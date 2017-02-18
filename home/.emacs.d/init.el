@@ -220,5 +220,4 @@
 	 ("M-s p" . spotify-previous)
 	 ("M-s n" . spotify-next)))
 
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/monokai-emacs")
-(load-theme 'monokai t)
+(load-theme 'idea-darkula)
