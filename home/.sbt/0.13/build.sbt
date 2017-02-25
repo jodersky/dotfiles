@@ -6,3 +6,15 @@ useGpg in Global := true
 
 import org.ensime.EnsimeCoursierKeys._
 ensimeServerVersion in ThisBuild := "2.0.0-SNAPSHOT"
+
+import java.nio.file.Files
+target := {
+  val buildSbt = baseDirectory.value / "build.sbt"
+  val projectSbt = baseDirectory.value / "project.sbt"
+  val project = baseDirectory.value / "project"
+
+  if (buildSbt.exists() || projectSbt.exists() || project.exists())
+    target.value
+  else
+    Files.createTempDirectory("sbt-new").toFile
+}
