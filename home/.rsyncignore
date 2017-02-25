@@ -1,6 +1,5 @@
 # keep these hidden files and directories
 + /.dotfiles/
-+ /.drone/
 + /.emacs.d/
 + /.gitconfig/
 + /.gnupg/
@@ -23,7 +22,5 @@ dir-merge,- .gitignore
 
 # ignore following directories
 - /downloads
-- /images
 - /opt
 - /tmp
-- /vm
