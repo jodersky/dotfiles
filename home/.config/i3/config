@@ -137,7 +137,7 @@ bindsym $mod+x exec --no-startup-id dmenu_run # all executables
 
 mode "common" {
 	bindsym t exec i3-sensible-terminal, mode "default"
-	bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait --eval '(switch-to-buffer nil)', mode "default"
+	bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
 	bindsym f exec firefox, mode "default"
 	bindsym p exec open-project, mode "default"
 	bindsym y exec passmenu, mode "default"
@@ -156,16 +156,16 @@ mode "setup" {
 bindsym XF86LaunchA mode setup
 
 # media keys
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%'
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '+5%'
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
-bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause
-bindsym XF86AudioNext exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next
-bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%', exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '+5%', exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioNext exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks
 
 # lighting
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -steps 1 -time 0 -dec 2
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -steps 1 -time 0 -inc 2
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -steps 1 -time 0 -dec 2, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -steps 1 -time 0 -inc 2, exec pkill -SIGRTMIN+10 i3blocks
 
 # GNOME desktop settings such as font sizes and touchpad settings
 exec --no-startup-id gnome-shell
