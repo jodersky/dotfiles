@@ -1,0 +1,7 @@
+#!/bin/bash
+
+find ~/src -name .git -type d -prune -printf "%h\n" | \
+    xargs -I "{}" sh -c 'echo $(git -C {} status --porcelain | wc -l) {}' | sort -n
+
+#find ~/src -name .git -type d -prune | \
+#    xargs -I '{}' git -C '{}' ls-files -m -d

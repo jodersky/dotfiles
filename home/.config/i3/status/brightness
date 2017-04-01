@@ -1,0 +1,10 @@
+#!/bin/sh
+
+device="/sys/class/$BLOCK_INSTANCE"
+
+brightness=$(cat "$device/brightness")
+max_brightness=$(cat "$device/max_brightness")
+
+percent=$(( $brightness*100/$max_brightness ))
+
+echo "$percent%"
