@@ -154,22 +154,50 @@
 
 ;; Completion
 (use-package company
-  :diminish company-mode)
+  :diminish company-mode
+  :commands company-mode)
 
 ;; Snippets
 (use-package yasnippet
-  :diminish yas-minor-mode)
+  :diminish yas-minor-mode
+  :commands yas-minor-mode
+  :config
+  (define-key yas-minor-mode-map [tab] nil)
+  (define-key yas-minor-mode-map (kbd "TAB") nil)
+  (yas-reload-all)
+  :bind ("C-<tab>" . yas-expand))
+
+(use-package yatemplate
+  :defer 2 ;; WORKAROUND https://github.com/mineo/yatemplate/issues/3
+  :config
+  (auto-insert-mode t)
+  (setq auto-insert-alist nil)
+  (yatemplate-fill-alist))
 
 ;; C
 (setq c-default-style "linux")
 
+(defcustom
+  scala-mode-prettify-symbols
+  '(("->" . ?→)
+    ("<-" . ?←)
+    ("=>" . ?⇒)
+    ("<=" . ?≤)
+    (">=" . ?≥)
+    ("!=" . ?≠)
+    ("implicit" . ?ⅈ))
+"Prettify symbols for scala-mode.")
+
 ;; Scala
 (use-package scala-mode
+  :pin melpa
   :interpreter ("scala" . scala-mode)
   :config
   (require 'ensime-expand-region)
   (add-hook 'scala-mode-hook
 	    (lambda ()
+	      (setq prettify-symbols-alist scala-mode-prettify-symbols)
+	      (prettify-symbols-mode t)
 	      (local-set-key (kbd "RET")
 			     '(lambda ()
 				(interactive)
@@ -178,7 +206,6 @@
 	      (setq fill-column 80)
 	      (ensime-mode)))
   :bind (:map scala-mode-map
-	      ("C-<tab>" . dabbrev-expand)
 	      ("<backtab>" . scala-indent:indent-with-reluctant-strategy)))
 
 ;; ENhanced Scala Interaction Mode for text Editors
@@ -189,6 +216,26 @@
   :config
   (setq ensime-startup-notification nil
 	ensime-startup-snapshot-notification nil))
+
+(use-package sbt-mode
+  :pin melpa)
+
+;; Java / Scala support for templates
+(defun mvn-package-for-buffer ()
+  "Calculate the expected package name for the buffer;
+assuming it is in a maven-style project."
+  ;; see https://github.com/fommil/dotfiles/issues/66
+  (let* ((kind (file-name-extension buffer-file-name))
+         (root (locate-dominating-file default-directory kind)))
+    (when root
+      (require 'subr-x) ;; maybe we should just use 's
+      (replace-regexp-in-string
+       (regexp-quote "/") "."
+       (string-remove-suffix "/"
+                             (string-remove-prefix
+                              (expand-file-name (concat root "/" kind "/"))
+                              default-directory))
+nil 'literal))))
 
 ;; Java
 (add-hook 'java-mode-hook (lambda ()
@@ -215,9 +262,6 @@
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
 
-(use-package spotify
-  :bind (("M-s SPC" . spotify-playpause)
-	 ("M-s p" . spotify-previous)
-	 ("M-s n" . spotify-next)))
-
+(use-package idea-darkula-theme)
+;(use-package intellij-theme)
 (load-theme 'idea-darkula)
