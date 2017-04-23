@@ -7,7 +7,7 @@ addSbtPlugin("com.timushev.sbt" % "sbt-updates" % "0.1.10")
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.8.2")
 
 // ENSIME brings Scala and Java IDE-like features to your favourite text editor
-addSbtPlugin("org.ensime" % "sbt-ensime" % "1.12.8")
+addSbtPlugin("org.ensime" % "sbt-ensime" % "1.12.9")
 
 // Enable fast dependency resolution
 // can be disabled with `sbt -Dcoursier=false`

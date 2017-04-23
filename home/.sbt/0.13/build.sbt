@@ -1,3 +1,5 @@
+cancelable in Global := true
+
 // configure gpg
 import com.typesafe.sbt.pgp.PgpKeys._
 gpgCommand in Global := "gpg2"
