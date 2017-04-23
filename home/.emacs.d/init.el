@@ -43,6 +43,12 @@
 
 (setq initial-buffer-choice "~/readme.org")
 
+(defun show-file-name ()
+  "Show the absolute path file name in the minibuffer."
+  (interactive)
+  (message (buffer-file-name)))
+(global-set-key (kbd "C-x n") 'show-file-name)
+
 ;;; Enable use-package
 
 (require 'package)
@@ -177,6 +183,7 @@
 ;; C
 (setq c-default-style "linux")
 
+;; Scala
 (defcustom
   scala-mode-prettify-symbols
   '(("->" . ?→)
@@ -188,7 +195,6 @@
     ("implicit" . ?ⅈ))
 "Prettify symbols for scala-mode.")
 
-;; Scala
 (use-package scala-mode
   :pin melpa
   :interpreter ("scala" . scala-mode)
@@ -264,4 +270,4 @@ nil 'literal))))
 
 (use-package idea-darkula-theme)
 ;(use-package intellij-theme)
-(load-theme 'idea-darkula)
+;(load-theme 'idea-darkula)
