@@ -268,6 +268,7 @@ nil 'literal))))
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
 
-(use-package idea-darkula-theme)
-;(use-package intellij-theme)
-;(load-theme 'idea-darkula)
+;;(use-package idea-darkula-theme)
+;;(use-package intellij-theme)
+;;(load-theme 'idea-darkula)
+(load-theme 'solarized-light)
