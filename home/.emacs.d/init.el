@@ -41,7 +41,7 @@
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-(setq initial-buffer-choice "~/readme.org")
+;;(setq initial-buffer-choice "~/readme.org")
 
 (defun show-file-name ()
   "Show the absolute path file name in the minibuffer."
