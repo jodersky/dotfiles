@@ -19,7 +19,7 @@
 
 ;; font
 ; value is in 1/10pt, so 100 will give you 10pt, etc.
-(set-face-attribute 'default nil :height 100)
+(set-face-attribute 'default nil :height 120)
 
 ;; simplify questions
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -40,6 +40,9 @@
 ;; save customizations to separate file
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
+
+;; don't send emacs to background
+(global-unset-key (kbd "C-z"))
 
 ;;(setq initial-buffer-choice "~/readme.org")
 
@@ -174,9 +177,9 @@
   :bind ("C-<tab>" . yas-expand))
 
 (use-package yatemplate
-  :defer 2 ;; WORKAROUND https://github.com/mineo/yatemplate/issues/3
   :config
   (auto-insert-mode t)
+  (setq auto-insert-query nil)
   (setq auto-insert-alist nil)
   (yatemplate-fill-alist))
 
@@ -199,20 +202,12 @@
   :pin melpa
   :interpreter ("scala" . scala-mode)
   :config
-  (require 'ensime-expand-region)
   (add-hook 'scala-mode-hook
 	    (lambda ()
 	      (setq prettify-symbols-alist scala-mode-prettify-symbols)
 	      (prettify-symbols-mode t)
-	      (local-set-key (kbd "RET")
-			     '(lambda ()
-				(interactive)
-				(newline-and-indent)
-				(scala-indent:insert-asterisk-on-multiline-comment)))
 	      (setq fill-column 80)
-	      (ensime-mode)))
-  :bind (:map scala-mode-map
-	      ("<backtab>" . scala-indent:indent-with-reluctant-strategy)))
+	      (ensime-mode))))
 
 ;; ENhanced Scala Interaction Mode for text Editors
 (use-package ensime
@@ -220,6 +215,7 @@
   :commands ensime ensime-mode
   :init
   :config
+  (require 'ensime-expand-region)
   (setq ensime-startup-notification nil
 	ensime-startup-snapshot-notification nil))
 
@@ -241,7 +237,7 @@ assuming it is in a maven-style project."
                              (string-remove-prefix
                               (expand-file-name (concat root "/" kind "/"))
                               default-directory))
-nil 'literal))))
+       nil 'literal))))
 
 ;; Java
 (add-hook 'java-mode-hook (lambda ()
@@ -268,7 +264,8 @@ nil 'literal))))
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
 
-;;(use-package idea-darkula-theme)
+(use-package idea-darkula-theme)
 ;;(use-package intellij-theme)
-;;(load-theme 'idea-darkula)
-(load-theme 'solarized-light)
+(use-package solarized-theme)
+(load-theme 'idea-darkula)
+;;(load-theme 'solarized-light)
