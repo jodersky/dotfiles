@@ -140,7 +140,8 @@ mode "common" {
 	bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
 	bindsym f exec firefox, mode "default"
 	bindsym p exec open-project, mode "default"
-	bindsym y exec passmenu, mode "default"
+	bindsym y exec ~/bin/passmenu --type, mode "default"
+	bindsym Shift+y exec ~/bin/passmenu, mode "default"
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
@@ -164,8 +165,8 @@ bindsym XF86AudioNext exec --no-startup-id dbus-send --print-reply --dest=org.mp
 bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks
 
 # lighting
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -steps 1 -time 0 -dec 2, exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -steps 1 -time 0 -inc 2, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/backlight dec, exec pkill -SIGRTMIN+10 i3blocks
+bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/backlight inc, exec pkill -SIGRTMIN+10 i3blocks
 
 # GNOME desktop settings such as font sizes and touchpad settings
 exec --no-startup-id gnome-shell
