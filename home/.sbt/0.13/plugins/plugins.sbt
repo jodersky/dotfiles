@@ -11,10 +11,10 @@ addSbtPlugin("org.ensime" % "sbt-ensime" % "1.12.11")
 
 // Enable fast dependency resolution
 // can be disabled with `sbt -Dcoursier=false`
-//sys.props.get("coursier") match {
-//  case Some("false") => Seq()
-//  case _ => addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-RC2")
-//}
+sys.props.get("coursier") match {
+  case Some("false") => Seq()
+  case _ => addSbtPlugin("io.get-coursier" % "sbt-coursier" % "1.0.0-RC3")
+}
 
 // Automatic formatting
 addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "0.6.8")
