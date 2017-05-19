@@ -41,8 +41,10 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # move workspaces between monitors
-bindsym $mod+Shift+greater move workspace to output right
-bindsym $mod+Shift+less move workspace to output left
+bindsym $mod+Shift+Control+Left move workspace to output right
+bindsym $mod+Shift+Control+Right move workspace to output left
+bindsym $mod+Shift+Control+Up move workspace to output up
+bindsym $mod+Shift+Control+Down move workspace to output down
 
 # split in horizontal orientation
 bindsym $mod+h split h
@@ -138,7 +140,7 @@ bindsym $mod+x exec --no-startup-id dmenu_run # all executables
 mode "common" {
 	bindsym t exec i3-sensible-terminal, mode "default"
 	bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
-	bindsym f exec firefox, mode "default"
+	bindsym f exec google-chrome, mode "default"
 	bindsym p exec open-project, mode "default"
 	bindsym y exec ~/bin/passmenu --type, mode "default"
 	bindsym Shift+y exec ~/bin/passmenu, mode "default"
@@ -148,23 +150,29 @@ mode "common" {
 bindsym $mod+q mode "common"
 
 mode "setup" {
-     bindsym 0 exec --no-startup-id setup mirror
-     bindsym 1 exec --no-startup-id setup single
-     bindsym 2 exec --no-startup-id setup double
+     bindsym 0 exec --no-startup-id ~/bin/setup mirror
+     bindsym 1 exec --no-startup-id ~/bin/setup single
+     bindsym 2 exec --no-startup-id ~/bin/setup double
      bindsym Return mode "default"
      bindsym Escape mode "default"
 }
-bindsym XF86LaunchA mode setup
+bindsym XF86Explorer mode setup
 
-# media keys
+mode "media" {
+     bindsym space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause, exec pkill -SIGRTMIN+10 i3blocks, mode "default"
+     bindsym Right exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, exec pkill -SIGRTMIN+10 i3blocks, mode "default"
+     bindsym Left exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks, mode "default"
+     bindsym Return mode "default"
+     bindsym Escape mode "default"
+}
+bindsym $mod+m mode "media"
+
+# volume keys
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%', exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '+5%', exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle, exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioPlay exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause, exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioNext exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, exec pkill -SIGRTMIN+10 i3blocks
-bindsym XF86AudioPrev exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks
 
-# lighting
+# backlight
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/backlight dec, exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/backlight inc, exec pkill -SIGRTMIN+10 i3blocks
 
@@ -178,6 +186,7 @@ bindsym $mod+Control+l exec --no-startup-id systemctl suspend
 
 # utility applications
 exec --no-startup-id nm-applet
+exec --no-startup-id blueman-applet
 exec --no-startup-id redshift
 
 # layout preferences

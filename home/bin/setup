@@ -1,0 +1,35 @@
+#!/bin/bash
+
+internal=eDP-1
+external=$(xrandr | grep -w connected | grep -v "$internal" | cut -d ' ' -f 1)
+
+case "$1" in
+    single)
+	xrandr --output "$internal" --auto --primary --output "$external" --off
+	#xrandr --dpi 172
+        #gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
+	#emacsclient -e '(zoom-all-frames-in)'
+	#emacsclient -e '(zoom-all-frames-in)'
+	;;
+    double)
+	xrandr --output "$internal" --auto --output "$external" --auto --primary --above "$internal"
+	#gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
+	#emacsclient -e '(zoom-all-frames-out)'
+	#emacsclient -e '(zoom-all-frames-out)'
+	;;
+    mirror)
+	xrandr --output "$internal" --auto --output "$ex3ternal" --auto --same-as "$internal"
+	#gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
+	;;
+    *)
+	echo "Usage: $0 (single|double|mirror)" 1>&2
+	exit 1
+	;;
+esac
+
+xmodmap ~/.Xmodmap
+i3-msg restart
+
+#echo "Reverting to single display in 10 seconds." 1>&2
+#sleep 10
+#"$0" single
