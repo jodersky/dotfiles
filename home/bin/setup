@@ -3,22 +3,38 @@
 internal=eDP-1
 external=$(xrandr | grep -w connected | grep -v "$internal" | cut -d ' ' -f 1)
 
+move_workspace() {
+    local workspace="$1"
+    echo "$workspace"
+    if [[ "$workspace" =~ "[1-7]*" ]]; then
+	i3-msg workspace "$workspace", move workspace to output "$external"
+    else
+	i3-msg workspace "$workspace", move workspace to output "$internal"
+    fi
+    return 0
+}
+export -f move_workspace
+
 case "$1" in
     single)
 	xrandr --output "$internal" --auto --primary --output "$external" --off
 	#xrandr --dpi 172
         #gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
-	#emacsclient -e '(zoom-all-frames-in)'
-	#emacsclient -e '(zoom-all-frames-in)'
 	;;
     double)
 	xrandr --output "$internal" --auto --output "$external" --auto --primary --above "$internal"
+	# current_workspace="$(i3-msg -t get_workspaces \
+	# 			   | jq '.[] | select(.focused==true).name' \
+	# 			   | cut -d"\"" -f2)"
+	
+	# i3-msg -t get_workspaces | jq -r .[].name | xargs -I{} bash -c "move_workspace {}"
+	# i3-msg workspace "$current_workspace" 
+	
+	
 	#gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
-	#emacsclient -e '(zoom-all-frames-out)'
-	#emacsclient -e '(zoom-all-frames-out)'
 	;;
     mirror)
-	xrandr --output "$internal" --auto --output "$ex3ternal" --auto --same-as "$internal"
+	xrandr --output "$internal" --auto --output "$external" --auto --same-as "$internal"
 	#gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
 	;;
     *)
@@ -29,6 +45,7 @@ esac
 
 xmodmap ~/.Xmodmap
 i3-msg restart
+exit 0
 
 #echo "Reverting to single display in 10 seconds." 1>&2
 #sleep 10

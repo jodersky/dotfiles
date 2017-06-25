@@ -71,7 +71,7 @@ set $workspace1 "1: "
 set $workspace2 "2: "
 set $workspace3 "3: "
 set $workspace4 "4: "
-set $workspace5 "5: "
+set $workspace5 "5: "
 set $workspace6 "6: "
 set $workspace7 "7: "
 set $workspace8 "8: "
@@ -206,7 +206,8 @@ font pango:Ubuntu, FontAwesome 10
 set $bg-color            #464f63
 set $inactive-bg-color   #020202
 set $text-color          #f3f4f5
-set $inactive-text-color #676e7d
+set $inactive-text-color #f3f4f5
+#set $inactive-text-color #676e7d
 set $urgent-bg-color     #e59900
 
 # window colors
