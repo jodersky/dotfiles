@@ -1,4 +1,5 @@
 # keep these hidden files and directories
++ /.bashrc.d
 + /.dotfiles/
 + /.emacs.d/
 + /.gitconfig/
@@ -6,8 +7,6 @@
 + /.password-store/
 + /.sbt/
 + /.ssh/
-+ /.offlineimaprc
-+ /.offlineimaprc.py
 + /.rsyncignore
 
 # ignore files in any .gitignore files
