@@ -17,7 +17,7 @@ shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 HISTSIZE=
-HISTFILESIZE=2000
+HISTFILESIZE=
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -117,3 +117,6 @@ if [ -d "$HOME/.bashrc.d" ]; then
 	. "$script"
     done
 fi
+
+# added by travis gem
+[ -f /home/jodersky/.travis/travis.sh ] && source /home/jodersky/.travis/travis.sh
