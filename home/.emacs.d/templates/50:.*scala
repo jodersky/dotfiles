@@ -1,0 +1,4 @@
+`(let ((package (mvn-package-for-buffer)))
+  (when (and package (not (string= "" package)))
+     (concat "package " package)))`
+
