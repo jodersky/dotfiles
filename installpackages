@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sudo apt install gnupg2 dirmngr pcscd scdaemon
+gpg --recv-keys 4E7DA7B5A0F86992D6EB3F514601878662E33372
+gpg --card-status
