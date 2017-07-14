@@ -67,16 +67,16 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # workspace names
-set $workspace1 "1: "
-set $workspace2 "2: "
-set $workspace3 "3: "
-set $workspace4 "4: "
-set $workspace5 "5: "
-set $workspace6 "6: "
-set $workspace7 "7: "
-set $workspace8 "8: "
-set $workspace9 "9: "
-set $workspace10 "10: "
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
+set $workspace4 "4"
+set $workspace5 "5"
+set $workspace6 "6"
+set $workspace7 "7"
+set $workspace8 "8"
+set $workspace9 "9"
+set $workspace10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -137,7 +137,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop # desktop applications
 bindsym $mod+x exec --no-startup-id dmenu_run # all executables
 
-mode "common" {
+mode "quick" {
 	bindsym t exec i3-sensible-terminal, mode "default"
 	bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
 	bindsym f exec google-chrome, mode "default"
@@ -147,7 +147,7 @@ mode "common" {
 	bindsym Return mode "default"
 	bindsym Escape mode "default"
 }
-bindsym $mod+q mode "common"
+bindsym $mod+q mode "quick"
 
 mode "setup" {
      bindsym 0 exec --no-startup-id ~/bin/setup mirror
@@ -160,8 +160,8 @@ bindsym XF86Explorer mode setup
 
 mode "media" {
      bindsym space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause, exec pkill -SIGRTMIN+10 i3blocks, mode "default"
-     bindsym Right exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, exec pkill -SIGRTMIN+10 i3blocks, mode "default"
-     bindsym Left exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks, mode "default"
+     bindsym Right exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, exec pkill -SIGRTMIN+10 i3blocks
+     bindsym Left exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks
      bindsym Return mode "default"
      bindsym Escape mode "default"
 }
@@ -208,7 +208,7 @@ set $inactive-bg-color   #020202
 set $text-color          #f3f4f5
 set $inactive-text-color #f3f4f5
 #set $inactive-text-color #676e7d
-set $urgent-bg-color     #e59900
+set $urgent-bg-color     #f90900
 
 # window colors
 #                       border             background         text                 indicator
