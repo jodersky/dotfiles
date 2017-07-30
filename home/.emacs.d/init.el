@@ -44,6 +44,12 @@
 ;; don't send emacs to background
 (global-unset-key (kbd "C-z"))
 
+(setq browse-url-browser-function 'browse-url-chrome)
+
+(setq ido-enable-flex-matching t
+      ido-everywhere t)
+(ido-mode 1)
+
 ;;(setq initial-buffer-choice "~/readme.org")
 
 (defun show-file-name ()
@@ -71,20 +77,6 @@
 
 ;;; Specialized packages
 
-(use-package counsel)
-(use-package swiper)
-(use-package ivy
-  :diminish ivy-mode
-  :init
-  (ivy-mode 1)
-  :bind (("C-s" . swiper)
-	 ("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file)
-	 ("C-c C-r" . ivy-resume))
-  :config
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) "))
-
 (use-package goto-chg
   :commands goto-last-change
   :bind (("C-." . goto-last-change)
@@ -98,14 +90,11 @@
   :init
   (setq projectile-use-git-grep t)
   :config
-  (setq projectile-completion-system 'ivy)
   (projectile-global-mode t)
   :diminish projectile-mode)
 
 (use-package magit
-  :bind ("C-x g" . magit-status)
-  :config
-  (setq magit-completing-read-function 'ivy-completing-read))
+  :bind ("C-x g" . magit-status))
 
 (use-package zoom-frm
   :bind (("C-+" . zoom-all-frames-in)
