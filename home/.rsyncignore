@@ -7,6 +7,7 @@
 + /.password-store/
 + /.sbt/
 + /.ssh/
++ /.config/google-chrome/Default/Bookmarks
 + /.rsyncignore
 
 # ignore files in any .gitignore files
