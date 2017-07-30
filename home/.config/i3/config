@@ -176,6 +176,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/backlight dec, exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/backlight inc, exec pkill -SIGRTMIN+10 i3blocks
 
+bindsym Print exec --no-startup-id gnome-screenshot
+
 # GNOME desktop settings such as font sizes and touchpad settings
 exec --no-startup-id gnome-shell
 exec --no-startup-id gnome-settings-daemon
