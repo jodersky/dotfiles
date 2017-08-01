@@ -1,21 +1,17 @@
 #!/bin/bash
 set -e
 
-device=/dev/sdb
-mapped=backup
+uuid=05b7770e-1f01-4b17-83de-ede0a04495a1
+instance="$(systemd-escape $uuid)"
 
 case "$1" in
     mount)
-	echo $(pass other/backup) | sudo cryptsetup open --type luks "$device" "$mapped"
-	sudo mount /dev/mapper/"$mapped" /mnt
+	sudo cryo "$uuid" mount
 	;;
     umount)
-	sudo umount /mnt
-	sudo cryptsetup close "$mapped"
+	sudo cryo "$uuid" umount
 	;;
     *)
-	echo "Unknown argument $1"
-	echo "Usage: $0 [mount | umount]"
-	exit 1
+	sudo systemctl start "cryo@$instance.service"
 	;;
 esac
