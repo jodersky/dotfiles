@@ -241,6 +241,9 @@ assuming it is in a maven-style project."
 ;; Haskell
 (use-package haskell-mode)
 
+;; Go
+(use-package go-mode)
+
 ;; Docker
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
