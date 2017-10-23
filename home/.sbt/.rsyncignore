@@ -1,4 +1,6 @@
-- /boot/
-- /project/
-- /staging/
-- /target/
+- boot/
+- project/
+- staging/
+- target/
+- templates/
+- zinc/
