@@ -14,11 +14,17 @@ set $mod Mod4
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 bindsym $mod+a focus parent
 bindsym $mod+z focus child
 
@@ -29,10 +35,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -41,19 +47,26 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # move workspaces between monitors
+bindsym $mod+Shift+Control+h move left
+bindsym $mod+Shift+Control+j move down
+bindsym $mod+Shift+Control+k move up
+bindsym $mod+Shift+Control+l move right
+
+# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Control+Left move workspace to output right
 bindsym $mod+Shift+Control+Right move workspace to output left
 bindsym $mod+Shift+Control+Up move workspace to output up
 bindsym $mod+Shift+Control+Down move workspace to output down
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+b split h
 
 # split in vertical orientation
 bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
+bindsym $mod+Shift+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -106,16 +119,16 @@ bindsym $mod+Shift+0 move container to workspace $workspace10
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
 
-	bindsym j resize shrink width 5 px or 5 ppt
-        bindsym k resize grow height 5 px or 5 ppt
-        bindsym l resize shrink height 5 px or 5 ppt
-        bindsym semicolon resize grow width 5 px or 5 ppt
+        bindsym j resize shrink width 5 px or 2 ppt
+        bindsym k resize grow height 5 px or 2 ppt
+        bindsym l resize shrink height 5 px or 2 ppt
+        bindsym semicolon resize grow width 5 px or 2 ppt
 
         # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 5 px or 5 ppt
-        bindsym Down resize grow height 5 px or 5 ppt
-        bindsym Up resize shrink height 5 px or 5 ppt
-        bindsym Right resize grow width 5 px or 5 ppt
+        bindsym Left resize shrink width 5 px or 2 ppt
+        bindsym Down resize grow height 5 px or 2 ppt
+        bindsym Up resize shrink height 5 px or 2 ppt
+        bindsym Right resize grow width 5 px or 2 ppt
 
         # back to normal: Enter or Escape
         bindsym Return mode "default"
@@ -167,6 +180,8 @@ mode "media" {
 }
 bindsym $mod+m mode "media"
 
+set $background_image ".background.png"
+
 # volume keys
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '-5%', exec pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ '+5%', exec pkill -SIGRTMIN+10 i3blocks
@@ -183,7 +198,7 @@ exec --no-startup-id gnome-shell
 exec --no-startup-id gnome-settings-daemon
 
 # screenlock
-exec --no-startup-id xss-lock -- i3lock -n -i ~/.background.png -t -e
+exec --no-startup-id xss-lock -- i3lock -n -i $background_image -e
 bindsym $mod+Control+l exec --no-startup-id systemctl suspend
 
 # utility applications
@@ -236,4 +251,4 @@ bar {
 new_window pixel 1
 
 # desktop background
-exec_always feh --bg-scale ~/.background.png
+exec_always feh --bg-scale $background_image
