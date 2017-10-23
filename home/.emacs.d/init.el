@@ -46,6 +46,9 @@
 
 ;;(setq initial-buffer-choice "~/readme.org")
 
+(global-set-key (kbd "C-x C-b") 'ibuffer)
+(global-set-key (kbd "M-o") 'other-window)
+
 (defun show-file-name ()
   "Show the absolute path file name in the minibuffer."
   (interactive)
@@ -83,7 +86,10 @@
 	 ("C-c C-r" . ivy-resume))
   :config
   (setq ivy-use-virtual-buffers t)
-  (setq ivy-count-format "(%d/%d) "))
+  (setq ivy-count-format "(%d/%d) ")
+  (setq ivy-initial-inputs-alist nil)
+  (setq ivy-re-builders-alist
+	'((t . ivy--regex-plus))))
 
 (use-package goto-chg
   :commands goto-last-change
@@ -249,7 +255,6 @@ assuming it is in a maven-style project."
   :mode "\\Dockerfile\\'")
 
 (use-package idea-darkula-theme)
-;;(use-package intellij-theme)
 (use-package solarized-theme)
 (load-theme 'idea-darkula)
 ;;(load-theme 'solarized-light)
