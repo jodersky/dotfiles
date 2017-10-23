@@ -1,5 +1,5 @@
 # keep these hidden files and directories
-+ /.bashrc.d
++ /.bashrc.d/
 + /.dotfiles/
 + /.emacs.d/
 + /.gitconfig/
