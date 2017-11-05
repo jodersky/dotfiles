@@ -195,7 +195,7 @@ bindsym Print exec --no-startup-id gnome-screenshot
 
 # GNOME desktop settings such as font sizes and touchpad settings
 exec --no-startup-id gnome-shell
-exec --no-startup-id gnome-settings-daemon
+#exec --no-startup-id gnome-settings-daemon
 
 # screenlock
 exec --no-startup-id xss-lock -- i3lock -n -i $background_image -e
@@ -211,7 +211,7 @@ for_window [class="Spotify"] move to workspace $workspace10
 exec --no-startup-id spotify
 
 assign [instance="slack"] $workspace8
-exec --no-startup-id slack
+#exec --no-startup-id slack
 
 #assign [instance="mail.google.com"] $workspace9
 #exec --no-startup-id chromium --app=https://mail.google.com
