@@ -227,7 +227,7 @@ bindsym $mod+r mode "resize"
 #
 # Window borders:
 #
-    new_window pixel 1
+    default_border pixel 1
 #
 # Status Bar:
 #
@@ -274,7 +274,6 @@ bindsym $mod+r mode "resize"
         bindsym Escape mode "default"
     }
     bindsym $mod+q mode "quick"
-
 
 exec redshift
 
