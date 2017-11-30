@@ -19,7 +19,7 @@
 
 ;; font
 ; value is in 1/10pt, so 100 will give you 10pt, etc.
-(set-face-attribute 'default nil :height 120)
+(set-face-attribute 'default nil :height 110)
 
 ;; simplify questions
 (defalias 'yes-or-no-p 'y-or-n-p)
