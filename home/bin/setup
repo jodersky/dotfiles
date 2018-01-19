@@ -3,14 +3,11 @@
 internal=eDP-1
 external=$(xrandr | grep -w connected | grep -v "$internal" | cut -d ' ' -f 1)
 
-move_workspace() {
-    local workspace="$1"
-    echo "$workspace"
-    if [[ "$workspace" =~ "[1-7]*" ]]; then
-	i3-msg workspace "$workspace", move workspace to output "$external"
-    else
-	i3-msg workspace "$workspace", move workspace to output "$internal"
-    fi
+move_workspaces() {
+    local primary=$(i3-msg -t get_outputs | jq '.[]|select(.primary==true)|.name')
+    for workspace_number in $(i3-msg -t get_workspaces | jq .[].num); do
+	i3-msg workspace number "$workspace_number", move workspace to output "$primary"
+    done
     return 0
 }
 export -f move_workspace
