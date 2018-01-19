@@ -1,2 +1,2 @@
-alias ec="emacsclient --alternate-editor='' --create-frame --no-wait"
+alias ec="emacsclient --alternate-editor='' --tty"
 alias g=git
