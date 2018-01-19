@@ -29,7 +29,8 @@ set $term x-terminal-emulator
     # Despite the name, also works for non-floating windows.
     # Change normal to inverse to use left mouse button for resizing and right
     # mouse button for dragging.
-    floating_modifier $mod normal
+    # floating_modifier $mod normal
+    floating_modifier $mod
 
     # reload the configuration file
     bindsym $mod+Shift+c reload
@@ -39,7 +40,6 @@ set $term x-terminal-emulator
     # exit i3 (logs you out of your X session)
     bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-    bindsym $mod+Shift+e exit
 #
 # Moving around:
 #
@@ -67,46 +67,34 @@ set $term x-terminal-emulator
 #
 # Workspaces:
 #
-    # workspace names
-    set $workspace1 "1"
-    set $workspace2 "2"
-    set $workspace3 "3"
-    set $workspace4 "4"
-    set $workspace5 "5"
-    set $workspace6 "6"
-    set $workspace7 "7"
-    set $workspace8 "8"
-    set $workspace9 "9"
-    set $workspace10 "10"
-
-    # rename workspaces
+    # rename workspace
     bindsym $mod+n exec i3-msg rename workspace to "$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num'):$(dmenu -p 'Rename workspace to ')"
     # reset custom name of workspace
     bindsym $mod+Shift+n exec i3-msg rename workspace to "$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')"
 
     # switch to workspace
-    bindsym $mod+1 workspace number 1 $workspace1
-    bindsym $mod+2 workspace number 2 $workspace2
-    bindsym $mod+3 workspace number 3 $workspace3
-    bindsym $mod+4 workspace number 4 $workspace4
-    bindsym $mod+5 workspace number 5 $workspace5
-    bindsym $mod+6 workspace number 6 $workspace6
-    bindsym $mod+7 workspace number 7 $workspace7
-    bindsym $mod+8 workspace number 8 $workspace8
-    bindsym $mod+9 workspace number 9 $workspace9
-    bindsym $mod+0 workspace number 10 $workspace10
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
     
     # move focused container to workspace
-    bindsym $mod+Shift+1 move container to workspace number 1 $workspace1
-    bindsym $mod+Shift+2 move container to workspace number 2 $workspace2
-    bindsym $mod+Shift+3 move container to workspace number 3 $workspace3
-    bindsym $mod+Shift+4 move container to workspace number 4 $workspace4
-    bindsym $mod+Shift+5 move container to workspace number 5 $workspace5
-    bindsym $mod+Shift+6 move container to workspace number 6 $workspace6
-    bindsym $mod+Shift+7 move container to workspace number 7 $workspace7
-    bindsym $mod+Shift+8 move container to workspace number 8 $workspace8
-    bindsym $mod+Shift+9 move container to workspace number 9 $workspace9
-    bindsym $mod+Shift+0 move container to workspace number 10 $workspace10
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
 
     # move focused workspace to monitor
     bindsym $mod+Control+$left move workspace to output left
@@ -164,16 +152,16 @@ mode "resize" {
     # right will grow the containers width
     # up will shrink the containers height
     # down will grow the containers height
-    bindsym $left resize shrink width 10 px or 10 ppt
-    bindsym $down resize grow height 10 px or 10 ppt
-    bindsym $up resize shrink height 10 px or 10 ppt
-    bindsym $right resize grow width 10 px or 10 ppt
+    bindsym $left resize shrink width 10 px or 3 ppt
+    bindsym $down resize grow height 10 px or 3 ppt
+    bindsym $up resize shrink height 10 px or 3 ppt
+    bindsym $right resize grow width 10 px or 3 ppt
 
     # ditto, with arrow keys
-    bindsym Left resize shrink width 10 px or 10 ppt
-    bindsym Down resize grow height 10 px or 10 ppt
-    bindsym Up resize shrink height 10 px or 10 ppt
-    bindsym Right resize grow width 10 px or 10 ppt
+    bindsym Left resize shrink width 10 px or 3 ppt
+    bindsym Down resize grow height 10 px or 3 ppt
+    bindsym Up resize shrink height 10 px or 3 ppt
+    bindsym Right resize grow width 10 px or 3 ppt
 
     # return to default mode
     bindsym Return mode "default"
@@ -202,7 +190,9 @@ bindsym $mod+r mode "resize"
 #
 # Window borders:
 #
-    default_border pixel 1
+    #default_border pixel 1
+    new_window pixel 1
+
 #
 # Status Bar:
 #
@@ -239,7 +229,15 @@ bindsym $mod+r mode "resize"
 # Other utilities:
 #
     bindsym Print exec --no-startup-id gnome-screenshot
-    bindsym $mod+Control+l exec systemctl suspend
+    bindsym $mod+Sift+Control+l exec --no-startup-id systemctl suspend
+#
+# Common applications
+#
+    bindsym $mod+Enter exec gnome-terminal
+    bindsym $mod+y exec ~/bin/passmenu --type, mode "default"
+    bindsym $mod+u exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
+    bindsym $mod+i exec google-chrome
+    bindsym $mod+Shift+i exec google-chrome --incognito
 #
 # Quick launch menu
 #
@@ -256,8 +254,8 @@ bindsym $mod+r mode "resize"
 
     mode "media" {
         bindsym space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause, exec pkill -SIGRTMIN+10 i3blocks, mode "default"
-        bindsym Right exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, exec pkill -SIGRTMIN+10 i3blocks
-        bindsym Left exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks
+        bindsym $right exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, exec pkill -SIGRTMIN+10 i3blocks
+        bindsym $left exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks
         bindsym Return mode "default"
         bindsym Escape mode "default"
     }
@@ -280,16 +278,14 @@ exec --no-startup-id gnome-shell
 # screenlock
 exec --no-startup-id xss-lock -- i3lock -n -i $background_image -e
 
-exec redshift
-
 # utility applications
 exec --no-startup-id nm-applet
 exec --no-startup-id blueman-applet
 exec --no-startup-id redshift
 
 # layout preferences
-for_window [class="Spotify"] move to workspace number 10 $workspace10
+for_window [class="Spotify"] move to workspace number 10
 exec spotify
 
-assign [instance="slack"] number 8 $workspace8
+assign [instance="slack"] 8
 #exec --no-startup-id slack
