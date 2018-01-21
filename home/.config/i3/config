@@ -8,7 +8,7 @@ set $down j
 set $up k
 set $right l
 
-set $term x-terminal-emulator
+set $term sakura
 
 ### Key bindings
 #
@@ -233,7 +233,7 @@ bindsym $mod+r mode "resize"
 #
 # Common applications
 #
-    bindsym $mod+Enter exec gnome-terminal
+    bindsym $mod+Enter exec $term
     bindsym $mod+y exec ~/bin/passmenu --type, mode "default"
     bindsym $mod+u exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
     bindsym $mod+i exec google-chrome
@@ -244,7 +244,7 @@ bindsym $mod+r mode "resize"
     mode "quick" {
         bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
         bindsym f exec google-chrome, mode "default"
-        bindsym t exec gnome-terminal, mode "default"
+        bindsym t exec $term, mode "default"
         bindsym y exec ~/bin/passmenu --type, mode "default"
         bindsym Shift+y exec ~/bin/passmenu, mode "default"
         bindsym Return mode "default"
