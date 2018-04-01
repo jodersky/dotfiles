@@ -237,6 +237,7 @@ bindsym $mod+r mode "resize"
     bindsym $mod+y exec ~/bin/passmenu --type, mode "default"
     bindsym $mod+u exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
     bindsym $mod+i exec google-chrome
+    bindsym $mod+p exec --no-startup-id ~/bin/open-project
     bindsym $mod+Shift+i exec google-chrome --incognito
 #
 # Quick launch menu
@@ -265,6 +266,7 @@ bindsym $mod+r mode "resize"
         bindsym 0 exec --no-startup-id ~/bin/setup mirror
         bindsym 1 exec --no-startup-id ~/bin/setup single
         bindsym 2 exec --no-startup-id ~/bin/setup double
+        bindsym 3 exec --no-startup-id ~/bin/setup triple
         bindsym Return mode "default"
         bindsym Escape mode "default"
     }

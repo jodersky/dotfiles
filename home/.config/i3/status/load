@@ -24,17 +24,6 @@ awk -v cpus=$cpus -v cpuload=$load '
         load_percent=(cpuload*100)/cpus
         print cpuload
         print cpuload
-        if (load_percent < 10) {
-            exit 0;
-        } else if (load_percent < 50) {
-            print "#00ff00";
-            exit 0;
-        } else if (load_percent < 80) {
-            print "#ffff00";
-            exit 0;
-        } else {
-            print "#ff0000";
-            exit 0;
-        }
+	exit 0
     }
 '
