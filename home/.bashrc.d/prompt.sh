@@ -20,6 +20,10 @@ function __prompt_command() {
 	PS1+="${red}(✗)${reset} "
     fi
 
+#    if [[ $(command -v kubectl) ]]; then
+#	PS1+="[$(kubectl config current-context)] "
+#    fi
+
     PS1+="${debian_chroot:+($debian_chroot)}${light_green}\u@\h${reset}:${light_blue}\W${reset}"
 
     ### Add Git Status ###
