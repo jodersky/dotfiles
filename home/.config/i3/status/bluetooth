@@ -1,0 +1,9 @@
+#!/bin/bash
+if (/usr/sbin/rfkill list bluetooth --output SOFT,HARD --noheadings \
+	| grep -w blocked --quiet); then
+    echo "OFF"
+    echo "blocked"
+else
+    echo "ON"
+    echo "unblocked"
+fi

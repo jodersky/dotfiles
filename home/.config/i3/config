@@ -281,8 +281,6 @@ exec --no-startup-id gnome-shell
 exec --no-startup-id xss-lock -- i3lock -n -i $background_image -e
 
 # utility applications
-exec --no-startup-id nm-applet
-exec --no-startup-id blueman-applet
 exec --no-startup-id redshift
 
 # layout preferences

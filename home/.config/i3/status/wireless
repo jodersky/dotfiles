@@ -1,0 +1,17 @@
+#!/bin/bash
+set -o errexit
+
+interface="${BLOCK_INSTANCE:-wlp4s0}"
+
+[[ -d /sys/class/net/$interface/wireless ]] || exit 0
+
+if [[ $(cat "/sys/class/net/$interface/operstate") = "down" ]]; then
+    echo OFF
+    echo OFF
+else
+    quality="$(grep "$interface" /proc/net/wireless | \
+    			      awk '{ print int($3 * 100 / 70) }')"
+    echo "$quality%" # full text
+    echo "$quality%" # short text
+fi
+exit 0
