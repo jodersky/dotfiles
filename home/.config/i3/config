@@ -198,6 +198,7 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
     bar {
+        mode hide
         position top
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
         colors {
@@ -282,6 +283,9 @@ exec xinput set-prop 12 280 1
 # increase pointer acceleration on touchpad
 exec xinput set-prop 12 300 1
 exec --no-startup-id redshift
+
+exec --no-startup-id sakura --name=sakura_scratchpad
+for_window [instance="sakura_scratchpad"] move scratchpad
 
 # layout preferences
 for_window [class="Spotify"] move to workspace number 10
