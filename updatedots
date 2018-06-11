@@ -7,66 +7,54 @@
 # Any existing files in the home directory are backed up before being
 # replaced with a symlink.
 
-# Root directory of dotfiles project
-BASEDIR=$(dirname "$(readlink -f "$0")")
+set -o nounset
 
-# Directory containing all dotfiles that will be linked to $HOMEDIR
-DOTDIR=${BASEDIR}/home
+# Root directory of dotfiles project (directory containing this script)
+basedir="$(dirname "$(readlink -f "$0")")"
+
+# Directory containing all dotfiles that will be linked to $homedir
+dotdir="$basedir/home"
 
 # Directory into which files will be linked
-HOMEDIR=${HOME}
+homedir="$HOME"
 
 # Directory into which any pre-existing dotfiles will be copied
-BACKUPDIR=${HOMEDIR}/.updatedots-backup
+backupdir="$homedir/.updatedots-backup"
 
-# Dotfiles relative to $DOTDIR
-RDOTFILES=$(find ${DOTDIR} -type f -print | sed "s|^${DOTDIR}/||g")
+# Dotfiles relative to $dotdir
+mapfile -t rdotfiles < <(find "$dotdir" -mindepth 1 -type f,l -printf '%P\n')
 
-# Command used to create symbolic links
-LINK="ln --symbolic --relative"
-
-# Publish dotfiles to home directory, backing up any collisions
+# Link dotfiles to home directory, backing up any collisions
 create_links() {
-    if [ ! -e "$BACKUPDIR" ]; then
-	mkdir "$BACKUPDIR"
-    fi
-    if [ -n "$(ls -A $BACKUPDIR)" ]; then
-	echo "Backup directory $BACKUPDIR is not empty, local files could be lost." >&2
-	echo "Aborting." >&2
+    [[ -e $backupdir ]] || mkdir "$backupdir"
+    if [[ -n $(ls -A "$backupdir") ]]; then
+	echo "Backup directory $backupdir is not empty. Aborting." >&2
 	exit 1
     fi
 
     local moved=0
 
-    echo "*** Linking dotfiles from $(realpath $DOTDIR) to $HOMEDIR ***"
-    for relative in $RDOTFILES; do
-	local src=$DOTDIR/$relative
-	local dest=$HOMEDIR/$relative
+    for relative in "${rdotfiles[@]}"; do
+	local src="$dotdir/$relative"
+	local dest="$homedir/$relative"
 
-	# backup destination (if the file already exists and is backed up)
-	local bdest=$BACKUPDIR/$relative
+	mkdir -p "$(dirname "$dest")"
 
-	mkdir -p $(dirname "$dest")
-
-	if [ -e "$dest" ] && [ $(readlink -f "$dest") = $(readlink -f "$src") ]; then
-	    echo "Nothing to be done for $relative"
-	else
-	    if [ -e "$dest" ]; then
-		mkdir -p $(dirname "$bdest")
+	if [[ ! -L "$dest" ]] || [[ $(readlink -f "$dest") != $(readlink -f "$src") ]]; then
+	    if [[ -e "$dest" ]]; then
+		local bdest="$backupdir/$relative"
+		mkdir -p "$(dirname "$bdest")"
 		mv "$dest" "$bdest"
 		moved=1
-		echo "Backed up original $relative to $bdest"
+		echo "$relative: backed up original $dest to $bdest"
 	    fi
-
-	    $LINK "$src" "$dest"
-	    echo "Linked $relative"
+	    ln --symbolic --relative "$src" "$dest"
+	    echo "$relative: linked to $dest"
 	fi
     done
 
-    echo "*** Finished linking dotfiles ***"
-    echo
     if [ "$moved" -gt 0 ]; then
-	echo "WARNING: some files were moved to $BACKUPDIR" >&2
+	echo "NOTE: some files were moved to $backupdir" >&2
     fi
 }
 
