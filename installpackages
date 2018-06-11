@@ -1,5 +1,33 @@
-#!/bin/sh
+#!/bin/bash
+# Install base packages for a minimal Linux desktop
 
+set -o errexit
+
+# Basic packages and Window manager
+sudo apt install \
+     bluez \
+     build-essential \
+     emacs \
+     evince \
+     feh \
+     gimp \
+     git \
+     i3 \
+     i3blocks \
+     inkscape \
+     inotify-tools \
+     network-manager \
+     pandoc \
+     pass \
+     ranger \
+     restic \
+     rsync \
+     sakura \
+     texlive-latex-extra \
+     thunar \
+     xdg-utils
+
+# Packages required for using yubikey
 sudo apt install gnupg2 dirmngr pcscd scdaemon
 gpg --recv-keys 4E7DA7B5A0F86992D6EB3F514601878662E33372
 gpg --card-status
