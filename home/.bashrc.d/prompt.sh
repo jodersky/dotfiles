@@ -4,7 +4,7 @@ function __prompt_command() {
     local exit="$?"
     PS1=""
     # set title for terminal emulators
-    PS1+="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]"
+    PS1+="\\[\\e]0;${debian_chroot:+($debian_chroot)}\\u@\\h: \\w\\a\\]"
 
     local red='\[\e[31m\]'
     local green='\[\e[32m\]'
@@ -24,26 +24,22 @@ function __prompt_command() {
 #	PS1+="[$(kubectl config current-context)] "
 #    fi
 
-    PS1+="${debian_chroot:+($debian_chroot)}${light_green}\u@\h${reset}:${light_blue}\W${reset}"
+    PS1+="${debian_chroot:+($debian_chroot)}${light_green}\\u@\\h${reset}:${light_blue}\\W${reset}"
 
     ### Add Git Status ###
     ## Inspired by http://www.terminally-incoherent.com/blog/2013/01/14/whats-in-your-bash-prompt/
     if [[ $(command -v git) ]]; then
-	local git_status="$(git status --porcelain -b 2>/dev/null | tr '\n' ':')"
-
-	if [ "$git_status" ]; then
-	    local git_color="${reset}"
-	    ### Test For Changes ###
-	    ## Change this to test for 'ahead' or 'behind'!
-	    local git_changed="$(echo ${git_status} | tr ':' '\n' | grep -v "^$" | grep -v "^\#\#" | wc -l | tr -d ' ')"
-	    if [ "$git_changed" == "0" ]; then
+	local git_status
+	if git_status="$(git status --porcelain 2>/dev/null)"; then
+	    if [[ -z $git_status ]]; then
 		git_color="${green}"
 	    else
 		git_color="${red}"
 	    fi
-
-	    ### Find Branch ###
-	    local git_branch="$(echo ${git_status} | tr ':' '\n' | grep "^##" | cut -c4-)"
+	    local git_branch
+	    git_branch="$(git status --porcelain --branch 2>/dev/null \
+	    		      | grep '^##' \
+			      | cut -c4-)"
 	    PS1+=" ${git_color}[${git_branch}]${reset}"
 	fi
     fi
@@ -52,5 +48,5 @@ function __prompt_command() {
 	PS1+=" ${red}(exit $exit)${reset}"
     fi
 
-    PS1+="\n╰\$ ${reset}"
+    PS1+="\\n╰\$ ${reset}"
 }

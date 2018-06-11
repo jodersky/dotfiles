@@ -278,6 +278,8 @@ bindsym $mod+r mode "resize"
 exec --no-startup-id xss-lock -- i3lock -n -i $background_image -e
 
 # utility applications
+# disable audible bell
+exec set -b
 # enable tap to click on touchpad
 exec xinput set-prop 12 280 1
 # increase pointer acceleration on touchpad
