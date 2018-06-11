@@ -273,14 +273,14 @@ bindsym $mod+r mode "resize"
     bindsym $mod+Control+s mode setup
     bindsym XF86Explorer mode setup
 
-# GNOME desktop settings such as font sizes and touchpad settings
-exec --no-startup-id gnome-shell
-#exec --no-startup-id gnome-settings-daemon
-
 # screenlock
 exec --no-startup-id xss-lock -- i3lock -n -i $background_image -e
 
 # utility applications
+# enable tap to click on touchpad
+exec xinput set-prop 12 280 1
+# increase pointer acceleration on touchpad
+exec xinput set-prop 12 300 1
 exec --no-startup-id redshift
 
 # layout preferences
