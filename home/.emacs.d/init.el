@@ -100,7 +100,8 @@
 (use-package magit
   :bind ("C-x g" . magit-status)
   :config
-  (setq magit-completing-read-function 'magit-ido-completing-read))
+  (setq magit-completing-read-function 'magit-ido-completing-read)
+  (setq magit-save-repository-buffer 'dontask))
 
 (use-package zoom-frm
   :bind (("C-+" . zoom-all-frames-in)
