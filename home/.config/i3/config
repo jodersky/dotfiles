@@ -132,6 +132,10 @@ set $term sakura
     # move focus to the parent container
     bindsym $mod+a focus parent
     bindsym $mod+z focus child
+
+    # hide and show status bar
+    bindsym $mod+t bar mode toggle
+
 #
 # Scratchpad:
 #
