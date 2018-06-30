@@ -1,5 +1,3 @@
-export PROMPT_COMMAND=__prompt_command
-
 function __prompt_command() {
     local exit="$?"
     PS1=""
@@ -50,3 +48,5 @@ function __prompt_command() {
 
     PS1+="\\n╰\$ ${reset}"
 }
+
+export PROMPT_COMMAND=__prompt_command

@@ -113,7 +113,7 @@ if ! shopt -oq posix; then
 fi
 
 if [ -d "$HOME/.bashrc.d" ]; then
-    for script in $(find "$HOME/.bashrc.d/" -name *.sh); do
+    for script in $(find "$HOME/.bashrc.d/" -name '*.sh'); do
 	. "$script"
     done
 fi
