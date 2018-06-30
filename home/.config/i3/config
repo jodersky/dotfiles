@@ -179,7 +179,8 @@ bindsym $mod+r mode "resize"
     set $text-color          #f3f4f5
     set $inactive-text-color #f3f4f5
     #set $inactive-text-color #676e7d
-    set $urgent-bg-color     #f90900
+    #set $urgent-bg-color    #f90900
+    set $urgent-bg-color     #676e7d
 #
 # Window colors:
 #                       border             background         text                 indicator
@@ -255,9 +256,22 @@ bindsym $mod+r mode "resize"
     bindsym $mod+q mode "quick"
 
     mode "media" {
-        bindsym space exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.PlayPause, exec pkill -SIGRTMIN+10 i3blocks, mode "default"
-        bindsym $right exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Next, exec pkill -SIGRTMIN+10 i3blocks
-        bindsym $left exec --no-startup-id dbus-send --print-reply --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 org.mpris.MediaPlayer2.Player.Previous, exec pkill -SIGRTMIN+10 i3blocks
+        bindsym space \
+            exec --no-startup-id dbus-send --print-reply \
+                --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
+                org.mpris.MediaPlayer2.Player.PlayPause, \
+            exec pkill -SIGRTMIN+10 i3blocks, \
+            mode "default"
+        bindsym $right \
+            exec --no-startup-id dbus-send --print-reply \
+               --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
+                org.mpris.MediaPlayer2.Player.Next, \
+            exec pkill -SIGRTMIN+10 i3blocks
+        bindsym $left \
+            exec --no-startup-id dbus-send --print-reply \
+                --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
+                org.mpris.MediaPlayer2.Player.Previous, \
+            exec pkill -SIGRTMIN+10 i3blocks
         bindsym Return mode "default"
         bindsym Escape mode "default"
     }
@@ -274,16 +288,30 @@ bindsym $mod+r mode "resize"
     bindsym $mod+Control+s mode setup
     bindsym XF86Explorer mode setup
 
-# screenlock
-exec --no-startup-id xss-lock -- i3lock -n -i $background_image -e
+#
+# Session and power management
+#
+    exec --no-startup-id xss-lock -- ~/bin/lock
+    set $mode_system (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown
+    mode "$mode_system" {
+        bindsym l exec --no-startup-id ~/bin/lock, mode "default"
+        bindsym e exec --no-startup-id i3-msg exit, mode "default"
+        bindsym s exec --no-startup-id systemctl suspend, mode "default"
+        bindsym r exec --no-startup-id systemctl reboot, mode "default"
+        bindsym Shift+s exec --no-startup-id systemctl poweroff, mode "default"
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+    }
+    bindsym $mod+Escape mode "$mode_system"
 
 # utility applications
 # disable audible bell
 exec set -b
 # enable tap to click on touchpad
-exec xinput set-prop 12 280 1
+exec_always xinput set-prop 12 280 1
 # increase pointer acceleration on touchpad
-exec xinput set-prop 12 300 1
+exec_always xinput set-prop 12 300 0.5
 exec --no-startup-id redshift
 
 exec --no-startup-id sakura --name=sakura_scratchpad

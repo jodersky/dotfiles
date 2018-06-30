@@ -14,8 +14,10 @@ sudo apt install \
      git \
      i3 \
      i3blocks \
+     i3lock \
      inkscape \
      inotify-tools \
+     jq \
      network-manager \
      pandoc \
      pass \
@@ -23,9 +25,11 @@ sudo apt install \
      restic \
      rsync \
      sakura \
+     scrot \
      texlive-latex-extra \
      thunar \
-     xdg-utils
+     xdg-utils \
+     xss-lock
 
 # Packages required for using yubikey
 sudo apt install gnupg2 dirmngr pcscd scdaemon

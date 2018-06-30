@@ -1,0 +1,7 @@
+#!/bin/bash
+
+screenshot="$XDG_RUNTIME_DIR/.screen.png"
+
+scrot "$screenshot" \
+    && convert "$screenshot" -scale 5% -scale 2000% "$screenshot"
+i3lock --nofork --image="$screenshot" --ignore-empty-password
