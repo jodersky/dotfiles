@@ -1,16 +1,20 @@
 #!/bin/bash
 
 internal=eDP-1
-externals=($(xrandr | grep -w connected | grep -v "$internal" | cut -d ' ' -f 1))
-
+mapfile -t externals < <(xrandr \
+			     | grep -w connected \
+			     | grep -v "$internal" \
+			     | cut -d ' ' -f 1)
 
 move_workspaces() {
-    local primary=$(i3-msg -t get_outputs | jq '.[]|select(.primary==true)|.name')
+    local primary
+    primary=$(i3-msg -t get_outputs | jq '.[]|select(.primary==true)|.name')
     for workspace_number in $(i3-msg -t get_workspaces | jq .[].num); do
-	i3-msg workspace number "$workspace_number", move workspace to output "$primary"
+	i3-msg \
+	    workspace number "$workspace_number", \
+	    move workspace to output "$primary"
     done
 }
-# export -f move_workspace
 
 case "$1" in
     single)
@@ -18,42 +22,32 @@ case "$1" in
 	for external in "${externals[@]}"; do
 	    xrandr --output "$external" --off
 	done
-	#xrandr --dpi 172
-        #gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
 	;;
     double)
-	xrandr --output "$internal" --auto --output "${externals[0]}" --auto --primary --above "$internal"
-	# current_workspace="$(i3-msg -t get_workspaces \
-	# 			   | jq '.[] | select(.focused==true).name' \
-	# 			   | cut -d"\"" -f2)"
-	
-	# i3-msg -t get_workspaces | jq -r .[].name | xargs -I{} bash -c "move_workspace {}"
-	# i3-msg workspace "$current_workspace" 
-	
-	
-	#gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
+	xrandr \
+	    --output "$internal" --auto \
+	    --output "${externals[0]}" --auto --primary --above "$internal"
 	;;
     triple)
 	xrandr \
 	    --output "$internal" --auto \
 	    --output "${externals[0]}" --auto --primary --above "$internal" \
-	    --output "${externals[1]}" --auto --right-of "${externals[0]}" --rotate left
+	    --output "${externals[1]}" --auto --right-of "${externals[0]}" \
+	    --rotate left
 	;;
     mirror)
-	xrandr --output "$internal" --primary --auto --output "${externals[0]}" --auto --scale-from 1920x1080
-	#gsettings set org.gnome.settings-daemon.plugins.xsettings overrides "{'Gdk/WindowScalingFactor': <1>}"
+	xrandr \
+	    --output "$internal" --auto  --primary \
+	    --output "${externals[0]}" --auto --scale-from 1920x1080
 	;;
     *)
-	echo "Usage: $0 (single|double|mirror)" 1>&2
+	echo "Usage: $0 (single|double|triple|mirror)" 1>&2
 	exit 1
 	;;
 esac
 
 xmodmap ~/.Xmodmap
 move_workspaces
-i3-msg restart
-exit 0
+feh --bg-scale ~/.background.png
 
-#echo "Reverting to single display in 10 seconds." 1>&2
-#sleep 10
-#"$0" single
+exit 0

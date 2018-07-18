@@ -145,8 +145,9 @@ set $term sakura
     # Move the currently focused window to the scratchpad
     bindsym $mod+Shift+minus move scratchpad
 
-    # Show the next scratchpad window or hide the focused scratchpad window.
-    # If there are multiple scratchpad windows, this command cycles through them.
+    # Show the next scratchpad window or hide the focused scratchpad
+    # window. If there are multiple scratchpad windows, this command
+    # cycles through them.
     bindsym $mod+minus scratchpad show
 #
 # Resizing containers:
@@ -187,7 +188,7 @@ bindsym $mod+r mode "resize"
     set $urgent-bg-color     #676e7d
 #
 # Window colors:
-#                       border             background         text                 indicator
+#                           border             background         text                 indicator
     client.focused          $bg-color          $bg-color          $text-color          $bg-color
     client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
     client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color $inactive-bg-color
@@ -248,17 +249,6 @@ bindsym $mod+r mode "resize"
 #
 # Quick launch menu
 #
-    mode "quick" {
-        bindsym e exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
-        bindsym f exec google-chrome, mode "default"
-        bindsym t exec $term, mode "default"
-        bindsym y exec ~/bin/passmenu --type, mode "default"
-        bindsym Shift+y exec ~/bin/passmenu, mode "default"
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-    }
-    bindsym $mod+q mode "quick"
-
     mode "media" {
         bindsym space \
             exec --no-startup-id dbus-send --print-reply \
@@ -280,24 +270,16 @@ bindsym $mod+r mode "resize"
         bindsym Escape mode "default"
     }
     bindsym $mod+m mode "media"
-    
-    mode "setup" {
-        bindsym 0 exec --no-startup-id ~/bin/setup mirror
-        bindsym 1 exec --no-startup-id ~/bin/setup single
-        bindsym 2 exec --no-startup-id ~/bin/setup double
-        bindsym 3 exec --no-startup-id ~/bin/setup triple
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-    }
-    bindsym $mod+Control+s mode setup
-    bindsym XF86Explorer mode setup
-
 #
 # Session and power management
 #
     exec --no-startup-id xss-lock -- ~/bin/lock
-    set $mode_system (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown
+    set $mode_system [0-3] monitor, (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown
     mode "$mode_system" {
+        bindsym 0 exec --no-startup-id ~/bin/setup mirror, mode "default"
+        bindsym 1 exec --no-startup-id ~/bin/setup single, mode "default"
+        bindsym 2 exec --no-startup-id ~/bin/setup double, mode "default"
+        bindsym 3 exec --no-startup-id ~/bin/setup triple, mode "default"
         bindsym l exec --no-startup-id ~/bin/lock, mode "default"
         bindsym e exec --no-startup-id i3-msg exit, mode "default"
         bindsym s exec --no-startup-id systemctl suspend, mode "default"
@@ -313,9 +295,9 @@ bindsym $mod+r mode "resize"
 # disable audible bell
 exec set -b
 # enable tap to click on touchpad
-exec_always xinput set-prop 12 280 1
+exec_always --no-startup-id xinput set-prop 12 280 1
 # increase pointer acceleration on touchpad
-exec_always xinput set-prop 12 300 0.5
+exec_always --no-startup-id xinput set-prop 12 300 0.5
 exec --no-startup-id redshift
 
 exec --no-startup-id sakura --name=sakura_scratchpad
