@@ -94,7 +94,8 @@
   (setq projectile-use-git-grep t)
   :config
   (setq projectile-completion-system 'ido)
-  (projectile-global-mode t)
+  (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+  (projectile-mode +1)
   :diminish projectile-mode)
 
 (use-package magit

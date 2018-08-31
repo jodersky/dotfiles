@@ -6,3 +6,4 @@ alias kl='kubectl --context=minikube'
 alias t="term"
 alias i="idea . &"
 alias explore="tree -P *.scala --prune -I target"
+alias drv="cd ~/src/driver"
