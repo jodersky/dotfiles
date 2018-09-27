@@ -305,7 +305,7 @@ for_window [instance="sakura_scratchpad"] move scratchpad
 
 # layout preferences
 for_window [class="Spotify"] move to workspace number 10
-exec spotify
+# exec spotify
 
 assign [instance="slack"] 8
 #exec --no-startup-id slack
