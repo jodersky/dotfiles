@@ -245,7 +245,7 @@ assuming it is in a maven-style project."
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
 
-(use-package idea-darkula-theme)
-(use-package solarized-theme)
-(load-theme 'idea-darkula)
+(use-package darcula-theme)
+;;(use-package solarized-theme)
 ;;(load-theme 'solarized-light)
+(load-theme 'darcula)
