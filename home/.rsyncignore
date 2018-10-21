@@ -7,6 +7,7 @@
 + /.password-store/
 + /.sbt/
 + /.ssh/
++ /.bash_aliases
 + /.config/google-chrome/Default/Bookmarks
 + /.rsyncignore
 
