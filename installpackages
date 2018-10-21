@@ -25,6 +25,7 @@ sudo apt install \
      restic \
      rsync \
      sakura \
+     shellcheck \
      scrot \
      texlive-latex-extra \
      thunar \
