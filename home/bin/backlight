@@ -12,12 +12,12 @@ case "$1" in
 	;;
     dec)
 	if [[ "$current" -gt 0 ]]; then
-	    echo $(( $current - $step )) > "$device/brightness"
+	    echo $(( current - step )) > "$device/brightness"
 	fi
 	;;
     inc)
 	if [[ "$current" -lt "$max" ]]; then
-	    echo $(( $current + $step )) > "$device/brightness"
+	    echo $(( current + step )) > "$device/brightness"
 	fi
 	;;
     *)

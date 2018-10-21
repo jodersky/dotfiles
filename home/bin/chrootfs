@@ -10,9 +10,9 @@ fail() {
 
 rootfs="$1"
 
-[ -n "$rootfs" ] || fail "Usage: $(basename $0) <directory>"
+[ -n "$rootfs" ] || fail "Usage: $(basename "$0") <directory>"
 [ -e "$rootfs" ] || fail "$rootfs does not exist"
-[ "$EUID" -eq 0 ] || fail "$(basename $0) must be run as root"
+[ "$EUID" -eq 0 ] || fail "$(basename "$0") must be run as root"
 
 # Unmount and remove any temporary files
 #
