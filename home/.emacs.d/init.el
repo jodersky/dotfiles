@@ -80,6 +80,8 @@
   (setq ido-everywhere t)
   (ido-mode 1))
 
+(use-package ido-completing-read+)
+
 (use-package goto-chg
   :commands goto-last-change
   :bind (("C-." . goto-last-change)
@@ -103,11 +105,6 @@
   :config
   (setq magit-completing-read-function 'magit-ido-completing-read)
   (setq magit-save-repository-buffer 'dontask))
-
-(use-package zoom-frm
-  :bind (("C-+" . zoom-all-frames-in)
-	 ("C--" . zoom-all-frames-out)
-	 ("C-0" . zoom-frm-unzoom)))
 
 (use-package expand-region
   :commands 'er/expand-region
