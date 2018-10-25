@@ -5,7 +5,7 @@ set -e
 : ${BACKUPSOURCE:="/home/jodersky/"}
 
 # backup root folder, i.e. the one that will contain all backups in separate sub-folders
-: ${BACKUPCAPSULE:="/media/jodersky/backup/backup/jakob/"}
+: ${BACKUPCAPSULE:="/mnt/backup/backup/"}
 
 
 #destination folder to back up to

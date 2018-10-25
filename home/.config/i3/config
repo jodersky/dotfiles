@@ -216,7 +216,7 @@ bindsym $mod+r mode "resize"
         }
     }
 
-    set $background_image ".background.png"
+    set $background_image ".background"
     # desktop background
     exec_always --no-startup-id feh --bg-scale $background_image
 
@@ -230,8 +230,8 @@ bindsym $mod+r mode "resize"
 #
 # Backlight:
 #
-    bindsym XF86MonBrightnessDown exec --no-startup-id ~/bin/backlight dec, exec pkill -SIGRTMIN+10 i3blocks
-    bindsym XF86MonBrightnessUp exec --no-startup-id ~/bin/backlight inc, exec pkill -SIGRTMIN+10 i3blocks
+    bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 2%-, exec pkill -SIGRTMIN+10 i3blocks
+    bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 2%+, exec pkill -SIGRTMIN+10 i3blocks
 #
 # Other utilities:
 #

@@ -6,6 +6,7 @@ set -o errexit
 # Basic packages and Window manager
 sudo apt install \
      bluez \
+     brightnessctl \
      build-essential \
      emacs \
      evince \
@@ -27,6 +28,7 @@ sudo apt install \
      sakura \
      shellcheck \
      scrot \
+     texlive-fonts-extra \
      texlive-latex-extra \
      thunar \
      xdg-utils \
