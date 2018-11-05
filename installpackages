@@ -23,6 +23,7 @@ sudo apt install \
      pandoc \
      pass \
      ranger \
+     redshift \
      restic \
      rsync \
      sakura \
