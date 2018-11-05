@@ -8,10 +8,10 @@ energy0=$(cat "/sys/class/power_supply/BAT0/energy_now")
 energy1=$(cat "/sys/class/power_supply/BAT1/energy_now")
 energy=$(( energy0 + energy1 ))
 
-mw=$(( power / 1000))
-mwh=$(( energy / 1000))
+# [W@Wh]
+printf '%0.1f @ %0.1f\n' "$(( power ))e-6" "$(( energy ))e-6"
 
-echo "${mw}mW / ${mwh}mWh"
-echo "${mw}mW / ${mwh}mWh"
+# [mW@mWh]
+printf '%0.0fmW @ %0.0fmWh\n' "$(( power ))e-3" "$(( energy ))e-3"
 
 exit 0
