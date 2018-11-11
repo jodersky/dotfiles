@@ -1,17 +1,6 @@
 #!/bin/bash
-set -e
+set -o errexit
 
-uuid=05b7770e-1f01-4b17-83de-ede0a04495a1
-instance="$(systemd-escape $uuid)"
-
-case "$1" in
-    mount)
-	sudo cryo "$uuid" mount
-	;;
-    umount)
-	sudo cryo "$uuid" umount
-	;;
-    *)
-	sudo systemctl start "cryo@$instance.service"
-	;;
-esac
+echo "backing up gdrive" >&2
+rclone sync --verbose ~/gdrive gdrive:laptop
+echo "backup successful" >&2

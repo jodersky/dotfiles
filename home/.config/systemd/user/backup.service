@@ -1,0 +1,8 @@
+[Unit]
+Description=copy home data to remote storage
+Requisite=unmetered-internet.target
+After=unmetered-internet.target
+
+[Service]
+Type=simple
+ExecStart=%h/bin/backup

@@ -1,29 +1,25 @@
 #!/bin/bash
 
-uuid=05b7770e-1f01-4b17-83de-ede0a04495a1
-instance="$(systemd-escape $uuid)"
+systemctl="systemctl --user"
 
-if systemctl --quiet is-active "cryo@$instance.service"; then
-    echo ""
-    echo "backup running"
-    echo "#00ff00"
-elif systemctl --quiet is-failed "cryo@$instance.service"; then
-    echo ""
-    echo "backup failed"
-    echo "#ff0000"
-elif [[ -f /var/lib/cryo/$uuid/alpha ]]; then
-    last_run=$(date --reference "/var/lib/cryo/$uuid/alpha" +%s)
-    now=$(date +%s)
-    days=$(( (now - last_run) / 60 / 60 / 24 ))
-    if [[ $days -gt 30 ]]; then
-	echo ">30d"
-	echo "backup last run over 30 days ago"
-	echo "#ff0000"
+function systemd_status() {
+    unit="$1"
+    if $systemctl --quiet is-active "$unit"; then
+	echo ""
+    elif $systemctl --quiet is-failed "$unit"; then
+	echo ""
+    elif ! $systemctl --quiet is-enabled "$unit"; then
+	# note that !enabled includes units that have not been found
+	echo ""
     else
-	echo "${days}d"
-	echo "backup last run $days days ago"
+	echo ""
     fi
-else
-    echo "no backup"
-    echo "no recent backup found"
-fi
+}
+
+status=""
+status+="$(systemd_status unmetered-internet.target)"
+status+="$(systemd_status backup.timer)"
+status+="$(systemd_status backup.service)"
+
+echo "$status"
+echo "$status"

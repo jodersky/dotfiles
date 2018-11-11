@@ -1,0 +1,27 @@
+#!/usr/bin/python3
+# dbus-monitor --system "path=/org/freedesktop/NetworkManager,interface=org.freedesktop.DBus.Properties,type=signal,member=PropertiesChanged"
+
+from gi.repository import GLib
+import pydbus
+loop = GLib.MainLoop()
+systemd = pydbus.SessionBus().get(".systemd1")
+nm = pydbus.SystemBus().get("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
+
+# https://developer.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMMetered
+# 0 = The metered status is unknown
+# 1 = Metered, the value was statically set
+# 2 = Not metered, the value was statically set
+# 3 = Metered, the value was guessed
+# 4 = Not metered, the value was guessed
+def check_metered(changed):
+    value=nm.Metered
+    if (value == 2 or value == 4):
+        # start unit (replace any conflicting requests that might have been
+        # enqueued to systemctl but not yet run)
+        systemd.StartUnit("unmetered-internet.target", "replace")
+    else:
+        systemd.StopUnit("unmetered-internet.target", "replace")
+
+nm.PropertiesChanged.connect(check_metered)
+loop.run()
+
