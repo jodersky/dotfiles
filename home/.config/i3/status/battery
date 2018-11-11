@@ -4,19 +4,24 @@ set -e
 device="/sys/class/power_supply/BAT${BLOCK_INSTANCE:-0}"
 status=$(cat "$device/status")
 percent=$(cat "$device/capacity")
+energy=$(cat "$device/energy_now")
 
 status_text=""
 if [[ $status = "Discharging" ]]; then
-    status_text=" (DIS)"
+    status_text=""
 elif [[ $status = "Charging" ]]; then
-    status_text=" (CHR)"
+    status_text=" "
 fi
 
-echo "${percent}%${status_text}"
+printf '%i%% (%0.1fWh)%s\n' \
+       "$(( percent ))" \
+       "$(( energy ))e-6" \
+       "$status_text"
+
 echo "${percent}%${status_text}"
 
 # consider color and urgent flag only on discharge
-if [[ $status="Discharging" ]]; then
+if [[ $status = "Discharging" ]]; then
     if [[ $percent -le 15 ]]; then
 	echo "#FF0000";
     fi

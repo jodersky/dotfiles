@@ -243,9 +243,9 @@ bindsym $mod+r mode "resize"
     bindsym $mod+Enter exec $term
     bindsym $mod+y exec ~/bin/passmenu --type, mode "default"
     bindsym $mod+u exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
-    bindsym $mod+i exec google-chrome
+    bindsym $mod+i exec firefox
     bindsym $mod+p exec --no-startup-id ~/bin/open-project
-    bindsym $mod+Shift+i exec google-chrome --incognito
+    bindsym $mod+Shift+i exec firefox --private-window
 #
 # Quick launch menu
 #
@@ -293,7 +293,7 @@ bindsym $mod+r mode "resize"
 
 # utility applications
 # disable audible bell
-exec set -b
+exec xset -b
 # enable tap to click on touchpad
 exec_always --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
 # increase pointer acceleration on touchpad

@@ -4,14 +4,7 @@ power0=$(cat "/sys/class/power_supply/BAT0/power_now")
 power1=$(cat "/sys/class/power_supply/BAT1/power_now")
 power=$(( power0 + power1 ))
 
-energy0=$(cat "/sys/class/power_supply/BAT0/energy_now")
-energy1=$(cat "/sys/class/power_supply/BAT1/energy_now")
-energy=$(( energy0 + energy1 ))
-
-# [W@Wh]
-printf '%0.1f @ %0.1f\n' "$(( power ))e-6" "$(( energy ))e-6"
-
-# [mW@mWh]
-printf '%0.0fmW @ %0.0fmWh\n' "$(( power ))e-3" "$(( energy ))e-3"
+printf '%0.1fW\n' "$(( power ))e-6"
+printf '%0.1fW\n' "$(( power ))e-6"
 
 exit 0
