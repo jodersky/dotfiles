@@ -142,14 +142,14 @@
   :commands company-mode)
 
 ;; Snippets
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :commands yas-minor-mode
-  :config
-  (define-key yas-minor-mode-map [tab] nil)
-  (define-key yas-minor-mode-map (kbd "TAB") nil)
-  (yas-reload-all)
-  :bind ("C-<tab>" . yas-expand))
+;; (use-package yasnippet
+;;   :diminish yas-minor-mode
+;;   :commands yas-minor-mode
+;;   :config
+;;   (define-key yas-minor-mode-map [tab] nil)
+;;   (define-key yas-minor-mode-map (kbd "TAB") nil)
+;;   (yas-reload-all)
+;;   :bind ("C-<tab>" . yas-expand))
 
 (use-package yatemplate
   :config
