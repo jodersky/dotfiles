@@ -27,7 +27,7 @@ mapfile -t rdotfiles < <(find "$dotdir" -mindepth 1 -type f,l -printf '%P\n')
 # Link dotfiles to home directory, backing up any collisions
 create_links() {
     [[ -e $backupdir ]] || mkdir "$backupdir"
-    if [[ -n $(ls -A "$backupdir") ]]; then
+    if [[ -n $(ls --almost-all "$backupdir") ]]; then
 	echo "Backup directory $backupdir is not empty. Aborting." >&2
 	exit 1
     fi
@@ -45,7 +45,7 @@ create_links() {
 		local bdest="$backupdir/$relative"
 		mkdir -p "$(dirname "$bdest")"
 		mv "$dest" "$bdest"
-		moved=1
+		moved=$((moved+1))
 		echo "$relative: backed up original $dest to $bdest"
 	    fi
 	    ln --symbolic --relative "$src" "$dest"
@@ -54,7 +54,7 @@ create_links() {
     done
 
     if [ "$moved" -gt 0 ]; then
-	echo "NOTE: some files were moved to $backupdir" >&2
+	echo "NOTE: $moved files were moved to $backupdir" >&2
     fi
 }
 
