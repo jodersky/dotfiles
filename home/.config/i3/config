@@ -273,7 +273,7 @@ bindsym $mod+r mode "resize"
 #
 # Session and power management
 #
-    exec --no-startup-id xss-lock -- ~/bin/lock
+    exec --no-startup-id xss-lock --transfer-sleep-lock -- ~/bin/lock
     set $mode_system [0-3] monitor, (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown
     mode "$mode_system" {
         bindsym 0 exec --no-startup-id ~/bin/setup mirror, mode "default"
