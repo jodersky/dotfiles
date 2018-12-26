@@ -1,0 +1,4 @@
+#!/bin/sh
+# Generate a random name for a project
+
+aspell dump master -d en_US | grep -v "'s" | grep -v "^[A-Z]" | shuf -n 2
