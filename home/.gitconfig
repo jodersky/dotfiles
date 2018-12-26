@@ -18,3 +18,5 @@
 [credential "https://git-wip-us.apache.org"]
 	username = jodersky
 	helper = "!f() { echo password=$(pass sites/apache.org); }; f"
+[github]
+	user = jodersky
