@@ -1,7 +1,7 @@
 [Unit]
 Description=copy home data to remote storage
-Requisite=unmetered-internet.target
-After=unmetered-internet.target
+Requisite=internet-unmetered.target
+After=internet-unmetered.target
 
 [Service]
 Type=simple

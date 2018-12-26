@@ -1,0 +1,3 @@
+[Unit]
+Description=current connection to the internet is not metered
+Conflicts=internet-metered.target

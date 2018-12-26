@@ -1,0 +1,9 @@
+[Unit]
+Description=user service to listen to system dbus events
+
+[Service]
+Type=simple
+ExecStart=%h/.local/lib/dbusmonitor
+
+[Install]
+WantedBy=default.target

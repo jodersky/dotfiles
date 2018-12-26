@@ -1,7 +1,7 @@
 [Unit]
 Description=run backup script periodically
-Requisite=unmetered-internet.target
-After=unmetered-internet.target
+Requisite=internet-unmetered.target
+After=internet-unmetered.target
 
 [Timer]
 OnCalendar=0/2:00:00
@@ -9,4 +9,4 @@ RandomizedDelaySec=10min
 Persistent=true
 
 [Install]
-WantedBy=unmetered-internet.target
+WantedBy=internet-unmetered.target

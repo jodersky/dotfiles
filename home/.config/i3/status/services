@@ -1,0 +1,34 @@
+#!/bin/bash
+
+systemctl="systemctl --user"
+
+function systemd_status() {
+    unit="$1"
+    icon="$2"
+    if $systemctl --quiet is-active "$unit"; then
+	echo "<span foreground=\"#00ff00\">$icon</span>"
+    elif $systemctl --quiet is-failed "$unit"; then
+	echo "<span foreground=\"#ff0000\">$icon</span>"
+    elif ! $systemctl --quiet is-enabled "$unit"; then
+	# note that !enabled includes units that have not been found
+	true
+    else
+	# inactive units: found, not failed and not disabled
+	echo "<span foreground=\"#464f63\">$icon</span>"
+	true
+    fi
+}
+
+
+status=""
+#status='<span foreground="blue" size="x-large">Blue text</span> is <i>cool</i>!'
+#status="      |"
+
+#status=""
+status+="$(systemd_status internet-metered.target ) "
+status+="$(systemd_status backup.timer ) "
+status+="$(systemd_status backup.service ) "
+status+="$(systemd_status backupz.service )"
+
+echo "$status"
+echo "$status"

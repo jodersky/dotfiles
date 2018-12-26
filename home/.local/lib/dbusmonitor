@@ -18,9 +18,11 @@ def check_metered(changed):
     if (value == 2 or value == 4):
         # start unit (replace any conflicting requests that might have been
         # enqueued to systemctl but not yet run)
-        systemd.StartUnit("unmetered-internet.target", "replace")
+        systemd.StopUnit("internet-metered.target", "replace")
+        systemd.StartUnit("internet-unmetered.target", "replace")
     else:
-        systemd.StopUnit("unmetered-internet.target", "replace")
+        systemd.StopUnit("internet-unmetered.target", "replace")
+        systemd.StartUnit("internet-metered.target", "replace")
 
 nm.PropertiesChanged.connect(check_metered)
 loop.run()

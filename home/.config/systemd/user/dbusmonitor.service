@@ -1,9 +1,0 @@
-[Unit]
-Description=user service to listen to system dbus sevents
-
-[Service]
-Type=simple
-ExecStart=%h/.local/bin/dbusmonitor
-
-[Install]
-WantedBy=default.target

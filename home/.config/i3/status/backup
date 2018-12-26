@@ -16,10 +16,12 @@ function systemd_status() {
     fi
 }
 
+
 status=""
-status+="$(systemd_status unmetered-internet.target)"
+status+="$(systemd_status internet-unmetered.target)"
 status+="$(systemd_status backup.timer)"
 status+="$(systemd_status backup.service)"
 
 echo "$status"
 echo "$status"
+
