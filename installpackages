@@ -34,6 +34,7 @@ sudo apt install \
      texlive-latex-extra \
      thunar \
      xdg-utils \
+     xdotool \
      xss-lock
 
 # Packages required for using yubikey
