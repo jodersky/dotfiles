@@ -18,8 +18,10 @@
 (global-auto-revert-mode t)
 
 ;; font
+(add-to-list 'default-frame-alist '(font . "Ubuntu Mono" ))
+(set-face-attribute 'default t :font "Ubuntu Mono")
 ; value is in 1/10pt, so 100 will give you 10pt, etc.
-(set-face-attribute 'default nil :height 110)
+(set-face-attribute 'default nil :height 130)
 
 ;; simplify questions
 (defalias 'yes-or-no-p 'y-or-n-p)
