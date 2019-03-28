@@ -2,3 +2,5 @@
 .ensime_cache/
 .ensime
 .idea/
+.metals/
+.vscode/

@@ -242,6 +242,7 @@ bindsym $mod+r mode "resize"
     bindsym $mod+Enter exec $term
     bindsym $mod+y exec ~/bin/passmenu --type, mode "default"
     bindsym $mod+u exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
+    bindsym $mod+o exec code , mode "default"
     bindsym $mod+i exec firefox
     bindsym $mod+p exec --no-startup-id ~/bin/open-project
     bindsym $mod+Shift+i exec firefox --private-window
