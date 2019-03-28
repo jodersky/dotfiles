@@ -20,5 +20,5 @@
 	helper = "!f() { echo password=$(pass sites/apache.org); }; f"
 [github]
 	user = jodersky
-[includeIf "gitdir:~/src/inpher/"]
+[includeIf "gitdir:~/src/"]
 	path = .gitconfig_inpher
