@@ -14,8 +14,8 @@
    height="293.88217mm"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
-   sodipodi:docname="layout.svg">
+   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   sodipodi:docname="i3-keyboard-layout.svg">
   <defs
      id="defs4">
     <symbol
@@ -111,19 +111,19 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.8284271"
-     inkscape:cx="811.20915"
-     inkscape:cy="220.14616"
+     inkscape:zoom="2.7396061"
+     inkscape:cx="619.412"
+     inkscape:cy="699.40808"
      inkscape:document-units="px"
-     inkscape:current-layer="g8299"
+     inkscape:current-layer="g8375"
      showgrid="false"
      units="mm"
-     inkscape:window-width="1918"
-     inkscape:window-height="1056"
+     inkscape:window-width="3438"
+     inkscape:window-height="1416"
      inkscape:window-x="0"
      inkscape:window-y="22"
      inkscape:window-maximized="0"
-     inkscape:snap-global="false"
+     inkscape:snap-global="true"
      inkscape:snap-object-midpoints="true"
      inkscape:snap-bbox="true"
      inkscape:bbox-paths="true"
@@ -154,7 +154,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -3964,9 +3964,9 @@
     <g
        transform="matrix(0.08999893,0,0,0.08999893,37.065738,586.93564)"
        id="g8005"
-       style="fill-rule:evenodd">
+       style="fill:#d7d7f4;fill-opacity:1;fill-rule:evenodd">
       <path
-         style="fill:none;fill-rule:nonzero;stroke:#96938e;stroke-width:7.4078722;stroke-linecap:round;stroke-linejoin:round"
+         style="fill:#d7d7f4;fill-opacity:1;fill-rule:nonzero;stroke:#96938e;stroke-width:7.4078722;stroke-linecap:round;stroke-linejoin:round"
          inkscape:connector-curvature="0"
          class="fil0 str0"
          d="m 122.66667,1715.2 c 0,40.5333 29.86666,72.5333 66.13333,72.5333 h 393.6 c 36.26667,0 66.13333,-33.0666 66.13333,-72.5333 V 1275.7333 C 648.53333,1235.2 618.66667,1203.2 582.4,1203.2 H 188.8 c -36.26667,0 -66.13333,32 -66.13333,72.5333 z"
@@ -4085,9 +4085,9 @@
     <g
        transform="matrix(0.08999893,0,0,0.08999893,37.065738,586.93564)"
        id="g8145"
-       style="fill-rule:evenodd">
+       style="fill:#b3ff80;fill-opacity:1;fill-rule:evenodd">
       <path
-         style="fill:none;fill-rule:nonzero;stroke:#96938e;stroke-width:7.4078722;stroke-linecap:round;stroke-linejoin:round"
+         style="fill:#b3ff80;fill-opacity:1;fill-rule:nonzero;stroke:#96938e;stroke-width:7.4078722;stroke-linecap:round;stroke-linejoin:round"
          inkscape:connector-curvature="0"
          class="fil0 str0"
          d="m 7719.4667,2515.2 c 0,40.5333 29.8666,72.5333 66.1333,72.5333 h 393.6 c 36.2667,0 66.1333,-33.0666 66.1333,-72.5333 v -439.4667 c 0,-40.5333 -29.8666,-72.5333 -66.1333,-72.5333 h -393.6 c -36.2667,0 -66.1333,32 -66.1333,72.5333 z"
@@ -4317,7 +4317,7 @@
            style="fill:#d7d7f4;fill-rule:nonzero;stroke:#96938e;stroke-width:7.4078722;stroke-linecap:round;stroke-linejoin:round" />
       </g>
       <g
-         style="fill:#d7d7f4;fill-rule:evenodd"
+         style="fill:none;fill-rule:evenodd"
          id="g8169"
          transform="matrix(0.08999893,0,0,0.08999893,37.065738,586.93564)">
         <path
@@ -4325,7 +4325,7 @@
            d="m 8919.4667,1715.2 c 0,40.5333 29.8666,72.5333 66.1333,72.5333 h 393.6 c 36.2667,0 66.1333,-33.0666 66.1333,-72.5333 v -439.4667 c 0,-40.5333 -29.8666,-72.5333 -66.1333,-72.5333 h -393.6 c -36.2667,0 -66.1333,32 -66.1333,72.5333 z"
            class="fil0 str0"
            inkscape:connector-curvature="0"
-           style="fill:#d7d7f4;fill-rule:nonzero;stroke:#96938e;stroke-width:7.4078722;stroke-linecap:round;stroke-linejoin:round" />
+           style="fill:none;fill-rule:nonzero;stroke:#96938e;stroke-width:7.4078722;stroke-linecap:round;stroke-linejoin:round" />
       </g>
     </g>
     <g
@@ -20462,7 +20462,7 @@
          sodipodi:role="line"
          x="628.81708"
          y="266.72525"
-         id="tspan7841">editor</tspan></text>
+         id="tspan7841">editor 1</tspan></text>
     <text
        id="text7847"
        y="338.7244"
@@ -20496,12 +20496,12 @@
     <text
        id="text7881"
        y="194.8221"
-       x="881.23242"
+       x="89.529854"
        style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Ubuntu Condensed';-inkscape-font-specification:'Ubuntu Condensed, ';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none"
        xml:space="preserve"><tspan
          id="tspan7879"
          y="194.8221"
-         x="881.23242"
+         x="89.529854"
          sodipodi:role="line">scratch</tspan></text>
     <text
        id="text7885"
@@ -20667,6 +20667,16 @@
          x="735.56781"
          y="448.62445"
          id="tspan8441">floating</tspan></text>
+    <text
+       id="text6979"
+       y="266.49588"
+       x="772.32098"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:8px;line-height:1.25;font-family:'Ubuntu Condensed';-inkscape-font-specification:'Ubuntu Condensed, ';text-align:end;letter-spacing:0px;word-spacing:0px;text-anchor:end;fill:#000000;fill-opacity:1;stroke:none"
+       xml:space="preserve"><tspan
+         id="tspan6977"
+         y="266.49588"
+         x="772.32098"
+         sodipodi:role="line">editor 2</tspan></text>
   </g>
   <g
      inkscape:groupmode="layer"
