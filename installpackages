@@ -5,6 +5,7 @@ set -o errexit
 
 # Basic packages and Window manager
 sudo apt install \
+     apt-listbugs \
      bluez \
      brightnessctl \
      build-essential \
