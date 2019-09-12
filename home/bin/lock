@@ -14,7 +14,8 @@ i3lock_options="--image=$screenshot --ignore-empty-password"
 # Run before starting the locker
 pre_lock() {
     gpgconf --kill scdaemon || true
-    scrot "$screenshot" \
+    rm -f "$screenshot" \
+	&& scrot "$screenshot" \
 	&& convert "$screenshot" -scale 5% -scale 2000% "$screenshot"
     #mpc pause
     return
