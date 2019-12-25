@@ -1,0 +1,24 @@
+#!/bin/bash
+# Uses https://haveibeenpwned.com/ to check if a password has been compromised.
+# Note that only 5 characters of the hashed password are sent to the service.
+# Usage: hibp <password>
+# Exits 0 if password is not known to be compromised, 1 otherwise.
+set -o errexit
+set -o nounset
+
+hash="$(echo -n "$1" | sha1sum | cut -d " " -f 1)"
+head5=$(head --bytes 5 <<< "$hash")
+tail5=$(tail --bytes +6 <<< "$hash")
+
+echo "Sending $head5 to server" >&2
+mapfile -t found_tails < <(curl -sS "https://api.pwnedpasswords.com/range/$head5")
+echo "Found ${#found_tails[@]} head matches. Checking each one." >&2
+
+shopt -s nocasematch
+for found in "${found_tails[@]}"; do
+    if [[ $found == $tail5* ]]; then
+        echo "Password has been pwned $(tr -d '\r' <<< "${found#*\:}") times!"
+        exit 1
+    fi
+done
+echo "Rest assured, password has not been pwned."
