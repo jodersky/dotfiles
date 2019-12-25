@@ -247,6 +247,7 @@ bindsym $mod+r mode "resize"
     bindsym $mod+i exec firefox
     bindsym $mod+p exec --no-startup-id ~/bin/open-project
     bindsym $mod+Shift+i exec firefox --private-window
+    bindsym $mod+g exec search
 #
 # Quick launch menu
 #
