@@ -1,0 +1,18 @@
+#!/bin/bash
+# Simple ngrok alternative, using an SSH reverse tunnel on
+# an internet-accessible server.
+set -o errexit
+
+port="$1"
+if [[ -z "$port" ]]; then
+    echo "must specify port" >&2
+    echo "Usage: mgrok PORT" >&2
+    exit 1
+fi
+
+echo "Exposing localhost:$port at https://dev.crashbox.io"
+echo "Press Ctrl+C to stop" >&2
+
+# The remote server is assumed to proxy http(s) traffic
+# destined to dev.crashbox.io to localhost:8080
+exec ssh -N -T -R8080:localhost:"$1" dev.crashbox.io
