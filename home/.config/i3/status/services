@@ -1,22 +1,29 @@
 #!/bin/bash
 
-systemctl="systemctl --user"
+systemd_status() {
+    instance="$1"
+    unit="$2"
+    icon="$3"
+    color="$4"
 
-function systemd_status() {
-    unit="$1"
-    icon="$2"
-    if $systemctl --quiet is-active "$unit"; then
-	echo "<span foreground=\"#00ff00\">$icon</span>"
-    elif $systemctl --quiet is-failed "$unit"; then
-	echo "<span foreground=\"#ff0000\">$icon</span>"
-    elif ! $systemctl --quiet is-enabled "$unit"; then
-	# note that !enabled includes units that have not been found
-	true
-    else
-	# inactive units: found, not failed and not disabled
-	echo "<span foreground=\"#464f63\">$icon</span>"
-	true
-    fi
+    case $(systemctl "$instance" is-active "$unit") in
+        active | activating)
+            echo "<span foreground=\"$color\">$icon</span>"
+            ;;
+        *)
+            if systemctl "$instance" --quiet is-failed "$unit"; then
+                echo "<span foreground=\"#ff0000\">$icon</span>"
+            elif ! systemctl "$instance" --quiet is-enabled "$unit"; then
+                # unknown and disabled units are not displayed at all
+                # (note that !enabled includes units which have not been found)
+                true
+            else
+                # inactive units (found, not failed and not disabled) are greyed out
+                echo "<span foreground=\"#464f63\">$icon</span>"
+                true
+            fi
+            ;;
+    esac
 }
 
 
@@ -25,10 +32,12 @@ status=""
 #status="      |"
 
 #status=""
-status+="$(systemd_status internet-metered.target ) "
-status+="$(systemd_status backup.timer ) "
-status+="$(systemd_status backup.service ) "
-status+="$(systemd_status backupz.service )"
+#
+status+="$(systemd_status --system resteasy.service  orange) "
+status+="$(systemd_status --user internet-metered.target  orange) "
+#status+="$(systemd_status backup.timer ) "
+#status+="$(systemd_status backup.service ) "
+#status+="$(systemd_status backupz.service )"
 
 echo "$status"
 echo "$status"

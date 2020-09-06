@@ -14,5 +14,5 @@ echo "Exposing localhost:$port at https://dev.crashbox.io"
 echo "Press Ctrl+C to stop" >&2
 
 # The remote server is assumed to proxy http(s) traffic
-# destined to dev.crashbox.io to localhost:8080
-exec ssh -N -T -R8080:localhost:"$1" dev.crashbox.io
+# destined to dev.crashbox.io to localhost:8085
+exec ssh -N -T -R8085:localhost:"$1" dev.crashbox.io

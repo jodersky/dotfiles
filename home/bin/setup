@@ -26,7 +26,7 @@ case "$1" in
     double)
 	xrandr \
 	    --output "$internal" --auto \
-	    --output "${externals[0]}" --auto --primary --above "$internal"
+	    --output "${externals[0]}" --auto --primary --right-of "$internal"
 	;;
     triple)
 	xrandr \

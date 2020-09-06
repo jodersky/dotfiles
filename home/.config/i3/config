@@ -248,6 +248,8 @@ bindsym $mod+r mode "resize"
     bindsym $mod+p exec --no-startup-id ~/bin/open-project
     bindsym $mod+Shift+i exec firefox --private-window
     bindsym $mod+g exec search
+    bindsym $mod+bracketleft exec chromium --new-window --app="https://stats.crashbox.io/d/A6T6hIRMk/humidor?orgId=1&refresh=1m&kiosk=tv"
+    bindsym $mod+bracketright exec vlc --fullscreen itcannotbe.mkv
 #
 # Quick launch menu
 #
@@ -297,9 +299,9 @@ bindsym $mod+r mode "resize"
 # disable audible bell
 exec xset -b
 # enable tap to click on touchpad
-exec_always --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Tapping Enabled" 1
+exec_always --no-startup-id xinput set-prop "Synaptics TM3289-021" "libinput Tapping Enabled" 1
 # increase pointer acceleration on touchpad
-exec_always --no-startup-id xinput set-prop "SynPS/2 Synaptics TouchPad" "libinput Accel Speed" 0.5
+exec_always --no-startup-id xinput set-prop "Synaptics TM3289-021" "libinput Accel Speed" 0.5
 exec --no-startup-id redshift
 
 exec --no-startup-id sakura --name=sakura_scratchpad
