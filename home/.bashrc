@@ -117,3 +117,5 @@ if [ -d "$HOME/.bashrc.d" ]; then
 	. "$script"
     done
 fi
+
+complete -C /home/jodersky/bin/vault vault

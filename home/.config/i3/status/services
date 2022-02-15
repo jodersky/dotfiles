@@ -35,6 +35,8 @@ status=""
 #
 status+="$(systemd_status --system resteasy.service  orange) "
 status+="$(systemd_status --user internet-metered.target  orange) "
+#status+="$(systemd_status --user prometheus.service P green) "
+#status+="$(systemd_status --user grafana.service G green) "
 #status+="$(systemd_status backup.timer ) "
 #status+="$(systemd_status backup.service ) "
 #status+="$(systemd_status backupz.service )"

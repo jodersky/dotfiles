@@ -302,7 +302,7 @@ exec xset -b
 exec_always --no-startup-id xinput set-prop "Synaptics TM3289-021" "libinput Tapping Enabled" 1
 # increase pointer acceleration on touchpad
 exec_always --no-startup-id xinput set-prop "Synaptics TM3289-021" "libinput Accel Speed" 0.5
-exec --no-startup-id redshift
+#exec --no-startup-id redshift
 
 exec --no-startup-id sakura --name=sakura_scratchpad
 for_window [instance="sakura_scratchpad"] move scratchpad

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+unit="$BLOCK_INSTANCE"
+
+if [[ -n $BLOCK_BUTTON ]]; then
+    if systemctl --user is-active --quiet "$unit"; then
+	systemctl --user stop "$unit"
+    else
+	systemctl --user start "$unit"
+    fi
+fi
+
+if systemctl --user is-active --quiet "$unit"; then
+    echo "ON"
+    echo "active"
+else
+    echo "OFF"
+    echo "inactive"
+fi

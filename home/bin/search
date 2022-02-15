@@ -1,6 +1,6 @@
 #!/bin/bash
 
-query=$(dmenu -p "Search:" < /dev/null)
+query=$(rofi -dmenu -p "Search" < /dev/null)
 
 if [[ -n $query ]]; then
 	xdg-open "https://google.com/search?q=$query"
