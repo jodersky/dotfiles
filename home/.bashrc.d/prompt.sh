@@ -8,9 +8,14 @@ function __prompt_command() {
     local green='\e[32m'
     local yellow='\e[33m'
     local light_blue='\e[94m'
+    local orange='\e[38;5;208m'
     local reset='\e[0m'
 
     PS1+="╭"
+
+    if [[ -n $SSH_CONNECTION ]]; then
+        PS1+="${orange}(\\h)${reset}"
+    fi
 
     PS1+="${light_blue}\\w${reset}"
 
