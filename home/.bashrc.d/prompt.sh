@@ -4,12 +4,12 @@ function __prompt_command() {
     # set title for terminal emulators
     PS1+="\\[\\e]0;\\u@\\h: \\w\\a\\]"
 
-    local red='\e[31m'
-    local green='\e[32m'
-    local yellow='\e[33m'
-    local light_blue='\e[94m'
-    local orange='\e[38;5;208m'
-    local reset='\e[0m'
+    local red='\[\e[31m\]'
+    local green='\[\e[32m\]'
+    local yellow='\[\e[33m\]'
+    local light_blue='\[\e[94m\]'
+    local orange='\[\e[38;5;208m\]'
+    local reset='\[\e[0m\]'
 
     PS1+="╭"
 
