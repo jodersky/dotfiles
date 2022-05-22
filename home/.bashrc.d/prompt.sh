@@ -1,5 +1,39 @@
+function show_duration() {
+    local seconds=$1
+    local minutes=0
+    local hours=0
+    if [[ $seconds -ge 60 ]]; then
+        minutes=$((seconds / 60))
+        seconds=$((seconds % 60))
+        if [[ $minutes -ge 60 ]]; then
+            hours=$((minutes / 60))
+            minutes=$((minutes % 60))
+        fi
+    fi
+    if [[ $minutes -eq 0 && $hours -eq 0 ]]; then
+        echo "${seconds}s"
+    elif [[ $hours -eq 0 ]]; then
+        echo "${minutes}m${seconds}s"
+    else
+        echo "${hours}h${minutes}m${seconds}s"
+    fi
+}
+
+function __pre_command() {
+    if [[ -z $__at_prompt ]]; then
+        return
+    fi
+    unset __at_prompt
+
+    __command_start_stamp=$SECONDS
+}
+trap __pre_command DEBUG
+
 function __prompt_command() {
     local exit="$?"
+    local duration_seconds="$(( SECONDS-__command_start_stamp ))"
+    local now
+    now="$(date +%H:%M:%S)"
     PS1=""
     # set title for terminal emulators
     PS1+="\\[\\e]0;\\u@\\h: \\w\\a\\]"
@@ -36,11 +70,16 @@ function __prompt_command() {
         fi
     fi
 
-    if [ "$exit" -ne 0 ]; then
+    if [[ $exit -ne 0 ]]; then
         PS1+=" ${red}(exit $exit)${reset}"
     fi
 
+    if [[ $duration_seconds -ge 10 ]]; then
+        PS1+=" ${light_blue}($(show_duration "$duration_seconds") $now)${reset}"
+    fi
+
     PS1+="\\n╰\$ ${reset}"
+    __at_prompt=1
 }
 
 export PROMPT_COMMAND=__prompt_command
