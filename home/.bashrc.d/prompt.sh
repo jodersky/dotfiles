@@ -72,18 +72,22 @@ function __prompt_command() {
             git_ab="$(git status --porcelain=2 --branch 2>/dev/null \
                             | sed --quiet 's/# branch.ab //p' - )"
 
-            if [[ $git_ab -ne "+0 -0" ]]; then
+            if [[ $git_ab = "" ]]; then
+                true
+            elif [[ $git_ab = "+0 -0" ]]; then
+                PS1+=" ${green}[0]${reset}"
+            elif [[ $git_ab != "+0 -0" ]]; then
                 local git_a
                 git_a=$(echo "$git_ab" | cut -d' ' -f 1 )
                 local git_b
                 git_b=$(echo "$git_ab" | cut -d' ' -f 2 )
 
-                if [[ git_a -ne "+0" && git_b -ne "-0" ]]; then
+                if [[ $git_a != "+0" && $git_b != "-0" ]]; then
                     # diverged
                     PS1+=" ${red}[${git_ab}]${reset}"
-                elif [[ git_a -ne "+0" ]]; then
+                elif [[ $git_a != "+0" ]]; then
                     PS1+=" ${yellow}[${git_a}]${reset}"
-                elif [[ git_b -ne "-0" ]]; then
+                elif [[ $git_b != "-0" ]]; then
                     PS1+=" ${yellow}[${git_b}]${reset}"
                 fi
             fi
