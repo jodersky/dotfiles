@@ -1,0 +1,10 @@
+#!/bin/bash
+set -o errexit
+
+repo="$1"
+[[ -n "$repo" ]] || { echo "repo URL expected" >&2 ; exit 1; }
+dir="$HOME/p/$(basename "$repo")"
+
+git clone --depth 1 "$repo" "$dir"
+
+code "$dir"

@@ -1,0 +1,81 @@
+#!/bin/bash
+###
+### cbl - show the cloud build log of a commit or pull request
+###
+### Usage:
+###   cbl [opts] <commit sha|ref>
+###   cbl [opts] #<PR>
+###
+### Options:
+###   -h --help
+###           Show this help
+###   -r --repo
+###           The GitHub repository to use. Defaults to inpher/<name of current directory>
+###   --token-command
+###           The command used to get a GitHub access token. The command must
+###           print the token to stdout. Defaults to
+###           "pass infra/github-token/repo".
+### Environment:
+###   GH_TOKEN the GitHub access token. This overrides --token-command if set.
+set -o errexit
+
+args=$(getopt -l "help,remote:,token-command:" -o "hr:" -- "$@")
+eval set -- "$args"
+
+repo="inpher/$(basename "$PWD")"
+token_command="pass infra/github-token/repo"
+while [[ $# -ge 1 ]]; do
+  case "$1" in
+    --)
+      shift; break ;; # no more named args left
+    -h|--help)
+      sed -rn 's/^### ?//;T;p' "$0";
+      exit 0 ;;
+    -r|--repo)
+      repo="$2" ; shift ;;
+    --token-command)
+      token_command="$2" ; shift ;;
+  esac
+  shift
+done
+
+echo "repo: '$repo'"
+
+gh_token="${GH_TOKEN:-$($token_command)}"
+
+
+ref="${1:-HEAD}"
+if [[ $ref == \#* ]]; then
+  pr_id="${ref:1}"
+  sha=$(
+    curl -H "Accept: application/vnd.github.v3+json" \
+      -H "Authorization: token $gh_token" \
+      "https://api.github.com/repos/$repo/pulls/$pr_id" -sS \
+        | jq '.head.sha' -r
+    )
+else
+  # TODO: curently if we pass a ref we need to be in a git repo. This is done
+  # only out of laziness, since the github API currently does not have an
+  # equivalent to rev-parse
+  sha="$(git rev-parse "$ref")"
+fi
+
+echo "check url: https://api.github.com/repos/$repo/commits/$sha/check-runs"
+
+gcloud_url=$(
+  curl -H "Accept: application/vnd.github.antiope-preview+json" \
+    -H "Authorization: token $gh_token" \
+    "https://api.github.com/repos/$repo/commits/$sha/check-runs" -sS \
+      | jq '.check_runs[] | select(.app.slug == "google-cloud-build") | .details_url' -r
+  )
+
+echo "build url: $gcloud_url"
+
+build_id=$(echo "$gcloud_url" | sed -n 's|.*/\(.*\)?.*|\1|p')
+echo "gcloud build ID: $build_id"
+
+region=$(echo "$gcloud_url" | sed -n 's|.*region=\(.*\)/.*|\1|p')
+echo "gcloud region of build: $region"
+
+
+gcloud beta builds log "--region=$region" --stream "$build_id" --project inpher-ci

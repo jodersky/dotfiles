@@ -1,0 +1,7 @@
+#!/bin/bash
+# Latest verisons of the Singaporean Stack (Haoyi's ecosystem)
+repos=$(curl -sS https://api.github.com/orgs/com-lihaoyi/repos | jq -r .[].name)
+for repo in $repos; do
+    latest=$(curl -sS "https://api.github.com/repos/com-lihaoyi/$repo/releases/latest" | jq -r '.tag_name')
+    echo "ivy\"com.lihaoyi::$repo:$latest\""
+done
