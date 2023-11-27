@@ -15,4 +15,32 @@ echo "Press Ctrl+C to stop" >&2
 
 # The remote server is assumed to proxy http(s) traffic
 # destined to dev.crashbox.io to localhost:8085
+#
+# Example configs:
+# nginx:
+#
+# server {
+#     server_name dev.crashbox.io;
+#     listen 80;
+#     listen [::]:80;
+#     listen 443 ssl;
+#     listen [::]:443 ssl;
+#
+#     location / {
+#         proxy_set_header Host $host;
+#         proxy_set_header X-Real-IP $remote_addr;
+#         proxy_pass http://localhost:8085/;
+#     }
+#
+# }
+#
+# caddy:
+#
+# dev.crashbox.io {
+#   reverse_proxy http://localhost:8085
+#   handle_errors {
+#     respond {http.error.status_code}
+#   }
+# }
+#
 exec ssh -N -T -R8085:localhost:"$1" dev.crashbox.io
