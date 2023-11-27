@@ -31,3 +31,7 @@
 	defaultBranch = master
 [merge]
 	conflictstyle = diff3
+
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+	insteadOf = git://github.com/
