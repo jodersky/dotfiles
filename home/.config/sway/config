@@ -179,7 +179,7 @@ input * {
     bindsym $mod+z focus child
 
     # hide and show status bar
-    bindsym $mod+t bar mode toggle
+    bindsym $mod+t exec pkill -SIGUSR1 waybar
 
 #
 # Scratchpad:
@@ -301,29 +301,29 @@ bindsym $mod+r mode "resize"
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
-bar {
-    position top
-
-    # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
-
-    colors {
-        # statusline #ffffff
-        # background #323232
-        # inactive_workspace #323232 #323232 #5c5c5c
-        statusline #ffffff
-        #                  border             background         text
-        focused_workspace  $bg-color          $bg-color          $text-color
-        inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-        urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
-        binding_mode       $menu-bg-color     $menu-bg-color     $text-color
-    }
-}
-
 # bar {
-#     swaybar_command waybar
+#     position top
+
+#     # When the status_command prints a new line to stdout, swaybar updates.
+#     # The default just shows the current date and time.
+#     status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+
+#     colors {
+#         # statusline #ffffff
+#         # background #323232
+#         # inactive_workspace #323232 #323232 #5c5c5c
+#         statusline #ffffff
+#         #                  border             background         text
+#         focused_workspace  $bg-color          $bg-color          $text-color
+#         inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+#         urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+#         binding_mode       $menu-bg-color     $menu-bg-color     $text-color
+#     }
 # }
+
+bar {
+    swaybar_command waybar
+}
 
 #
 # Startup applications
