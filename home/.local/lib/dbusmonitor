@@ -1,11 +1,15 @@
 #!/usr/bin/python3
 # dbus-monitor --system "path=/org/freedesktop/NetworkManager,interface=org.freedesktop.DBus.Properties,type=signal,member=PropertiesChanged"
 
-from gi.repository import GLib
-import pydbus
-loop = GLib.MainLoop()
-systemd = pydbus.SessionBus().get(".systemd1")
-nm = pydbus.SystemBus().get("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
+import dasbus.connection as dc
+import dasbus.loop
+import dasbus.typing
+import sys
+
+loop = dasbus.loop.EventLoop()
+
+systemd = dc.SessionMessageBus().get_proxy("org.freedesktop.systemd1", "/org/freedesktop/systemd1")
+nm = dc.SystemMessageBus().get_proxy("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
 
 # https://developer.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMMetered
 # 0 = The metered status is unknown
@@ -13,17 +17,55 @@ nm = pydbus.SystemBus().get("org.freedesktop.NetworkManager", "/org/freedesktop/
 # 2 = Not metered, the value was statically set
 # 3 = Metered, the value was guessed
 # 4 = Not metered, the value was guessed
-def check_metered(changed):
-    value=nm.Metered
-    if (value == 2 or value == 4):
-        # start unit (replace any conflicting requests that might have been
-        # enqueued to systemctl but not yet run)
-        systemd.StopUnit("internet-metered.target", "replace")
-        systemd.StartUnit("internet-unmetered.target", "replace")
-    else:
-        systemd.StopUnit("internet-unmetered.target", "replace")
-        systemd.StartUnit("internet-metered.target", "replace")
+def check_metered(name, properties, reason):
+    # print("checking metered status of connection", file=sys.stderr)
+    if properties.get("Metered") is not None:
+        value = properties.get("Metered")
+        pyvalue = dasbus.typing.get_native(value)
+        print(f"metered status changed to {value} ({pyvalue})", file=sys.stderr)
+        if (pyvalue == 2 or pyvalue == 4):
+            print("connection is unmetered", file=sys.stderr)
+            systemd.StopUnit("internet-metered.target", "replace")
+            systemd.StartUnit("internet-unmetered.target", "replace")
+        else:
+            print("connection is metered", file=sys.stderr)
+            systemd.StopUnit("internet-unmetered.target", "replace")
+            systemd.StartUnit("internet-metered.target", "replace")
 
 nm.PropertiesChanged.connect(check_metered)
 loop.run()
+
+# import pydbus
+# pydbus.SessionBus().get(".systemd1")
+
+
+# from gi.repository import GLib
+# import pydbus
+# import sys
+# loop = GLib.MainLoop()
+# systemd = pydbus.SessionBus().get(".systemd1")
+# nm = pydbus.SystemBus().get("org.freedesktop.NetworkManager", "/org/freedesktop/NetworkManager")
+
+# # https://developer.gnome.org/NetworkManager/stable/nm-dbus-types.html#NMMetered
+# # 0 = The metered status is unknown
+# # 1 = Metered, the value was statically set
+# # 2 = Not metered, the value was statically set
+# # 3 = Metered, the value was guessed
+# # 4 = Not metered, the value was guessed
+# def check_metered(changed):
+#     print("checking metered status of connection", file=sys.stderr)
+#     value=nm.Metered
+#     if (value == 2 or value == 4):
+#         print("connection is unmetered", file=sys.stderr)
+#         # start unit (replace any conflicting requests that might have been
+#         # enqueued to systemctl but not yet run)
+#         systemd.StopUnit("internet-metered.target", "replace")
+#         systemd.StartUnit("internet-unmetered.target", "replace")
+#     else:
+#         print("connection is metered", file=sys.stderr)
+#         systemd.StopUnit("internet-unmetered.target", "replace")
+#         systemd.StartUnit("internet-metered.target", "replace")
+
+# nm.PropertiesChanged.connect(check_metered)
+# loop.run()
 

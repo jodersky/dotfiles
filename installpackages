@@ -23,7 +23,7 @@ sudo apt install \
      network-manager \
      pandoc \
      pass \
-     python3-pydbus \
+     python3-dasbus \
      ranger \
      redshift \
      restic \
