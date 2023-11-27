@@ -36,7 +36,8 @@ sudo apt install \
      thunar \
      xdg-utils \
      xdotool \
-     xss-lock
+     xss-lock \
+     ydotool
 
 # Packages required for using yubikey
 sudo apt install gnupg2 dirmngr pcscd scdaemon
