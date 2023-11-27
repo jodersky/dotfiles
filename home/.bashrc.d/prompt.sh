@@ -63,13 +63,21 @@ function __prompt_command() {
             else
                 git_color="${yellow}"
             fi
+            git_status="$(git status --porcelain=2 --branch 2>/dev/null)"
+
             local git_branch
-            git_branch="$(git status --porcelain=2 --branch 2>/dev/null \
+            git_branch="$(echo "$git_status" \
                             | sed --quiet 's/# branch.head //p' - )"
-            PS1+=" ${git_color}[${git_branch}]${reset}"
+            PS1+=" ${git_color}["
+            if [[ $git_branch == "(detached)" ]]; then
+                PS1+="$(git rev-parse --short HEAD)"
+            else
+                PS1+="${git_branch}"
+            fi
+            PS1+="]${reset}"
 
             local git_ab
-            git_ab="$(git status --porcelain=2 --branch 2>/dev/null \
+            git_ab="$(echo "$git_status" \
                             | sed --quiet 's/# branch.ab //p' - )"
 
             if [[ $git_ab = "" ]]; then
@@ -92,6 +100,12 @@ function __prompt_command() {
                 fi
             fi
         fi
+    fi
+
+    if [[ $(which python3) =~ $HOME/venvs/.* ]]; then
+        local venv
+        venv=$(which python3 | sed 's|.*/venvs/\(\w*\)/.*|\1|')
+        PS1+=" ${orange}[venv:$venv]${reset}"
     fi
 
     if [[ $exit -ne 0 ]]; then
