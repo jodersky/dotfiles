@@ -1,0 +1,73 @@
+{
+    "window.menuBarVisibility": "toggle",
+    "editor.rulers": [
+        // 70,
+        80,
+        100
+    ],
+    "metals.javaHome": "/usr/lib/jvm/java-17-openjdk-amd64",
+    "gitlens.statusBar.enabled": false,
+    "[scala]": {
+        "editor.tabSize": 2
+    },
+    "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback', FontAwesome",
+    "editor.autoClosingQuotes": "never",
+    "files.insertFinalNewline": true,
+    "go.formatTool": "goimports",
+    "go.useLanguageServer": true,
+    "gitlens.codeLens.scopes": [
+        "document"
+    ],
+    "workbench.statusBar.visible": true,
+    "terminal.external.linuxExec": "sakura",
+    "shellcheck.customArgs": [
+        "-x"
+    ],
+    "workbench.startupEditor": "none",
+    "metals.serverVersion": "",
+    "workbench.editorAssociations": {
+        "*.html": "default",
+        "*.ipynb": "jupyter-notebook"
+    },
+    "editor.fontLigatures": true,
+    // "workbench.colorCustomizations": {
+    //     "statusBar.background" : "#303030",
+    //     "statusBar.noFolderBackground" : "#303030",
+    //     "statusBar.debuggingBackground": "#511f1f",
+    //     "statusBarItem.remoteBackground": "#303030",
+    //     "statusBarItem.remoteForeground": "#cccccc"
+    // },
+    "files.exclude": {
+        "**/.git": false,
+        "**/*.git": true
+    },
+    "files.watcherExclude": {
+        "**/.bloop": true,
+        "**/.metals": true,
+        "**/.ammonite": true
+    },
+    "metals.enableStripMarginOnTypeFormatting": false,
+    "security.workspace.trust.startupPrompt": "never",
+    "security.workspace.trust.enabled": false,
+    "redhat.telemetry.enabled": false,
+    "terminal.integrated.shellIntegration.decorationsEnabled": "never",
+    "terminal.integrated.shellIntegration.decorationIconError": "\"\"",
+    "terminal.integrated.shellIntegration.decorationIconSuccess": "\"\"",
+    "terminal.integrated.shellIntegration.enabled": false,
+    "terminal.integrated.allowChords": false,
+    "files.trimTrailingWhitespace": true,
+    "gitlens.rebaseEditor.ordering": "asc",
+    "[python]": {
+        "editor.formatOnType": true
+    },
+    "workbench.colorTheme": "Solarized Light",
+    "editor.minimap.enabled": false,
+    "window.zoomLevel": 2,
+    "cSpell.userWords": [
+        "scalalib",
+        "unmarshal"
+    ],
+    "[proto3]": {
+        "editor.defaultFormatter": "xaver.clang-format"
+    }
+}
