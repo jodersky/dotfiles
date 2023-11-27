@@ -14,6 +14,7 @@ sudo apt install \
      evince \
      flameshot \
      foot \
+     gammastep \
      gimp \
      git \
      inkscape \
