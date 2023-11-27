@@ -15,12 +15,12 @@ import mill._, scalalib._, scalafmt._
 
 object app extends ScalaModule with ScalafmtModule {
 
-  def scalaVersion = "3.1.2"
+  def scalaVersion = "3.3.1"
 
-  object test extends Tests {
+  object test extends ScalaTests {
     def testFramework = "utest.runner.Framework"
     def ivyDeps = Agg(
-      ivy"com.lihaoyi::utest::0.7.11"
+      ivy"com.lihaoyi::utest::0.8.2"
     )
   }
 
