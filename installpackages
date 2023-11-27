@@ -33,6 +33,7 @@ sudo apt install \
      swaylock \
      texlive-fonts-extra \
      texlive-latex-extra \
+     waybar \
      xdg-desktop-portal-wlr \
      xdg-utils \
      xwayland \
