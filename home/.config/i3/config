@@ -8,7 +8,7 @@ set $down j
 set $up k
 set $right l
 
-set $term sakura
+set $term alacritty
 
 ### Key bindings
 #
@@ -68,7 +68,7 @@ set $term sakura
 # Workspaces:
 #
     # rename workspace
-    bindsym $mod+n exec i3-msg rename workspace to "$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num'):$(dmenu -p 'Rename workspace to ')"
+    bindsym $mod+n exec i3-msg rename workspace to "$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num'):$(dmenu -p 'Rename workspace to ' < /dev/null)"
     # reset custom name of workspace
     bindsym $mod+Shift+n exec i3-msg rename workspace to "$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).num')"
 
@@ -184,8 +184,8 @@ bindsym $mod+r mode "resize"
     set $text-color          #f3f4f5
     set $inactive-text-color #f3f4f5
     #set $inactive-text-color #676e7d
-    #set $urgent-bg-color    #f90900
-    set $urgent-bg-color     #676e7d
+    set $urgent-bg-color    #f90900
+    set $menu-bg-color     #676e7d
 #
 # Window colors:
 #                           border             background         text                 indicator
@@ -212,6 +212,7 @@ bindsym $mod+r mode "resize"
             focused_workspace  $bg-color          $bg-color          $text-color
             inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
             urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+            binding_mode       $menu-bg-color     $menu-bg-color     $text-color
         }
     }
 
@@ -313,3 +314,6 @@ for_window [class="Spotify"] move to workspace number 10
 
 assign [instance="slack"] 8
 #exec --no-startup-id slack
+
+# temporary workaround for https://github.com/i3/i3/issues/5149
+for_window [all] border pixel 1
