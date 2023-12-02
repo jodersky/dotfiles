@@ -9,8 +9,8 @@
         "idle_inhibitor",
         "pulseaudio",
         // TODO: spotify,
-        // TODO: screen brightness  ,
-        // TODO: keyboard brightness 
+        "custom/brightness",
+        "custom/brightness2",
         // TODO: svc backup
         // TODO: svc climate
         // TODO: svc grafana
@@ -22,10 +22,11 @@
         "disk",
         "memory",
         "cpu",
-        "battery",
-        // TODO:  pwr,
+        "custom/battery",
+        "custom/pwr",
         // TODO:  wireless
         // TODO:  bluetooth
+        "bluetooth",
         "clock",
         "tray"
     ],
@@ -41,12 +42,10 @@
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format": "♪ {volume}%",
+        "format-bluetooth": "♪ {volume}% {icon}",
+        "format-bluetooth-muted": "♪ MUTE {icon}",
+        "format-muted": "♪ MUTE",
         "format-icons": {
             "headphone": "",
             "hands-free": "",
@@ -58,11 +57,18 @@
         },
         "on-click": "pavucontrol"
     },
-    // "backlight": {
-    //     // "device": "acpi_video1",
-    //     "format": "{percent}% {icon}",
-    //     "format-icons": ["", "", "", "", "", "", "", "", ""]
-    // },
+    "custom/brightness": {
+        "format": " {}",
+        "exec": "~/.config/waybar/libexec/brightness backlight/intel_backlight",
+        "restart-interval": 2,
+        "signal": 10
+    },
+    "custom/brightness2": {
+        "format": " {}",
+        "exec": "~/.config/waybar/libexec/brightness leds/tpacpi::kbd_backlight",
+        "restart-interval": 2,
+        "signal": 10
+    },
     "disk": {
         "format": " {free}"
     },
@@ -73,19 +79,25 @@
         "format": " {usage}%",
         "tooltip": false
     },
-    "battery": {
-        "states": {
-            // "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
-        "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-alt": "{time} {icon}",
-        // "format-good": "", // An empty format will hide the module
-        // "format-full": "",
-        "format-icons": ["", "", "", "", ""]
+    "custom/battery": {
+        "format": "BAT0 {}",
+        "exec": "~/.config/waybar/libexec/battery BAT0",
+        "restart-interval": 30
+    },
+    "custom/pwr": {
+        "format": " {}",
+        "exec": "~/.config/waybar/libexec/pwr",
+        "restart-interval": 30
+    },
+    "bluetooth": {
+        // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+        "format": " {status}",
+        "format-disabled": " off", // an empty format will hide the module
+        "format-connected": " {num_connections} connected",
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "rfkill toggle bluetooth"
     },
     "clock": {
         // "timezone": "America/New_York",

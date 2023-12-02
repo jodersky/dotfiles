@@ -21,6 +21,9 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 output * bg ~/.background fill
+
+output eDP-1 resolution 2560x1440 scale 1
+
 #
 # Example configuration:
 #
@@ -54,6 +57,12 @@ exec swayidle -w \
 
 input * {
     xkb_options ctrl:nocaps
+}
+
+input "1739:0:Synaptics_TM3289-021" {
+    tap enabled
+    accel_profile "adaptive" # disable mouse acceleration (enabled by default; to set it manually, use "adaptive" instead of "flat")
+    pointer_accel 0.5
 }
 
 ### Key bindings
@@ -222,12 +231,12 @@ bindsym $mod+r mode "resize"
 # Special keys
 #
 ## Sound:
-    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ '-5%'
-    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ '+5%'
-    bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+    bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ '-5%', exec pkill -SIGRTMIN+10 waybar
+    bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ '+5%', exec pkill -SIGRTMIN+10 waybar
+    bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle, exec pkill -SIGRTMIN+10 waybar
 ## Backlight:
-    bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 2%-
-    bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 2%+
+    bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 2%-, exec pkill -SIGRTMIN+10 waybar
+    bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 2%+, exec pkill -SIGRTMIN+10 waybar
 ## Other utilities:
     bindsym Print exec XDG_CURRENT_DESKTOP=sway flameshot full -p "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
     bindsym Shift+Print exec XDG_CURRENT_DESKTOP=sway flameshot gui -p "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
@@ -235,8 +244,8 @@ bindsym $mod+r mode "resize"
     bindsym $mod+y exec ~/bin/passmenu --type, mode "default"
     bindsym $mod+u exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
     bindsym $mod+o exec code , mode "default"
-    bindsym $mod+i exec firefox
-    bindsym $mod+Shift+i exec firefox --private-window
+    bindsym $mod+i exec MOZ_ENABLE_WAYLAND=1 firefox
+    bindsym $mod+Shift+i exec MOZ_ENABLE_WAYLAND=1 firefox --private-window
     bindsym $mod+bracketleft exec chromium --new-window --app="https://stats.crashbox.io/d/A6T6hIRMk/humidor?orgId=1&refresh=1m&kiosk=tv"
     bindsym $mod+bracketright exec vlc --fullscreen itcannotbe.mkv
 ## Media menu:
@@ -245,15 +254,18 @@ bindsym $mod+r mode "resize"
             exec dbus-send --print-reply \
                 --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
                 org.mpris.MediaPlayer2.Player.PlayPause, \
+            exec pkill -SIGRTMIN+10 waybar, \
             mode "default"
         bindsym $right \
             exec dbus-send --print-reply \
                --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
-                org.mpris.MediaPlayer2.Player.Next
+                org.mpris.MediaPlayer2.Player.Next, \
+            exec pkill -SIGRTMIN+10 waybar
         bindsym $left \
             exec dbus-send --print-reply \
                 --dest=org.mpris.MediaPlayer2.spotify /org/mpris/MediaPlayer2 \
-                org.mpris.MediaPlayer2.Player.Previous
+                org.mpris.MediaPlayer2.Player.Previous, \
+            exec pkill -SIGRTMIN+10 waybar
         bindsym Return mode "default"
         bindsym Escape mode "default"
     }
@@ -328,6 +340,8 @@ bar {
 #
 # Startup applications
 #
+
+exec gammastep -l 46.53:6.63
 
 exec $term --title scratchpad
 for_window [title="scratchpad"] move scratchpad
