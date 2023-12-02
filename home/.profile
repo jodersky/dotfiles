@@ -29,3 +29,16 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+
+# The gpg agent is expected to be launched via systemd's user mode (see
+# /usr/lib/systemd/user/gpg-agent.{socket,service} and systemd.unit(5)). This
+# allows systemd to clean up the agent automatically at logout. However, ssh
+# needs to be made aware of where to find the agent via an environment variable.
+if [ -n "$(gpgconf --list-options gpg-agent | \
+      awk -F: '/^enable-ssh-support:/{ print $10 }')" ]; then
+    SSH_AUTH_SOCK=$(gpgconf --list-dirs agent-ssh-socket)
+    export SSH_AUTH_SOCK
+fi
+
+# Start sway
+[ "$(tty)" = "/dev/tty1" ] && [ ! -e "$HOME/no-sway" ] && exec sway
