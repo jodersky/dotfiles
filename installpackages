@@ -3,12 +3,29 @@
 
 set -o errexit
 
+echo "Make sure to add components "contrib non-free non-free-firmware" to sources" >&2
+read -p "Press enter to continue"
+
+sudo apt update
+
+# Firmware packages.
+sudo apt install \
+     firmware-iwlwifi \
+     firmware-linux \
+     firmware-misc-nonfree \
+     firmware-realtek
+
 # Basic packages and Window manager
 sudo apt install \
+     apt-file \
      apt-listbugs \
+     blueman \
+     bluetooth \
      bluez \
      brightnessctl \
      build-essential \
+     curl \
+     dunst \
      emacs \
      eog \
      evince \
@@ -17,27 +34,40 @@ sudo apt install \
      gammastep \
      gimp \
      git \
+     grim \
      inkscape \
      inotify-tools \
      jq \
+     libnotify-bin \
      nautilus \
      network-manager \
+     openjdk-17-jdk \
+     openjdk-17-source \
      pandoc \
      pass \
+     pavucontrol \
      python3-pydbus \
+     rfkill \
      rsync \
      shellcheck \
+     slurp \
      sway \
      swaybg \
      swayidle \
      swaylock \
      texlive-fonts-extra \
      texlive-latex-extra \
+     ufw \
      waybar \
      xdg-desktop-portal-wlr \
      xdg-utils \
      xwayland \
      ydotool
+
+# Note: steam-devices adds a udev rule which tags /dev/uinput with "uaccess",
+# which in turn is needed to add an ACL so that the user can access the device,
+# so that ydotool can function
+sudo apt install steam-devices
 
 # Packages required for using yubikey
 sudo apt install gnupg2 dirmngr pcscd scdaemon

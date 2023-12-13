@@ -65,6 +65,12 @@ input "1739:0:Synaptics_TM3289-021" {
     pointer_accel 0.5
 }
 
+input "1267:12792:ELAN067B:00_04F3:31F8_Touchpad" {
+    tap enabled
+    accel_profile "adaptive"
+    pointer_accel 0.5
+}
+
 ### Key bindings
 #
 # Basics:
