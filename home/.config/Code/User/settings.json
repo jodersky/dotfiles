@@ -62,12 +62,12 @@
     },
     "workbench.colorTheme": "Solarized Light",
     "editor.minimap.enabled": false,
-    "window.zoomLevel": 2,
     "cSpell.userWords": [
         "scalalib",
         "unmarshal"
     ],
     "[proto3]": {
         "editor.defaultFormatter": "xaver.clang-format"
-    }
+    },
+    "window.zoomLevel": 3
 }
