@@ -13,20 +13,21 @@ elif [[ $status = "Charging" ]]; then
     status_text=" "
 fi
 
-echo "${percent}%${status_text}"
-
-printf '%i%% (%0.1fWh)%s\n' \
-       "$(( percent ))" \
-       "$(( energy ))e-6" \
-       "$status_text"
-
+class=""
 # consider color and urgent flag only on discharge
 if [[ $status = "Discharging" ]]; then
     if [[ $percent -le 15 ]]; then
-	echo "#FF0000";
+	    class="urgent";
     fi
     if [[ $percent -le 5 ]]; then
-	exit 33
+        class="critical";
     fi
 fi
+
+printf '{"text": "%i%% (%0.1fWh)%s", "class": "%s"}' \
+       "$(( percent ))" \
+       "$(( energy ))e-6" \
+       "$status_text" \
+       "$class"
+
 exit 0

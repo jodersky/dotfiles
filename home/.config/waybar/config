@@ -82,6 +82,7 @@
     "custom/battery": {
         "format": "BAT0 {}",
         "exec": "~/.config/waybar/libexec/battery BAT0",
+        "return-type": "json",
         "restart-interval": 30
     },
     "custom/pwr": {

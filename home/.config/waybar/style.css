@@ -51,6 +51,14 @@ button:hover {
     background-color: #eb4d4b;
 }
 
+.urgent {
+    color: #eb4d4b;
+}
+
+.critical {
+    background-color: #eb4d4b;
+}
+
 #mode {
     background-color: #64727D;
     border-bottom: 3px solid #ffffff;
