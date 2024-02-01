@@ -1,0 +1,10 @@
+profile multiple {
+    output "Dell Inc. DELL U3219Q HD2Q413" position 0,0
+    output eDP-1 position 3840,200 scale 2
+    exec swaymsg workspace number 10, move workspace to output eDP-1
+    exec swaymsg workspace number 1
+}
+
+profile single {
+    output eDP-1 position 0,0 scale 1
+}

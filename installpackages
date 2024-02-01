@@ -23,6 +23,8 @@ sudo apt install \
      bluetooth \
      bluez \
      brightnessctl \
+     btrfs-progs \
+     btrfsmaintenance \
      build-essential \
      curl \
      dunst \
@@ -38,6 +40,7 @@ sudo apt install \
      inkscape \
      inotify-tools \
      jq \
+     kanshi \
      libnotify-bin \
      nautilus \
      network-manager \
@@ -58,6 +61,7 @@ sudo apt install \
      texlive-fonts-extra \
      texlive-latex-extra \
      ufw \
+     wofi \
      waybar \
      xdg-desktop-portal-wlr \
      xdg-utils \

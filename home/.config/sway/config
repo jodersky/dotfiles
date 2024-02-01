@@ -15,7 +15,9 @@ set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu dmenu_path | dmenu | xargs swaymsg exec --
+# set $menu dmenu_path | dmenu | xargs swaymsg exec --
+set $menu tofi-run | xargs swaymsg exec --
+# set $menu wofi --show run
 
 ### Output configuration
 #
@@ -23,6 +25,8 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec --
 output * bg ~/.background fill
 
 output eDP-1 resolution 2560x1440 scale 1
+
+exec kanshi
 
 #
 # Example configuration:
@@ -33,7 +37,7 @@ output eDP-1 resolution 2560x1440 scale 1
 
 ### Idle configuration
 exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000 -s center ~/.lock' \
+         timeout 300 'swaylock -f -c 000000 -s center -i ~/.lock' \
          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
          before-sleep 'swaylock -f -c 000000 -s center -i ~/.lock'
 #
@@ -82,7 +86,7 @@ input "1267:12792:ELAN067B:00_04F3:31F8_Touchpad" {
     bindsym $mod+Shift+q kill
 
     # Start your launcher
-    # TODO: bindsym $mod+d exec --no-startup-id i3-dmenu-desktop # desktop applications
+    bindsym $mod+d exec wofi --show drun # desktop applications
     bindsym $mod+x exec $menu # all executables
 
     # Drag floating windows by holding down $mod and left mouse button.
@@ -244,8 +248,10 @@ bindsym $mod+r mode "resize"
     bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 2%-, exec pkill -SIGRTMIN+10 waybar
     bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 2%+, exec pkill -SIGRTMIN+10 waybar
 ## Other utilities:
-    bindsym Print exec XDG_CURRENT_DESKTOP=sway flameshot full -p "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
-    bindsym Shift+Print exec XDG_CURRENT_DESKTOP=sway flameshot gui -p "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
+    bindsym Print exec grim "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
+    bindsym Shift+Print exec grim -g "$(slurp)" "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
+    # bindsym Print exec XDG_CURRENT_DESKTOP=sway flameshot full -p "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
+    # bindsym Shift+Print exec XDG_CURRENT_DESKTOP=sway flameshot gui -p "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
 ## Common applications:
     bindsym $mod+y exec ~/bin/passmenu --type, mode "default"
     bindsym $mod+u exec emacsclient --alternate-editor='' --create-frame --no-wait , mode "default"
