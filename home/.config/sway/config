@@ -248,8 +248,8 @@ bindsym $mod+r mode "resize"
     bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 2%-, exec pkill -SIGRTMIN+10 waybar
     bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 2%+, exec pkill -SIGRTMIN+10 waybar
 ## Other utilities:
-    bindsym Print exec grim "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
-    bindsym Shift+Print exec grim -g "$(slurp)" "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
+    bindsym Print exec grim "screenshots/screenshot-$(date +%Y-%m-%d_%H%M%S).png"
+    bindsym Shift+Print exec grim -g "$(slurp)" "screenshots/screenshot-$(date +%Y-%m-%d_%H%M%S).png"
     # bindsym Print exec XDG_CURRENT_DESKTOP=sway flameshot full -p "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
     # bindsym Shift+Print exec XDG_CURRENT_DESKTOP=sway flameshot gui -p "screenshot-$(date +%Y-%m-%d_%H%M%S).png"
 ## Common applications:
