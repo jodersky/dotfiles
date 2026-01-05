@@ -11,6 +11,6 @@ alias zulu="date --utc +%Y-%m-%dT%H:%M:%S.%3NZ"
 alias scu="systemctl --user"
 alias get_idf='. $HOME/p/esp/esp-idf/export.sh'
 alias sb='ssh -A jodersky@europe-west6-b.sb.internal.inpher.io -t -- '
-alias m='./mill'
+alias m='~/meshci/tools/millr'
 alias q='codename q 1'
 alias v="source ~/venvs/main/bin/activate"

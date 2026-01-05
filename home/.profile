@@ -41,4 +41,4 @@ if [ -n "$(gpgconf --list-options gpg-agent | \
 fi
 
 # Start sway
-[ "$(tty)" = "/dev/tty1" ] && [ ! -e "$HOME/no-sway" ] && exec sway
+[ "$(tty)" = "/dev/tty1" ] && [ ! -e "$HOME/no-sway" ] && exec sway 2> sway.log
