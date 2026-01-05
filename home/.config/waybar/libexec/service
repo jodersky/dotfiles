@@ -1,0 +1,18 @@
+#!/bin/bash
+
+unit="$1"
+action="$2"
+
+if [[ -n $action ]]; then
+    if systemctl --user is-active --quiet "$unit"; then
+	systemctl --user stop "$unit"
+    else
+	systemctl --user start "$unit"
+    fi
+fi
+
+if systemctl --user is-active --quiet "$unit"; then
+    echo -n '{"text": "ON"}'
+else
+    echo -n '{"text": "OFF"}'
+fi

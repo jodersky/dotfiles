@@ -18,7 +18,7 @@
         // TODO: svc nomadfwd
         // TODO: svc jaeger
         // TODO: svc services
-        // TODO: svc backup
+        "custom/service",
         "disk",
         "memory",
         "cpu",
@@ -66,8 +66,14 @@
     "custom/brightness2": {
         "format": " {}",
         "exec": "~/.config/waybar/libexec/brightness leds/tpacpi::kbd_backlight",
-        "restart-interval": 2,
+        "return-type": "json",
+        "restart-interval": 30,
         "signal": 10
+    },
+    "custom/service": {
+        "format": "nomadfwd {}",
+        "exec": "~/.config/waybar/libexec/service nomadfwd",
+        "on-click": "~/.config/waybar/libexec/service nomadfwd toggle"
     },
     "disk": {
         "format": " {free}"

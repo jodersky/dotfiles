@@ -24,7 +24,7 @@ if [[ $status = "Discharging" ]]; then
     fi
 fi
 
-printf '{"text": "%i%% (%0.1fWh)%s", "class": "%s"}' \
+/usr/bin/printf '{"text": "%i%% (%0.1fWh)%s", "class": "%s"}' \
        "$(( percent ))" \
        "$(( energy ))e-6" \
        "$status_text" \
