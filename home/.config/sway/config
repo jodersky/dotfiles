@@ -38,14 +38,31 @@ exec kanshi
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Idle configuration
-exec swayidle -w \
-         timeout 300 'swaylock -f -c 000000 -s center -i ~/.lock' \
-         timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -f -c 000000 -s center -i ~/.lock'
+
+# We assume that sway is used on a systemd-based system with logind managing
+# user sessions. In this setup, logind is responsible for managing "system" and
+# "user" events, and sway should only be used to manage events related to the
+# current session (a session is an "instance" of a user logging in, attached to
+# a TTY). For example, managing what happens when the lid is closed is the
+# responsibility of logind, not swayidle, but visually locking the session when
+# the system is suspended, or telling logind when the session is idle is the
+# responsibility of swayidle.
 #
-# This will lock your screen after 300 seconds of inactivity, then turn off
-# your displays after another 300 seconds, and turn your screens back on when
-# resumed. It will also lock your screen before your computer goes to sleep.
+# To make logind and swayidle work well together, we configure swayidle to
+# signal idle events to logind, and react to lock and suspend events from
+# logind.
+#
+# Note in the current configuration it is possible that swaylock is started
+# twice: once if the session is locked, and once when the system is suspended.
+# This is acceptable since swaylock will simply exit if it is already running.
+# TODO: find a better way to handle this situation
+
+exec swayidle -w \
+    timeout 300 'loginctl lock-session' \
+    timeout 330 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    idlehint 330 \
+    lock 'swaylock -f -c 000000 -s center -i ~/.lockscreen.svg' \
+    before-sleep 'swaylock -f -c 000000 -s center -i ~/.lockscreen.svg'
 
 ### Input configuration
 #
@@ -291,7 +308,7 @@ bindsym $mod+r mode "resize"
         bindsym 1 exec ~/bin/setup single, mode "default"
         bindsym 2 exec ~/bin/setup double, mode "default"
         bindsym 3 exec ~/bin/setup triple, mode "default"
-        bindsym l exec pkill -USR1 swayidle, mode "default"
+        bindsym l exec loginctl lock-session, mode "default"
         bindsym Shift+e exec swaymsg exit, mode "default"
         bindsym s exec systemctl suspend, mode "default"
         bindsym Shift+r exec systemctl reboot, mode "default"
