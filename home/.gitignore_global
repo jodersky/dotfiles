@@ -1,7 +1,9 @@
 .bloop/
+.bsp/
 .ensime_cache/
 .ensime
 .idea/
 .metals/
+.scala-build/
 .vscode/
 project/metals.sbt
