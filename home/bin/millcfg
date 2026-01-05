@@ -1,28 +1,28 @@
 #!/bin/bash
 #
-# millcfg - generate a sensible mill configuration
+# millcfg - install mill and generate a starter mill configuration
 #
 set -o errexit
 
 # Latest mill version
 latest_tag=$(curl -sS https://api.github.com/repos/com-lihaoyi/mill/releases/latest | jq -r '.tag_name')
 
-cat << EOF
-// install mill:
-// curl -sS -L "https://github.com/com-lihaoyi/mill/releases/download/$latest_tag/$latest_tag" > mill && chmod +x mill
+curl -L "https://repo1.maven.org/maven2/com/lihaoyi/mill-dist/$latest_tag/mill-dist-$latest_tag-mill.sh" -o mill
 
-import mill._, scalalib._, scalafmt._
+chmod +x mill
 
-object app extends ScalaModule with ScalafmtModule {
+cat > build.mill << EOF
+//| mill-version: $latest_tag
 
-  def scalaVersion = "3.3.1"
+import mill.*, scalalib.*, scalafmt.*
 
-  object test extends ScalaTests {
+object app extends ScalaModule with ScalafmtModule:
+
+  def scalaVersion = "3.7.4"
+
+  object test extends ScalaTests:
     def testFramework = "utest.runner.Framework"
-    def ivyDeps = Agg(
-      ivy"com.lihaoyi::utest::0.8.2"
+    def mvnDeps = Seq(
+      mvn"com.lihaoyi::utest::0.9.1"
     )
-  }
-
-}
 EOF
