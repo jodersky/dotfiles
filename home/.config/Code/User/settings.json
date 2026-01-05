@@ -1,17 +1,17 @@
 {
-    "window.menuBarVisibility": "toggle",
     "editor.rulers": [
         // 70,
         80,
         100
     ],
-    "metals.javaHome": "/usr/lib/jvm/java-17-openjdk-amd64",
+    "metals.javaHome": "/usr/lib/jvm/java-25-openjdk-amd64",
     "gitlens.statusBar.enabled": false,
     "[scala]": {
         "editor.tabSize": 2
     },
     "editor.fontFamily": "'Droid Sans Mono', 'monospace', monospace, 'Droid Sans Fallback', FontAwesome",
     "editor.autoClosingQuotes": "never",
+    "editor.titleBar.enabled": false,
     "files.insertFinalNewline": true,
     "go.formatTool": "goimports",
     "go.useLanguageServer": true,
@@ -63,11 +63,43 @@
     "workbench.colorTheme": "Solarized Light",
     "editor.minimap.enabled": false,
     "cSpell.userWords": [
+        "Hetzner",
+        "routable",
         "scalalib",
         "unmarshal"
     ],
     "[proto3]": {
-        "editor.defaultFormatter": "xaver.clang-format"
+        "editor.defaultFormatter": "zxh404.vscode-proto3"
     },
-    "window.zoomLevel": 3
+    "window.zoomLevel": 3,
+    "cmake.showOptionsMovedNotification": false,
+    "metals.millScript": "./mill",
+    "metals.javaVersion": "24",
+    "metals.defaultBspToBuildTool": true,
+    "diffEditor.ignoreTrimWhitespace": false,
+    "window.commandCenter": false,
+    "window.menuBarVisibility": "toggle",
+    "window.titleBarStyle": "native",
+    "[java]": {
+        "editor.defaultFormatter": "scalameta.metals"
+    },
+    "window.customTitleBarVisibility": "never",
+    "git.blame.editorDecoration.enabled": true,
+    "github.copilot.nextEditSuggestions.enabled": true,
+    "docker.extension.enableComposeLanguageServer": false,
+    "[dockercompose]": {
+        "editor.insertSpaces": true,
+        "editor.tabSize": 2,
+        "editor.autoIndent": "advanced",
+        "editor.quickSuggestions": {
+            "other": true,
+            "comments": false,
+            "strings": true
+        },
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "[github-actions-workflow]": {
+        "editor.defaultFormatter": "redhat.vscode-yaml"
+    },
+    "terminal.integrated.enableMultiLinePasteWarning": "never"
 }
