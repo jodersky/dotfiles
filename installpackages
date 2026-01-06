@@ -44,12 +44,13 @@ sudo apt install \
      libnotify-bin \
      nautilus \
      network-manager \
-     openjdk-17-jdk \
-     openjdk-17-source \
+     openjdk-25-jdk \
+     openjdk-25-source \
      pandoc \
      pass \
-     pavucontrol \
+     pipewire \
      python3-pydbus \
+     qpwgraph \
      rfkill \
      rsync \
      shellcheck \
