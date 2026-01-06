@@ -1,20 +1,22 @@
-# https://gist.github.com/thomasdarimont/46358bc8167fce059d83a1ebdb92b0e7
 
-decode_base64_url() {
-  local len=$((${#1} % 4))
-  local result="$1"
-  if [[ $len -eq 2 ]]; then result="$1"'=='
-  elif [[ $len -eq 3 ]]; then result="$1"'='
-  fi
-  echo "$result" | tr '_-' '/+' | openssl enc -d -base64
+
+# Read a JWT from stdin and decode one of its parts.
+# Usage: cat jwt.txt | decode_jwt 1
+# $1: part of the JWT to decode (1: header, 2: payload, 3: signature)
+decode_jwt() {
+    local body=$(cat)
+    local payload=$(echo -n "$body" | cut -d '.' -f "$1" | tr '_-' '/+')
+
+    local len=$((${#payload} % 4))
+    if [ $len -eq 2 ]; then
+        payload="$payload"'=='
+    elif [ $len -eq 3 ]; then
+        payload="$payload"'='
+    fi
+
+    echo "$payload" | base64 -d | jq .
 }
 
-decode_jwt(){
-   decode_base64_url "$(echo -n "$2" | cut -d "." -f "$1")" | jq .
-}
-
-# Decode JWT header
-alias jwth="decode_jwt 1"
-
-# Decode JWT Payload
-alias jwtp="decode_jwt 2"
+alias jwth='decode_jwt 1'
+alias jwtp='decode_jwt 2'
+alias jwts='decode_jwt 3'
