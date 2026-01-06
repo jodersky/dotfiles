@@ -1,0 +1,279 @@
+#!/usr/bin/env python3
+"""
+Sway status script for swaybar
+"""
+
+from enum import Enum
+import json
+import os
+import sys
+import time
+import subprocess
+from pathlib import Path
+import signal
+import threading
+
+
+def run_command(cmd: str) -> str:
+    """Run a shell command and return output"""
+    try:
+        result = subprocess.run(
+            cmd, shell=True, capture_output=True, text=True, timeout=2
+        )
+        return result.stdout.strip()
+    except (subprocess.TimeoutExpired, Exception):
+        return ""
+
+
+def get_volume() -> dict:
+    """Get current volume level"""
+    try:
+        output = run_command("wpctl get-volume @DEFAULT_SINK@")
+        if not output:
+            return {}
+
+        # Parse output like "Volume: 0.95" or "Volume: 0.95 [MUTED]"
+        parts = output.split()
+        if len(parts) < 2:
+            return {}
+
+        volume = float(parts[1]) * 100
+        is_muted = "[MUTED]" in output
+
+        return {
+            "full_text": f"♪ {'MUTED' if is_muted else f'{volume:3.0f}%'}",
+            "name": "volume",
+        }
+
+    except Exception:
+        return {}
+
+
+def get_brightness(icon: str, device: str) -> dict:
+    """Get brightness level from sysfs"""
+    percentage = ""
+    try:
+        brightness_path = Path(f"/sys/class/{device}/brightness")
+        max_brightness_path = Path(f"/sys/class/{device}/max_brightness")
+
+        if brightness_path.exists() and max_brightness_path.exists():
+            brightness = int(brightness_path.read_text().strip())
+            max_brightness = int(max_brightness_path.read_text().strip())
+            percentage = f"{int((brightness / max_brightness) * 100)}%"
+    except Exception:
+        percentage = "error"
+
+    return {
+        "full_text": f"{icon} {percentage}",
+        "name": f"brightness-{device}",
+    }
+
+
+def get_disk_usage(icon: str, mount_point: str) -> dict:
+    """Get disk usage for a given mount point"""
+    try:
+        stat = os.statvfs(mount_point)
+        free_bytes = stat.f_bavail * stat.f_frsize
+        free_gb = free_bytes / (1024**3)
+        if free_gb >= 1024:
+            free_str = f"{free_gb / 1024:.1f} TB"
+        else:
+            free_str = f"{free_gb:.1f} GB"
+        return {"full_text": f"{icon} {free_str}"}
+    except Exception:
+        return {}
+
+
+def get_memory_usage() -> dict:
+    """Get memory usage"""
+    try:
+        mem_info = {}
+        with open("/proc/meminfo", "r") as f:
+            for line in f:
+                key, value = line.split(":")
+                mem_info[key.strip()] = int(value.strip().split()[0])
+        free_mem = mem_info.get("MemAvailable", 0) / 1024 / 1024
+
+        return {"full_text": f" {free_mem:.1f} GB"}
+    except Exception:
+        return {}
+
+
+def get_cpu_usage() -> dict:
+    """Get CPU usage"""
+    try:
+        with open("/proc/stat", "r") as f:
+            cpu_line = f.readline()
+            cpu_times = [int(x) for x in cpu_line.split()[1:]]
+            total = sum(cpu_times)
+            idle = cpu_times[3]  # idle time is the 4th value
+
+            # Store previous values for calculation
+            if not hasattr(get_cpu_usage, "prev_total"):
+                get_cpu_usage.prev_total = total
+                get_cpu_usage.prev_idle = idle
+                return {}
+
+            total_diff = total - get_cpu_usage.prev_total
+            idle_diff = idle - get_cpu_usage.prev_idle
+
+            get_cpu_usage.prev_total = total
+            get_cpu_usage.prev_idle = idle
+
+            if total_diff > 0:
+                cpu_usage = ((total_diff - idle_diff) / total_diff) * 100
+            else:
+                cpu_usage = 0.0
+
+            return {"full_text": f" {cpu_usage:2.0f}%"}
+    except Exception:
+        return {}
+
+
+class BatteryLevel(Enum):
+    NORMAL = 0
+    WARNING = 1
+    CRITICAL = 2
+
+
+def get_battery(name: str) -> dict:
+    """Get battery capacity percentage"""
+    try:
+        status_path = Path(f"/sys/class/power_supply/{name}/status")
+        capacity_path = Path(f"/sys/class/power_supply/{name}/capacity")
+        energy_now_path = Path(f"/sys/class/power_supply/{name}/energy_now")
+        power_now_path = Path(f"/sys/class/power_supply/{name}/power_now")
+
+        if not status_path.exists():
+            return {}
+
+        status = status_path.read_text().strip()
+        capacity = int(capacity_path.read_text().strip())
+        energy_now = int(energy_now_path.read_text().strip())
+        power_now = int(power_now_path.read_text().strip())
+
+        if status == "Charging":
+            status_text = " "
+        else:
+            status_text = ""
+
+        level = BatteryLevel.NORMAL
+        if status == "Discharging":
+            if capacity <= 15:
+                level = BatteryLevel.WARNING
+            if capacity <= 5:
+                level = BatteryLevel.CRITICAL
+
+        return {
+            "full_text": f"{name} {capacity:3.0f}% ({energy_now/1E6:2.1f}Wh)  {power_now/1E6:2.1f}W{status_text}",
+            "urgent": True if level == BatteryLevel.CRITICAL else False,
+            "color": "#FF0000" if level == BatteryLevel.WARNING else None,
+        }
+
+    except Exception:
+        return {}
+
+
+def get_time() -> dict:
+    """Get current time"""
+    current_time = time.strftime("%a %Y-%m-%d %H:%M")
+    return {"full_text": f"{current_time}"}
+
+
+def generate_status() -> list[dict]:
+    """Generate status blocks for swaybar"""
+    blocks = []
+
+    blocks.append(get_volume())
+    blocks.append(get_brightness("", "backlight/intel_backlight"))
+    blocks.append(get_brightness("", "leds/tpacpi::kbd_backlight"))
+    blocks.append(get_disk_usage("", "/"))
+    blocks.append(get_memory_usage())
+    blocks.append(get_cpu_usage())
+    blocks.append(get_battery("BAT0"))
+    blocks.append(get_time())
+
+    return blocks
+
+
+def main():
+    print('{"version":1}')
+    print("[")
+
+    # Print empty array to start
+    print("[]")
+
+    lock = threading.Lock()
+
+    runtime_dir = os.environ.get("XDG_RUNTIME_DIR")
+    session_id = os.environ.get("XDG_SESSION_ID")
+    if not runtime_dir:
+        print("Error: XDG_RUNTIME_DIR not set", file=sys.stderr)
+        sys.exit(1)
+    if not session_id:
+        print("Error: XDG_SESSION_ID not set", file=sys.stderr)
+        sys.exit(1)
+
+    fifo_path = os.path.join(runtime_dir, f"sway-status-{session_id}.fifo")
+
+    def update_status():
+        """Update status with locking to prevent concurrent runs"""
+        if lock.acquire(blocking=False):
+            try:
+                blocks = generate_status()
+                # Print with comma prefix (i3bar protocol)
+                print(f",{json.dumps(blocks)}", flush=True)
+            finally:
+                lock.release()
+
+    def fifo_listener():
+        """Listen for newlines on FIFO and trigger updates"""
+        while True:
+            try:
+                # This blocks until someone writes to the FIFO
+                with open(fifo_path, "r") as fifo:
+                    for line in fifo:
+                        update_status()
+            except Exception:
+                time.sleep(0.1)
+
+    # Create named pipe (FIFO) if it doesn't exist
+    try:
+        os.mkfifo(fifo_path)
+    except FileExistsError:
+        pass
+
+    # Start FIFO listener in background thread
+    listener_thread = threading.Thread(target=fifo_listener, daemon=True)
+    listener_thread.start()
+
+    def writer():
+        while True:
+            update_status()
+            time.sleep(15)
+
+    writer_thread = threading.Thread(target=writer, daemon=True)
+    writer_thread.start()
+
+    try:
+        while True:
+            line = sys.stdin.readline()
+            if not line:
+                break
+            # TODO: parse and react to click events
+            # data=json.loads(line)
+            # if data["name"] == "volume":
+            #     subprocess.Popen(["easyeffects"])
+            update_status()
+    except KeyboardInterrupt:
+        pass
+    finally:
+        # Clean up FIFO
+        try:
+            os.unlink(fifo_path)
+        except Exception:
+            pass
+
+
+if __name__ == "__main__":
+    main()
