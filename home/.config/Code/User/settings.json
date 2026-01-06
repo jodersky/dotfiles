@@ -102,5 +102,6 @@
         "editor.defaultFormatter": "redhat.vscode-yaml"
     },
     "terminal.integrated.enableMultiLinePasteWarning": "never",
-    "chat.viewSessions.orientation": "stacked"
+    "chat.viewSessions.orientation": "stacked",
+    "explorer.confirmDelete": false
 }

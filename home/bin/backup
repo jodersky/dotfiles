@@ -1,6 +1,0 @@
-#!/bin/bash
-set -o errexit
-
-echo "backing up gdrive" >&2
-rclone sync --verbose ~/gdrive gdrive:laptop
-echo "backup successful" >&2
